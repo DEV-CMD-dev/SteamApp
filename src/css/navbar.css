@@ -1,0 +1,18 @@
+.navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: xx-large;
+    gap: 15px;
+    background-color: #1a1a1a;
+    padding: 10px;
+}
+
+a{
+    text-decoration: none;
+    color: darkturquoise; 
+}
+
+a:hover{
+    color: rgb(53, 84, 171);
+}
