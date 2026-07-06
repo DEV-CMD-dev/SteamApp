@@ -8,18 +8,19 @@ import Navbar from './partials/Navbar'
 import {Routes, Route} from 'react-router-dom'
 
 function App() {
-
   return (
     <>
       <AuthProvider>
-        <Navbar />
-        <div className='pages-container'>
-          <Routes>
-            <Route path='auth' element={<AuthForm />} />
-            <Route path='/' element={<StorePage />} />
-            <Route path='/library' element={<LibraryPage />} />
-            <Route path='/profile' element={<ProfilePage />} />
-          </Routes>
+        <div className="site-wrapper"> 
+          <Navbar />
+          <div className='pages-container'>
+            <Routes>
+              <Route path='auth' element={<AuthForm />} />
+              <Route path='/' element={<StorePage />} />
+              <Route path='/library' element={<LibraryPage />} />
+              <Route path='/profile' element={<ProfilePage />} />
+            </Routes>
+          </div>
         </div>
       </AuthProvider>
     </>
