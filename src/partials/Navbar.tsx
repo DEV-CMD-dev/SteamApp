@@ -52,7 +52,7 @@ export default function Navbar() {
             </div>
           </form>
 
-          <Link to="/wishlist" className="wishlist-container">
+          <Link to="/wishlist" className="wishlist-container" style={accessToken ? {} : {display: "none"}}>
             <img src={starIcon} alt="Wishlist star" className="wishlist-icon" />
             <span className="wishlist-text">Wishlist</span>
           </Link>
