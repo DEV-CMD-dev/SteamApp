@@ -13,21 +13,27 @@
     column-gap: 40px;
     padding: 20px 50px;
     align-items: center;
-    
     max-width: var(--website-layout-max-width);
     margin: 0 auto;
 }
 
 .logo-container { 
     grid-area: logo;
+    display: flex;
+    align-items: center;
 }
 
 .logo {
-    font-size: 44px;
-    font-weight: 800;
-    color: #ffffff;
+    display: inline-block;
     text-decoration: none;
-    transition: color 0.2s ease;
+    margin-top: 15px;
+}
+
+.logo-img {
+    height: 35px;
+    width: auto;
+    display: block;
+    object-fit: contain;
 }
 
 .nav-buttons-container { 
@@ -59,9 +65,12 @@
     column-gap: 24px;
 }
 
-.categories-button {
+.category-dropdown-btn {
     background: none;
     border: none;
+    display: flex;
+    align-items: center;
+    column-gap: 6px;
     color: #bdbdbd;
     font-size: 15px;
     font-weight: 600;
@@ -70,8 +79,21 @@
     transition: color 0.2s ease;
 }
 
-.categories-button:hover {
+.category-dropdown-btn:hover {
     color: #ffffff;
+}
+
+.dropdown-icon {
+    width: 10px;
+    height: 10px;
+    object-fit: contain;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.category-dropdown-btn:hover .dropdown-icon {
+    opacity: 1;
+    transform: translateY(2px);
 }
 
 .nav-actions-container { 
@@ -151,14 +173,13 @@
     object-fit: contain;
 }
 
-/* --- Media Queries targeting the inner container wrapper --- */
 @media (max-width: 992px) {
     .navbar-container {
         padding: 20px 30px;
         column-gap: 20px;
     }
-    .logo {
-        font-size: 34px;
+    .logo-img {
+        height: 34px;
     }
 }
 
