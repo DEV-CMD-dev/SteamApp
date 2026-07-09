@@ -5,12 +5,18 @@ import "../css/navbar.css";
 
 import searchIcon from "../assets/navbar/search.png";
 import starIcon from "../assets/navbar/star.png";
+import logo from "../assets/logo.svg";
+import arrowDownIcon from "../assets/navbar/arrow-down.svg"; 
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
 
-  const handleSearchSubmit = (e: React.SubmitEvent) => {
+  const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  };
+
+  const handleDropdownClick = (category: string) => {
+    console.log(`${category} dropdown clicked`);
   };
 
   return (
@@ -18,7 +24,9 @@ export default function Navbar() {
       <div className="navbar-container">
         
         <div className="logo-container">
-          <Link to="/" className="logo">nexus</Link>
+          <Link to="/" className="logo">
+            <img src={logo} alt="Website Logo" className="logo-img" />
+          </Link>
         </div>
 
         <div className="nav-buttons-container">
@@ -33,9 +41,29 @@ export default function Navbar() {
         </div>
 
         <div className="categories-container">
-          <button type="button" className="categories-button">Browse</button>
-          <button type="button" className="categories-button">Categories</button>
-          <button type="button" className="categories-button">Recommendations</button>
+          <button 
+            type="button" 
+            className="category-dropdown-btn" 
+            onClick={() => handleDropdownClick("Browse")}>
+            <span>Browse</span>
+            <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
+          </button>
+
+          <button 
+            type="button" 
+            className="category-dropdown-btn" 
+            onClick={() => handleDropdownClick("Categories")}>
+            <span>Categories</span>
+            <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
+          </button>
+
+          <button 
+            type="button" 
+            className="category-dropdown-btn" 
+            onClick={() => handleDropdownClick("Recommendations")}>
+            <span>Recommendations</span>
+            <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
+          </button>
         </div>
 
         <div className="nav-actions-container">
@@ -44,8 +72,7 @@ export default function Navbar() {
               <input 
                 className="search-bar" 
                 type="text" 
-                placeholder="Search for games"
-              />
+                placeholder="Search for games"/>
               <button type="submit" className="search-bar-button">
                 <img src={searchIcon} alt="Search" />
               </button>
