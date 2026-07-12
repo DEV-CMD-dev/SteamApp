@@ -1,34 +1,342 @@
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap");
+
+:root {
+  --nexus-bg: #0c0f16;
+  --nexus-panel: #1b1f29;
+  --nexus-card-border: #323846;
+  --nexus-field: #171b24;
+  --nexus-field-border: #262b38;
+  --nexus-ink: #ffffff;
+  --nexus-ink-soft: #b8bcc8;
+  --nexus-muted: #6b7180;
+  --nexus-line: #232837;
+  --nexus-error: #ff6b6b;
+  --nexus-accent-a: #6a4bff;
+  --nexus-accent-b: #2f7bff;
+  --nexus-radius: 10px;
+  --nexus-font-display: "Space Grotesk", "Inter", sans-serif;
+  --nexus-font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.nexus-auth {
   width: 100%;
-  max-width: 320px;
+  height: 100dvh;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  background: var(--nexus-panel);
+  font-family: var(--nexus-font-body);
+  color: var(--nexus-ink);
+  overflow: hidden;
 }
 
-.auth-form input,
-.auth-form button {
-  width: 100%;
-  padding: 8px;
+.nexus-auth *,
+.nexus-auth *::before,
+.nexus-auth *::after {
   box-sizing: border-box;
 }
 
-.auth-switch {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  margin: 0;
+.nexus-auth__stage {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  min-width: 0;
 }
 
-.auth-link {
+.nexus-auth__stage-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.nexus-auth__panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-width: 0;
+  padding: 28px 32px;
+  background: var(--nexus-panel);
+  overflow-y: auto;
+}
+
+.nexus-auth__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-bottom: 10px;
+}
+
+.nexus-auth__logo-link {
+  display: inline-flex;
+  line-height: 0;
+  transition: opacity 0.15s ease;
+}
+
+.nexus-auth__logo-link:hover {
+  opacity: 0.8;
+}
+
+.nexus-auth__logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.nexus-auth__tabs {
+  display: flex;
+  gap: 24px;
+}
+
+.nexus-auth__tab {
+  appearance: none;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--nexus-font-body);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--nexus-muted);
   cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.nexus-auth__tab.is-active {
+  color: var(--nexus-ink);
+  font-weight: 600;
+}
+
+.nexus-auth__tab:hover {
+  color: var(--nexus-ink-soft);
+}
+
+.nexus-auth__card {
+  background: var(--nexus-panel);
+  border: 1px solid var(--nexus-card-border);
+  border-radius: var(--nexus-radius);
+  padding: 18px 20px;
+  width: min(100%, 320px);
+  margin-top: 16px;
+  flex-shrink: 0;
+}
+
+.nexus-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nexus-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nexus-field__label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--nexus-ink-soft);
+}
+
+.nexus-field input {
+  width: 100%;
+  height: 36px;
+  padding: 0 12px;
+  border-radius: 6px;
+  border: 1px solid var(--nexus-field-border);
+  background: var(--nexus-field);
+  color: var(--nexus-ink);
+  font-family: var(--nexus-font-body);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.nexus-field input::placeholder {
+  color: var(--nexus-muted);
+}
+
+.nexus-field input:focus {
+  border-color: var(--nexus-accent-b);
+}
+
+.nexus-field__password {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.nexus-field__password input {
+  padding-right: 40px;
+}
+
+.nexus-field__toggle {
+  position: absolute;
+  right: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--nexus-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.nexus-field__toggle:hover {
+  color: var(--nexus-ink-soft);
+}
+
+.nexus-auth__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: -2px;
+}
+
+.nexus-link {
+  font-size: 11.5px;
+  color: var(--nexus-muted);
+  text-decoration: none;
+}
+
+.nexus-link:hover {
+  color: var(--nexus-ink-soft);
   text-decoration: underline;
+}
+
+.nexus-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--nexus-ink-soft);
+  cursor: pointer;
+  user-select: none;
+}
+
+.nexus-checkbox--standalone {
+  margin-top: -2px;
+}
+
+.nexus-checkbox input {
+  width: 14px;
+  height: 14px;
+  accent-color: var(--nexus-accent-b);
+  cursor: pointer;
+}
+
+.nexus-auth__error {
+  font-size: 12px;
+  color: var(--nexus-error);
+  text-align: center;
+}
+
+.nexus-submit {
+  height: 38px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--nexus-accent-a), var(--nexus-accent-b));
+  color: #ffffff;
+  font-family: var(--nexus-font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 2px;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.nexus-submit:hover:not(:disabled) {
+  opacity: 0.92;
+}
+
+.nexus-submit:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.nexus-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nexus-auth__oauth {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.nexus-auth__oauth-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--nexus-ink-soft);
+}
+
+.nexus-auth__oauth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.nexus-oauth-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--nexus-field-border);
+  background: var(--nexus-field);
+  color: var(--nexus-ink-soft);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, transform 0.15s ease, color 0.15s ease;
+}
+
+.nexus-oauth-btn:hover {
+  transform: translateY(-1px);
+  color: var(--nexus-ink);
+}
+
+.nexus-oauth-btn--discord:hover { background: #5865f2; border-color: #5865f2; }
+.nexus-oauth-btn--google:hover { background: #ea4335; border-color: #ea4335; }
+.nexus-oauth-btn--facebook:hover { background: #1877f2; border-color: #1877f2; }
+.nexus-oauth-btn--x:hover { background: #000000; border-color: #3a3f4c; }
+
+@media (max-width: 900px) {
+  .nexus-auth {
+    height: auto;
+    min-height: 100dvh;
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .nexus-auth__stage {
+    height: 32vh;
+    min-height: 220px;
+  }
+
+  .nexus-auth__panel {
+    height: auto;
+    overflow-y: visible;
+    padding: 24px 20px 40px;
+  }
+
+  .nexus-auth__card {
+    margin-top: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nexus-oauth-btn,
+  .nexus-auth__tab,
+  .nexus-field input,
+  .nexus-submit {
+    transition: none;
+  }
 }
