@@ -2,8 +2,8 @@
 
 :root {
   --nexus-bg: #0c0f16;
-  --nexus-panel: #1b1f29;
-  --nexus-card-border: #323846;
+  --nexus-panel: #12151d;
+  --nexus-card-border: #1f2430;
   --nexus-field: #171b24;
   --nexus-field-border: #262b38;
   --nexus-ink: #ffffff;
@@ -18,6 +18,9 @@
   --nexus-font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+/* /auth is now a standalone route rendered outside MainLayout /
+   .pages-container, so this simply fills the viewport — no breakout
+   hack needed. */
 .nexus-auth {
   width: 100%;
   height: 100dvh;
@@ -36,6 +39,12 @@
   box-sizing: border-box;
 }
 
+/* Left stage: full-bleed artwork, fixed to the grid row height so it
+   never resizes when the form on the right grows taller.
+   min-width: 0 overrides the grid default (min-width: auto), which
+   otherwise refuses to shrink a track below its content's intrinsic
+   size — this is what made the image "stick" at browser zoom levels
+   while the panel column kept resizing. */
 .nexus-auth__stage {
   position: relative;
   overflow: hidden;
@@ -50,6 +59,7 @@
   display: block;
 }
 
+/* Right side: dark panel with form, vertically centered as a group. */
 .nexus-auth__panel {
   display: flex;
   flex-direction: column;
@@ -62,13 +72,18 @@
   overflow-y: auto;
 }
 
+/* Everything below uses clamp(min, fluid, max) so the whole block scales
+   smoothly with viewport width instead of staying pinned at one fixed
+   pixel size — small on a laptop, still proportionate on a 4K monitor,
+   without ever going below a comfortable minimum on small screens. */
+
 .nexus-auth__header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: clamp(8px, 0.6vw, 12px);
   flex-shrink: 0;
-  margin-bottom: 10px;
+  margin-bottom: clamp(20px, 2vw, 32px);
 }
 
 .nexus-auth__logo-link {
@@ -82,15 +97,15 @@
 }
 
 .nexus-auth__logo {
-  height: 28px;
+  height: clamp(26px, 2vw, 38px);
   width: auto;
   object-fit: contain;
-  margin-bottom: 20px;
+  margin-bottom: 4px;
 }
 
 .nexus-auth__tabs {
   display: flex;
-  gap: 24px;
+  gap: clamp(20px, 1.6vw, 32px);
 }
 
 .nexus-auth__tab {
@@ -99,7 +114,7 @@
   border: none;
   padding: 0;
   font-family: var(--nexus-font-body);
-  font-size: 14px;
+  font-size: clamp(14px, 0.9vw, 17px);
   font-weight: 500;
   color: var(--nexus-muted);
   cursor: pointer;
@@ -115,20 +130,21 @@
   color: var(--nexus-ink-soft);
 }
 
+/* Card */
 .nexus-auth__card {
   background: var(--nexus-panel);
   border: 1px solid var(--nexus-card-border);
   border-radius: var(--nexus-radius);
-  padding: 18px 20px;
-  width: min(100%, 320px);
-  margin-top: 16px;
+  padding: clamp(18px, 1.6vw, 30px) clamp(20px, 1.8vw, 32px);
+  width: clamp(320px, 24vw, 440px);
+  margin-top: clamp(14px, 1.2vw, 22px);
   flex-shrink: 0;
 }
 
 .nexus-auth__form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: clamp(10px, 0.9vw, 16px);
 }
 
 .nexus-field {
@@ -138,21 +154,21 @@
 }
 
 .nexus-field__label {
-  font-size: 11.5px;
+  font-size: clamp(11.5px, 0.75vw, 13.5px);
   font-weight: 600;
   color: var(--nexus-ink-soft);
 }
 
 .nexus-field input {
   width: 100%;
-  height: 36px;
-  padding: 0 12px;
+  height: clamp(36px, 2.6vw, 48px);
+  padding: 0 clamp(12px, 0.9vw, 16px);
   border-radius: 6px;
   border: 1px solid var(--nexus-field-border);
   background: var(--nexus-field);
   color: var(--nexus-ink);
   font-family: var(--nexus-font-body);
-  font-size: 13px;
+  font-size: clamp(13px, 0.85vw, 15px);
   outline: none;
   transition: border-color 0.15s ease;
 }
@@ -201,7 +217,7 @@
 }
 
 .nexus-link {
-  font-size: 11.5px;
+  font-size: clamp(11.5px, 0.75vw, 13px);
   color: var(--nexus-muted);
   text-decoration: none;
 }
@@ -215,7 +231,7 @@
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  font-size: 11.5px;
+  font-size: clamp(11.5px, 0.75vw, 13px);
   color: var(--nexus-ink-soft);
   cursor: pointer;
   user-select: none;
@@ -233,19 +249,19 @@
 }
 
 .nexus-auth__error {
-  font-size: 12px;
+  font-size: clamp(12px, 0.75vw, 13.5px);
   color: var(--nexus-error);
   text-align: center;
 }
 
 .nexus-submit {
-  height: 38px;
+  height: clamp(38px, 2.8vw, 50px);
   border: none;
   border-radius: 6px;
   background: linear-gradient(90deg, var(--nexus-accent-a), var(--nexus-accent-b));
   color: #ffffff;
   font-family: var(--nexus-font-body);
-  font-size: 13.5px;
+  font-size: clamp(13.5px, 0.9vw, 16px);
   font-weight: 600;
   cursor: pointer;
   margin-top: 2px;
@@ -265,28 +281,29 @@
   cursor: not-allowed;
 }
 
+/* Social buttons row */
 .nexus-auth__oauth {
-  margin-top: 14px;
+  margin-top: clamp(14px, 1.2vw, 22px);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: clamp(10px, 0.8vw, 14px);
 }
 
 .nexus-auth__oauth-label {
-  font-size: 11.5px;
+  font-size: clamp(11.5px, 0.75vw, 13px);
   font-weight: 600;
   color: var(--nexus-ink-soft);
 }
 
 .nexus-auth__oauth-buttons {
   display: flex;
-  gap: 12px;
+  gap: clamp(12px, 0.9vw, 18px);
 }
 
 .nexus-oauth-btn {
-  width: 32px;
-  height: 32px;
+  width: clamp(32px, 2.4vw, 42px);
+  height: clamp(32px, 2.4vw, 42px);
   border-radius: 50%;
   border: 1px solid var(--nexus-field-border);
   background: var(--nexus-field);
@@ -308,6 +325,9 @@
 .nexus-oauth-btn--facebook:hover { background: #1877f2; border-color: #1877f2; }
 .nexus-oauth-btn--x:hover { background: #000000; border-color: #3a3f4c; }
 
+/* Responsive: below this width we stop forcing a fixed 100dvh / hidden
+   overflow so the layout adapts to the viewport and scrolls normally
+   instead of being squeezed into the middle of the screen. */
 @media (max-width: 900px) {
   .nexus-auth {
     height: auto;
@@ -328,6 +348,7 @@
   }
 
   .nexus-auth__card {
+    width: min(100%, 380px);
     margin-top: 14px;
   }
 }
