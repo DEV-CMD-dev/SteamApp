@@ -134,7 +134,7 @@ const AuthForm: React.FC = () => {
           )}
 
           {isLogin && (
-            <Link to='/' className="forgot-password">Forgot password?</Link>
+            <Link to='/forgot-password' className="forgot-password">Forgot password?</Link>
           )}
 
           <button type="submit" className={`auth-button ${isLoading ? "disabled" : ""}`} disabled={isLoading}>

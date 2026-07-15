@@ -4,6 +4,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import MainLayout from './MainLayout'
 import LibraryPage from './pages/LibraryPage'
 import ProfilePage from './pages/ProfilePage'
+import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
 import {Routes, Route} from 'react-router-dom'
 
@@ -12,6 +13,7 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route path='/auth' element={<AuthForm />} />
+        <Route path='/forgot-password' element={<ResetPasswordPage />} />
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
