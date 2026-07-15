@@ -32,11 +32,6 @@ const AuthForm: React.FC = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSwitchMode = () => {
-    setIsLogin(prev => !prev);
-    setErrorMessage(null);
-  };
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -79,9 +74,14 @@ const AuthForm: React.FC = () => {
   return (
     <div className="auth-wrapper">
       <div className="auth-area">
-        <img src={logo} alt="Website Logo" className="auth-logo" />
+        <Link to='/' className="auth-logo-wrapper">
+          <img src={logo} alt="Website Logo" className="auth-logo" />
+        </Link>
+        <div className="auth-form-method-buttons">
+          <button onClick={() => setIsLogin(true)} style={isLogin ? {color: "white"} : {}}>Log In</button>
+          <button onClick={() => setIsLogin(false)} style={!isLogin ? {color: "white"} : {}}>Register</button>
+        </div>
         <form onSubmit={handleSubmit} className="auth-form">
-          <h2>{isLogin ? "Log In" : "Register"}</h2>
 
           <div className="auth-form-group">
             <label>
@@ -133,7 +133,9 @@ const AuthForm: React.FC = () => {
             </div>
           )}
 
-          <Link to='/' className="forgot-password">Forgot password?</Link>
+          {isLogin && (
+            <Link to='/' className="forgot-password">Forgot password?</Link>
+          )}
 
           <button type="submit" className={`auth-button ${isLoading ? "disabled" : ""}`} disabled={isLoading}>
             {isLoading ? "Loading..." : isLogin ? "Log In" : "Register"}
@@ -157,13 +159,6 @@ const AuthForm: React.FC = () => {
               <p>Continue with Google</p>
             </div>
           </button>
-          
-          <p className="auth-switch">
-            {isLogin ? "No account? " : "Already have an account? "}
-            <span onClick={handleSwitchMode} className="auth-link">
-              {isLogin ? "Register" : "Login"}
-            </span>
-          </p>
 
         </form>
       </div>

@@ -9,10 +9,16 @@
   background-color: #171D25;
 }
 
+.auth-logo-wrapper {
+  display: block;
+  width: fit-content;
+  margin: 0 auto 40px;
+}
 
-.auth-logo{
-  width: 50%;
-  margin: 0 auto 40px auto;
+.auth-logo {
+  display: block;
+  width: 200px;
+  max-width: 100%;
 }
 
 .auth-area {
@@ -90,25 +96,11 @@
   cursor: pointer;
 }
 
-.auth-switch {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  margin: 0;
-}
-
-.auth-link {
-  cursor: pointer;
-  text-decoration: underline;
-}
-
 .auth-form-image{
-  background:
-    radial-gradient(circle at top left, rgba(111,76,255,.45), transparent 35%),
-    radial-gradient(circle at bottom right, rgba(59,130,246,.35), transparent 40%),
-    linear-gradient(145deg, #1414a5 0%, #10105f 55%, #080814 100%);
+  background-image: url("../assets/auth/authBackground.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
 }
 
@@ -188,11 +180,32 @@
 
 .forgot-password{
   text-decoration: none;
-  color: white;
+  color: #bdbdbd;
   font-size: 14px;
   display: flex;
   width: auto;
   align-self: flex-start;
+  transition: color 0.3s ease;
+}
+
+.forgot-password:hover{
+  color: white;
+}
+
+.auth-form-method-buttons{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.auth-form-method-buttons button{
+  border: none;
+  color: #bdbdbd;
+  font-size: 22px;
+  background-color: transparent;
+  cursor: pointer;
 }
 
 @media (max-width: 1265px) {
@@ -208,11 +221,6 @@
   .auth-area {
     padding: 10px;
   }
-
-  .auth-logo {
-    width: 40%;
-    margin: 0 auto 24px auto;
-  }
 }
 
 @media (max-width: 480px) {
@@ -222,6 +230,6 @@
   }
 
   .auth-logo {
-    width: 50%;
+    width: 180px;
   }
 }
