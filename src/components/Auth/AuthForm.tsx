@@ -40,8 +40,8 @@ const AuthForm: React.FC = () => {
     try {
       if (isLogin) {
         const data = await authService.login({
-          Identifier: form.identifier,
-          Password: form.password,
+          Identifier: form.identifier.trim(),
+          Password: form.password.trim(),
         });
 
         localStorage.setItem("accessToken", data.accessToken);
@@ -134,7 +134,7 @@ const AuthForm: React.FC = () => {
           )}
 
           {isLogin && (
-            <Link to='/' className="forgot-password">Forgot password?</Link>
+            <Link to='/forgot-password' className="forgot-password">Forgot password?</Link>
           )}
 
           <button type="submit" className={`auth-button ${isLoading ? "disabled" : ""}`} disabled={isLoading}>

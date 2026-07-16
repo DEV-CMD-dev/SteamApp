@@ -67,15 +67,11 @@
   width: 100%;
   padding: 12px;
   box-sizing: border-box;
-}
-
-.auth-form input{
   background-color: #15181F;
   color: white;
   border: none;
   border-radius: 7px;
 }
-
 .auth-form input:focus{
   outline: .1px white solid;
 }
