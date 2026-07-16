@@ -6,7 +6,7 @@ import logo from '../assets/logo.svg';
 import { useState } from 'react';
 import type { RequestPasswordResetTokenDto } from '../DTOs/UserHelper/RequestPasswordResetTokenDto';
 
-export default function ResetPasswordPage(){
+export default function RequestResetPasswordPage(){
     const [isLoading, setIsLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     
