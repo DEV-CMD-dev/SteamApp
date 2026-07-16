@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import lockImg from '../assets/password-reset/lock.png'
 import { userHelperService } from '../services/userHelperService'
 import '../css/resetPasswordPage.css'
@@ -8,6 +8,8 @@ import type { RequestPasswordResetTokenDto } from '../DTOs/UserHelper/RequestPas
 
 export default function RequestResetPasswordPage(){
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     
     const [form, setForm] = useState<RequestPasswordResetTokenDto>({
@@ -21,19 +23,29 @@ export default function RequestResetPasswordPage(){
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) =>{
         e.preventDefault();
-        setIsLoading(true);
-        setErrorMessage(null);
 
         try {
+
+            if (!form.identifier.trim()) {
+                setErrorMessage("Please enter your email or username.");
+                return;
+            }
+
+            setIsLoading(true);
+            setErrorMessage(null);
+
             await userHelperService.requestResetPassword({
                 identifier: form.identifier.trim()
             })
             setForm({identifier: ""});
             alert("If account existed link has been sent to your email")
+
+            setTimeout(() => {
+                navigate("/auth");
+            }, 3000);
         }
         catch (err: any) 
         {
-            console.error(err);
             if (err.message === "Failed to fetch") {
                 setErrorMessage("Cannot connect to the server");
             } 
