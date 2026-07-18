@@ -1,3 +1,4 @@
+import type { ConfirmEmailDto } from "../DTOs/UserHelper/ConfirmEmailDto";
 import type { PasswordResetDto } from "../DTOs/UserHelper/PasswordResetDto";
 import type { RequestPasswordResetTokenDto } from "../DTOs/UserHelper/RequestPasswordResetTokenDto";
 
@@ -34,5 +35,14 @@ export const userHelperService = {
       body: JSON.stringify(dto),
     });
     return handleResponse(res, "Failed to reset password. Try again.");
+  },
+
+  async confirmEmail(dto: ConfirmEmailDto) {
+    const res = await fetch(`${API_BASE_URL}/confirm-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dto),
+    });
+    return handleResponse(res, "Failed to confirm email. Try again.");
   }
 };

@@ -2,6 +2,7 @@ import './App.css'
 import AuthForm from './components/Auth/AuthForm'
 import { AuthProvider } from './contexts/AuthContext'
 import MainLayout from './MainLayout'
+import ConfirmedEmailPage from './pages/ConfirmedEmailPage'
 import LibraryPage from './pages/LibraryPage'
 import ProfilePage from './pages/ProfilePage'
 import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
@@ -16,6 +17,7 @@ function App() {
         <Route path='/auth' element={<AuthForm />} />
         <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
         <Route path='/reset-password' element={<ResetPasswordPage />} />
+        <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
