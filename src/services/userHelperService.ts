@@ -2,7 +2,7 @@ import type { ConfirmEmailDto } from "../DTOs/UserHelper/ConfirmEmailDto";
 import type { PasswordResetDto } from "../DTOs/UserHelper/PasswordResetDto";
 import type { RequestPasswordResetTokenDto } from "../DTOs/UserHelper/RequestPasswordResetTokenDto";
 
-const API_BASE_URL = "http://localhost:5215/api/UserHelper";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const handleResponse = async (res: Response, defaultError: string) => {
   const contentType = res.headers.get("content-type");
@@ -20,7 +20,7 @@ const handleResponse = async (res: Response, defaultError: string) => {
 
 export const userHelperService = {
   async requestResetPassword(dto: RequestPasswordResetTokenDto) {
-    const res = await fetch(`${API_BASE_URL}/request-reset-password`, {
+    const res = await fetch(`${API_BASE_URL}/UserHelper/request-reset-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dto),
@@ -29,7 +29,7 @@ export const userHelperService = {
   },
 
   async resetPassword(dto: PasswordResetDto) {
-    const res = await fetch(`${API_BASE_URL}/reset-password`, {
+    const res = await fetch(`${API_BASE_URL}/UserHelper/reset-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dto),
@@ -38,7 +38,7 @@ export const userHelperService = {
   },
 
   async confirmEmail(dto: ConfirmEmailDto) {
-    const res = await fetch(`${API_BASE_URL}/confirm-email`, {
+    const res = await fetch(`${API_BASE_URL}/UserHelper/confirm-email`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dto),
