@@ -1,7 +1,7 @@
 import type { LoginRequestDto } from "../DTOs/LoginRequestDto";
 import type { RegisterRequestDto } from "../DTOs/RegisterRequestDto";
 
-const API_BASE_URL = "http://localhost:5215/api/Auth";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const handleResponse = async (res: Response, defaultError: string) => {
   const contentType = res.headers.get("content-type");
@@ -19,7 +19,7 @@ const handleResponse = async (res: Response, defaultError: string) => {
 
 export const authService = {
   async login(dto: LoginRequestDto) {
-    const res = await fetch(`${API_BASE_URL}/login`, {
+    const res = await fetch(`${API_BASE_URL}/Auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dto),
@@ -28,7 +28,7 @@ export const authService = {
   },
 
   async register(dto: RegisterRequestDto) {
-    const res = await fetch(`${API_BASE_URL}/register`, {
+    const res = await fetch(`${API_BASE_URL}/Auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dto),
