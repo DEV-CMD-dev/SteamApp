@@ -1,134 +1,99 @@
-.game {
-    width: 100%;
+.game-card {
     aspect-ratio: 514 / 762;
-    max-width: 514px;
-    max-height: 762px;
+    width: 100%;
     background-color: #1b2838;
-    position: relative;
     overflow: hidden;
+    position: relative;
+    transition: transform 0.1s ease-in;
+    will-change: transform;
+    transform: translateZ(0);
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+}
+
+.game-card-null {
+    aspect-ratio: 514 / 762;
+    width: 100%;
+    background-color: #1b2838;
+    overflow: hidden;
+    position: relative;
+}
+
+.game-card:hover {
+    transform: scale(1.03);
 }
 
 .game-image {
     width: 100%;
-
-    background-size: cover;
-    background-position: center;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border: none;
+    outline: none;
 }
 
 .game-price {
     position: absolute;
     bottom: 0px;
     right: 0px;
-
     width: clamp(160px, 63%, 325px);
     aspect-ratio: 325 / 79;
-
-    background-color: rgb(255, 0, 0);
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    background-color: #223034;
 }
 
 .discount {
     height: 100%;
     width: 37%;
-
     background-color: #6FB629;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 0 4%;
     box-sizing: border-box;
-    gap: 10px;
+    container-type: inline-size;
 }
 
 .price {
     height: 100%;
     width: 63%;
-
     background-color: #223034;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 0 4%;
     box-sizing: border-box;
-    gap: clamp(4px, 0.5vw, 12px);
+    gap: 4%;
+    container-type: inline-size;
+    box-shadow: 2px 0 0 #223034;
+}
+
+.game-price p {
+    margin: 0;
+    white-space: nowrap;
 }
 
 .discounted-price {
     color: white;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-weight: 500;
-    font-style: Medium;
-    font-size: clamp(30px, 2.5vw, 40px);
-    line-height: 100%;
-    letter-spacing: 0%;
+    font-size: 25cqw;
 }
 
 .original-price {
     color: #BFBFBF;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-weight: 500;
-    font-style: Medium;
-    font-size: clamp(30px, 2.5vw, 40px);
-    line-height: 100%;
-    letter-spacing: 0%;
+    font-size: 25cqw;
     text-decoration: line-through;
 }
 
 .discount p {
     color: white;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-weight: 500;
-    font-style: Medium;
-    font-size: clamp(30px, 2.5vw, 40px);
-    line-height: 100%;
-    letter-spacing: 0%;
-}
-
-@media (max-width: 1280px) {
-    .price {
-        gap: 4px;
-    }
-    .discounted-price {
-        font-size: clamp(25px, 2.5vw, 32px);
-    }
-    .original-price {
-        font-size: clamp(25px, 2.5vw, 32px);
-    }
-    .discount p {
-        font-size: clamp(25px, 2.5vw, 32px);
-    }
-}
-
-@media (max-width: 1057px) {
-    .price {
-        gap: 4px;
-    }
-    .discounted-price {
-        font-size: clamp(20px, 3.5vw, 35px);
-    }
-    .original-price {
-        font-size: clamp(20px, 3.5vw, 35px);
-    }
-    .discount p {
-        font-size: clamp(20px, 3.5vw, 35px);
-    }
-}
-
-@media (max-width: 695px) {
-    .price {
-        gap: 4px;
-    }
-    .discounted-price {
-        font-size: clamp(30px, 6vw, 40px);
-    }
-    .original-price {
-        font-size: clamp(30px, 6vw, 40px);
-    }
-    .discount p {
-        font-size: clamp(30px, 6vw, 40px);
-    }
+    font-size: 45cqw;
 }
