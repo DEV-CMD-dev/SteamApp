@@ -1,3 +1,16 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+    height: 8000px;
+    background: radial-gradient(circle, rgba(34, 60, 100, 1) 0%, rgba(20, 30, 43, 1) 100%);
+    box-sizing: border-box;
+    align-items: center;
+    gap: 60px;
+    overflow: hidden;
+}
+
 .store-header {
     width: 100%;
     aspect-ratio: 16/9;
@@ -9,15 +22,12 @@
 }
 
 .store-background {
+    width: clamp(300px, 75vw, var(--website-layout-max-width));
+    height: 100%;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin: 0;
-    height: 8000px;
-    background: radial-gradient(circle, rgba(34, 60, 100, 1) 0%, rgba(20, 30, 43, 1) 100%);
-    padding-top: clamp(20px, calc(10px + 4vw), 80px);
-    box-sizing: border-box;
-    gap: 80px;
+    align-items: center;
+    gap: 50px;
 }
 
 .btn-container {
@@ -27,13 +37,20 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-}
+    width: 100%;
+}   
 
 .games-container {
-    margin: 0 auto;
-    width: var(--website-layout-max-width);
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.category-container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     gap: 16px;
 }
 
@@ -42,8 +59,8 @@
     flex-direction: column;
     justify-content: center;
     margin: 0 auto;
-    width: calc(10% + var(--website-layout-max-width));
-    gap: 27px;
+    width: 100%;
+    gap: clamp(12px, 2vw, 27px); 
     padding-bottom: 27px;
     box-sizing: border-box;
 }
@@ -52,37 +69,73 @@
     color: white;
     font-family: Roboto;
     font-weight: 500;
-    font-style: Medium;
-    font-size: 38px;
+    font-size: clamp(22px, 2.5vw, 35px); 
     line-height: 100%;
-    letter-spacing: 0%;
-    margin: 0px;
+    margin: 0;
 }
 
-.category-container {
-    margin: 0 auto;
-    width: var(--website-layout-max-width);
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 16px;
+.prev-btn, .next-btn {
+    width: 23px;
+    height: 46px;
+    outline: none;
+    background-color: transparent;
+    border: 0;
+    background-image: url(../assets/store_page/cut_arrow.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
 }
 
 .prev-btn {
-    width: 50px;
-    height: 50px;
-    left: 0;
-    top: 50%;
-    object-position: -50% -50%;
-    background-color: rgb(0, 195, 255);
-    outline: none;
-    border: 0;
+    transform: rotateY(180deg);
 }
 
-.next-btn {
-    width: 50px;
-    height: 50px;
-    border: 0;
-    background-color: red;
-    right: 0;
-    top: 50%;
+.mobile-only {
+    display: none;
+}
+
+.desktop-only {
+    display: flex;
+}
+
+.mobile-scroll-container {
+    width: 100%;
+    height: min-content;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 16px;
+    padding: 10px 0;
+    box-sizing: border-box;
+    scrollbar-width: none;
+}
+
+.mobile-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.mobile-scroll-container > * {
+    flex: 0 0 250px;
+}
+
+.mobile-scroll-container.tag-scroll > * {
+    flex: 0 0 220px; 
+}
+
+@media (max-width: 1225px) {
+    .desktop-only {
+        display: none !important;
+    }
+
+    .mobile-only {
+        display: flex !important;
+    }
+
+    .store-header {
+        display: none;
+    }
+
+    .store-background {
+        width: 95vw;
+    }
 }
