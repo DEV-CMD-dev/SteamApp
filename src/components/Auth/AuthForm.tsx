@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { authService } from "../../services/authService";
 import "../../css/authForm.css";
+import logo from "../../assets/logo.svg";
+import googleLogo from "../../assets/auth/google.png"
 
 type FormState = {
   identifier: string;
@@ -14,6 +16,7 @@ type FormState = {
 const AuthForm: React.FC = () => {
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -29,11 +32,6 @@ const AuthForm: React.FC = () => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSwitchMode = () => {
-    setIsLogin(prev => !prev);
-    setErrorMessage(null);
-  };
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -41,64 +39,33 @@ const AuthForm: React.FC = () => {
 
     try {
       if (isLogin) {
-        const res = await fetch(`http://localhost:5215/api/Auth/login`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ 
-            Identifier: form.identifier, 
-            Password: form.password 
-          }),
+        const data = await authService.login({
+          Identifier: form.identifier.trim(),
+          Password: form.password.trim(),
         });
-        
-        const contentType = res.headers.get("content-type");
-        const data = contentType && contentType.includes("application/json") ? await res.json() : null;
-
-        // Login error handler
-        if (!res.ok) {
-          setErrorMessage(data?.detail || data?.message || "Login failed. Please check your credentials.");
-          return;
-        }
 
         localStorage.setItem("accessToken", data.accessToken);
         login(data.accessToken, form.identifier);
         navigate("/");
       } else {
-        const res = await fetch(`http://localhost:5215/api/Auth/register`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            UserName: form.identifier,
-            Email: form.email,
-            Password: form.password,
-            Country: form.country,
-          }),
+        await authService.register({
+          UserName: form.identifier,
+          Email: form.email,
+          Password: form.password,
+          Country: form.country,
         });
-
-        const contentType = res.headers.get("content-type");
-        const data = contentType && contentType.includes("application/json") ? await res.json() : null;
-
-        //Register error handler
-        if (!res.ok) {
-          if (data?.errors) {
-            const parsedErrors = Object.values(data.errors).flat().join(". ");
-            setErrorMessage(parsedErrors);
-          } else {
-            setErrorMessage(data?.detail || data?.message || "Registration failed. Try again.");
-          }
-          return;
-        }
 
         alert("Registration successful! Please login.");
         setForm(prev => ({ ...prev, email: "", country: "" }));
         setIsLogin(true);
       }
-    } catch (err) {
-      console.log(err);
-      setErrorMessage("Cannot connect to server.");
+    } catch (err: any) {
+      console.error(err);
+      if (err.message === "Failed to fetch") {
+        setErrorMessage("Cannot connect to the server");
+      } else {
+        setErrorMessage(err.message || "An unexpected error occurred.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -106,66 +73,97 @@ const AuthForm: React.FC = () => {
 
   return (
     <div className="auth-wrapper">
-      <form onSubmit={handleSubmit} className="auth-form">
-        <h2>{isLogin ? "Login" : "Register"}</h2>
+      <div className="auth-area">
+        <Link to='/' className="auth-logo-wrapper">
+          <img src={logo} alt="Website Logo" className="auth-logo" />
+        </Link>
+        <div className="auth-form-method-buttons">
+          <button onClick={() => setIsLogin(true)} style={isLogin ? {color: "white"} : {}}>Log In</button>
+          <button onClick={() => setIsLogin(false)} style={!isLogin ? {color: "white"} : {}}>Register</button>
+        </div>
+        <form onSubmit={handleSubmit} className="auth-form">
 
-        <input
-          type="text"
-          name="identifier"
-          placeholder={isLogin ? "Username or Email" : "Username"}
-          value={form.identifier}
-          onChange={handleChange}
-          required
-        />
-
-        {!isLogin && (
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-        )}
-
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-
-        {!isLogin && (
-          <input
-            type="text"
-            name="country"
-            placeholder="Country"
-            value={form.country}
-            onChange={handleChange}
-            required
-          />
-        )}
-
-        <button type="submit" className={isLoading ? "disabled" : ""} disabled={isLoading}>
-          {isLoading ? "Loading..." : isLogin ? "Login" : "Register"}
-        </button>
-
-        {errorMessage && (
-          <div className="auth-error" style={{ color: "red", fontSize: "14px", textAlign: "center" }}>
-            {errorMessage}
+          <div className="auth-form-group">
+            <label>
+              {isLogin ? "Username or Email" : "Username"}
+            </label>
+            <input
+              type="text"
+              name="identifier"
+              placeholder={isLogin ? "Username or Email" : "Username"}
+              value={form.identifier}
+              onChange={handleChange}
+              required/>
           </div>
-        )}
 
-        <p className="auth-switch">
-          {isLogin ? "No account? " : "Already have an account? "}
-          <span onClick={handleSwitchMode} className="auth-link">
-            {isLogin ? "Register" : "Login"}
-          </span>
-        </p>
-      </form>
+          {!isLogin && (
+            <div className="auth-form-group">
+              <label>Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={form.email}
+                onChange={handleChange}
+                required/>
+            </div>
+          )}
+
+          <div className="auth-form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required/>
+          </div>
+
+          {!isLogin && (
+            <div className="auth-form-group">
+              <label>Country</label>
+              <input
+                type="text"
+                name="country"
+                placeholder="Country"
+                value={form.country}
+                onChange={handleChange}
+                required/>
+            </div>
+          )}
+
+          {isLogin && (
+            <Link to='/forgot-password' className="forgot-password">Forgot password?</Link>
+          )}
+
+          <button type="submit" className={`auth-button ${isLoading ? "disabled" : ""}`} disabled={isLoading}>
+            {isLoading ? "Loading..." : isLogin ? "Log In" : "Register"}
+          </button>
+
+          {errorMessage && (
+            <div className="auth-error">
+              {errorMessage}
+            </div>
+          )}
+
+          <div className="auth-method-divider">
+            <hr />
+            <p>Or</p>
+            <hr />
+          </div>
+
+          <button type="button" className="another-auth-method-button">
+            <div>
+              <img src={googleLogo} alt="" />
+              <p>Continue with Google</p>
+            </div>
+          </button>
+
+        </form>
+      </div>
+
+      <div className="auth-form-image"></div>
     </div>
   );
 };
