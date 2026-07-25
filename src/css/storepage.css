@@ -90,15 +90,9 @@
     transform: rotateY(180deg);
 }
 
-.mobile-only {
+.mobile-games-scroll,
+.mobile-tags-scroll {
     display: none;
-}
-
-.desktop-only {
-    display: flex;
-}
-
-.mobile-scroll-container {
     width: 100%;
     height: min-content;
     flex-direction: row;
@@ -110,32 +104,56 @@
     scrollbar-width: none;
 }
 
-.mobile-scroll-container::-webkit-scrollbar {
+.mobile-games-scroll::-webkit-scrollbar,
+.mobile-tags-scroll::-webkit-scrollbar {
     display: none;
 }
 
-.mobile-scroll-container > * {
+.mobile-games-scroll > * {
     flex: 0 0 250px;
 }
 
-.mobile-scroll-container.tag-scroll > * {
+.mobile-tags-scroll > * {
     flex: 0 0 220px; 
 }
 
 @media (max-width: 1225px) {
-    .desktop-only {
-        display: none !important;
-    }
-
-    .mobile-only {
-        display: flex !important;
+    .btn-container {
+        display: none;
     }
 
     .store-header {
         display: none;
     }
 
+    .mobile-games-scroll,
+    .mobile-tags-scroll {
+        display: flex;
+    }
+
     .store-background {
         width: 95vw;
     }
+}
+
+.category-loading {
+    width: 100%;
+    aspect-ratio: 300 / 298;
+    background-color: #1b2838;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 28px;
+    box-sizing: border-box;
+}
+
+.game-loading {
+    aspect-ratio: 514 / 762;
+    width: 100%;
+    background-color: #1b2838;
+    overflow: hidden;
+    position: relative;
 }
