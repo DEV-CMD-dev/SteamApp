@@ -10,14 +10,6 @@
     -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
-.game-card-null {
-    aspect-ratio: 514 / 762;
-    width: 100%;
-    background-color: #1b2838;
-    overflow: hidden;
-    position: relative;
-}
-
 .game-card:hover {
     transform: scale(1.03);
 }
