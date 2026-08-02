@@ -1,47 +1,37 @@
-import { useState, useCallback } from 'react';
+import type { PaginatedResponse } from '../DTOs/PaginatedList';
+import type { GameDto } from '../DTOs/GameDto';
+import type { TagDto } from '../DTOs/TagDto';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export const useGameData = () => {
-    const [games, setGames] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [gameLoading, setGameLoading] = useState(true);
-    const [tagLoading, setTagLoading] = useState(true);
+const handleResponse = async (res: Response, defaultError: string) => {
+    const contentType = res.headers.get("content-type");
+    const data = contentType && contentType.includes("application/json") ? await res.json() : null;
 
-    const fetchGames = useCallback(async (pageGameNum: number) => {
-        setGameLoading(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/Game?pageNumber=${pageGameNum}&pageSize=9`);
-            const data = await response.json();
-            setGames(data);
-            if (data && data.length > 0) {
-                setGameLoading(false);
-            }
-        } catch (error) {
-            console.error("Error fetching games:", error);
+    if (!res.ok) {
+        if (data?.errors) {
+            const parsedErrors = Object.values(data.errors).flat().join(". ");
+            throw new Error(parsedErrors);
         }
-    }, []);
+        throw new Error(data?.detail || data?.message || defaultError);
+    }
+    return data;
+};
 
-    const fetchTags = useCallback(async (pageTagNum: number) => {
-        setTagLoading(true);
-        try {
-            const response = await fetch(`${API_BASE_URL}/Tag?pageNumber=${pageTagNum}&pageSize=15`);
-            const data = await response.json();
-            setTags(data);
-            if (data && data.length > 0) {
-                setTagLoading(false);
-            }
-        } catch (error) {
-            console.error("Error fetching tags:", error);
-        }
-    }, []);
+export const storeService = {
+    async fetchGames(pageNumber: number, pageSize: number = 3): Promise<PaginatedResponse<GameDto>> {
+        const res = await fetch(`${API_BASE_URL}/Game?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        return handleResponse(res, "Failed to fetch games.");
+    },
 
-    return {
-        games,
-        tags,
-        gameLoading,
-        tagLoading,
-        fetchGames,
-        fetchTags
-    };
+    async fetchTags(pageNumber: number, pageSize: number = 5): Promise<PaginatedResponse<TagDto>> {
+        const res = await fetch(`${API_BASE_URL}/Tag?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        return handleResponse(res, "Failed to fetch tags.");
+    }
 };
