@@ -1,0 +1,149 @@
+.carouselContainer {
+    max-width: var(--website-layout-max-width);
+    margin: 0 auto;
+    padding: 20px 20px;
+    font-family: Arial, sans-serif;
+}
+
+.carouselWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 44px;
+    box-sizing: border-box;
+    background:
+        linear-gradient(
+            0deg,
+            rgba(31, 49, 74, .45) 5%,
+            rgba(33, 54, 77, .65) 20%,
+            rgba(28, 50, 70, 0.5) 65%,
+            rgba(40, 70, 98, 0.45) 95%,
+            rgba(43, 83, 118, 0.55) 100%
+        ),
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(94, 174, 255, 0.2) 0%,
+            rgba(34, 53, 77, 0.05) 50%,
+            rgba(94, 174, 255, 0) 90%
+        ),
+        radial-gradient(
+            circle at 80% 100%,
+            rgba(94, 174, 255, 0.1) 0%,
+            rgba(94, 174, 255, 0.05) 50%,
+            rgba(94, 174, 255, 0) 90%
+        );
+}
+
+.scrollButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 48px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.leftButton {
+    left: 0;
+}
+
+.rightButton {
+    right: 0;
+}
+
+.scrollButtonImageLeft,
+.scrollButtonImageRight {
+    width: 100%;
+    height: auto;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.scrollButtonImageLeft:hover,
+.scrollButtonImageRight:hover {
+    opacity: 1;
+}
+
+.scrollButtonImageLeft {
+    transform: rotate(180deg);
+}
+
+.carouselRow {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 14px;
+    width: 100%;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 12px 0;
+    -webkit-mask-image: linear-gradient(to right, black 92%, transparent 100%);
+    mask-image: linear-gradient(to right, black 92%, transparent 100%);
+}
+
+.carouselRow::-webkit-scrollbar {
+    display: none;
+}
+
+.carouselRow {
+    scrollbar-width: none;
+}
+
+.cardWrapper {
+    flex: 0 0 calc((100% - 3.5 * 14px) / 3.5);
+}
+
+@media (max-width: 992px) {
+    .carouselContainer {
+        padding: 16px;
+    }
+
+    .carouselWrapper {
+        padding: 0 36px;
+    }
+
+    .scrollButton {
+        width: 28px;
+        height: 42px;
+    }
+
+    .carouselRow {
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .cardWrapper {
+        flex: 0 0 calc((100% - 2 * 10px) / 3);
+    }
+}
+
+@media (max-width: 576px) {
+    .carouselContainer {
+        padding: 12px;
+    }
+
+    .carouselWrapper {
+        padding: 0 28px;
+    }
+
+    .scrollButton {
+        width: 24px;
+        height: 36px;
+    }
+
+    .carouselRow {
+        gap: 8px;
+        padding: 8px 0;
+    }
+
+    .cardWrapper {
+        flex: 0 0 calc((100% - 8px) / 2);
+    }
+}
