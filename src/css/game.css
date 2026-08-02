@@ -8,10 +8,17 @@
     will-change: transform;
     transform: translateZ(0);
     -webkit-mask-image: -webkit-radial-gradient(white, black);
+    margin: 0;
 }
 
 .game-card:hover {
     transform: scale(1.03);
+}
+
+@media (max-width: 1225px) {
+    .game-card:hover {
+        transform: scale(1);
+    }
 }
 
 .game-image {

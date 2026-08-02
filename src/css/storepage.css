@@ -3,7 +3,7 @@
     flex-direction: column;
     width: 100%;
     margin: 0;
-    height: 8000px;
+    min-height: 100vh;
     background: radial-gradient(circle, rgba(34, 60, 100, 1) 0%, rgba(20, 30, 43, 1) 100%);
     box-sizing: border-box;
     align-items: center;
@@ -14,11 +14,11 @@
 .store-header {
     width: 100%;
     aspect-ratio: 16/9;
-    max-height: 900px;
+    max-height: 550px;
     margin: 0;
     background-image: url(../assets/store_page/header.png);
     background-size: cover;
-    background-position: center;
+    background-position: top;
 }
 
 .store-background {
@@ -27,10 +27,12 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 50px;
+    gap: 25px;
+    padding-top: 25px;
 }
 
-.btn-container {
+.btn-container,
+.btn-tag-container {
     margin: 0 auto;
     gap: 20px;
     display: flex;
@@ -38,7 +40,7 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-}   
+}
 
 .games-container {
     width: 100%;
@@ -46,6 +48,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
 }
+
 
 .category-container {
     width: 100%;
@@ -60,7 +63,7 @@
     justify-content: center;
     margin: 0 auto;
     width: 100%;
-    gap: clamp(12px, 2vw, 27px); 
+    gap: clamp(12px, 2vw, 27px);
     padding-bottom: 27px;
     box-sizing: border-box;
 }
@@ -69,12 +72,13 @@
     color: white;
     font-family: Roboto;
     font-weight: 500;
-    font-size: clamp(22px, 2.5vw, 35px); 
+    font-size: clamp(22px, 2.5vw, 35px);
     line-height: 100%;
     margin: 0;
 }
 
-.prev-btn, .next-btn {
+.prev-btn,
+.next-btn {
     width: 23px;
     height: 46px;
     outline: none;
@@ -84,76 +88,102 @@
     background-repeat: no-repeat;
     background-size: contain;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .prev-btn {
     transform: rotateY(180deg);
 }
 
-.mobile-games-scroll,
-.mobile-tags-scroll {
-    display: none;
+.mobile-games-scroll {
     width: 100%;
-    height: min-content;
-    flex-direction: row;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 16px;
-    padding: 10px 0;
-    box-sizing: border-box;
-    scrollbar-width: none;
-}
-
-.mobile-games-scroll::-webkit-scrollbar,
-.mobile-tags-scroll::-webkit-scrollbar {
+    max-width: 100vw;
+    padding: 20px 0;
     display: none;
 }
 
-.mobile-games-scroll > * {
-    flex: 0 0 250px;
+
+.swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.mobile-tags-scroll > * {
-    flex: 0 0 220px; 
+.game-card-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
+
+.swiper-slide .game-card-wrapper {
+    transition: transform 0.4s ease, filter 0.4s ease, opacity 0.4s ease;
+    transform: scale(0.85);
+    filter: blur(1px);
+    opacity: 0.6;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.swiper-slide.swiper-slide-active .game-card-wrapper {
+    transform: scale(1);
+    filter: blur(0px);
+    opacity: 1;
+}
+
 
 @media (max-width: 1225px) {
-    .btn-container {
-        display: none;
-    }
 
     .store-header {
         display: none;
     }
 
-    .mobile-games-scroll,
-    .mobile-tags-scroll {
-        display: flex;
-    }
-
     .store-background {
         width: 95vw;
     }
+
+    .category-container {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
-.category-loading {
-    width: 100%;
-    aspect-ratio: 300 / 298;
-    background-color: #1b2838;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 28px;
-    box-sizing: border-box;
+@media (max-width: 1000px) {
+    .category-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
-.game-loading {
-    aspect-ratio: 514 / 762;
-    width: 100%;
-    background-color: #1b2838;
-    overflow: hidden;
-    position: relative;
+@media (max-width: 800px) {
+
+    .btn-tag-container .prev-btn,
+    .btn-tag-container .next-btn {
+        display: none;
+    }
+
+    .category-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 650px) {
+    .mobile-games-scroll {
+        display: block;
+    }
+
+    .btn-container {
+        display: none;
+    }
+
+    .category-container {
+        gap:10px;
+    }
+
+    .btn-tag-container .prev-btn,
+    .btn-tag-container .next-btn {
+        display: none;
+    }
+
+    .category-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

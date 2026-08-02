@@ -1,91 +1,114 @@
+import { useState, useEffect } from "react";
 import Category from "../components/Category";
 import Game from "../components/Game";
 import "../css/storepage.css";
-import { useState, useEffect } from "react";
 import type { GameDto } from "../DTOs/GameDto";
-import { useGameData } from "../services/storeService";
+import { storeService } from "../services/storeService";
 import type { TagDto } from "../DTOs/TagDto";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import type { PaginatedResponse } from "../DTOs/PaginatedList";
 
 export default function StorePage() {
-    const [gamePageNumber, setgamePageNumber] = useState(1);
-    const [tagPageNumber, settagPageNumber] = useState(1);
+    const [gamePageNumber, setGamePageNumber] = useState(1);
+    const [tagPageNumber, setTagPageNumber] = useState(1);
 
-    const {
-        games,
-        tags,
-        gameLoading,
-        tagLoading,
-        fetchGames,
-        fetchTags,
-    } = useGameData();
+    const [games, setGames] = useState<PaginatedResponse<GameDto> | null>(null);
+    const [tags, setTags] = useState<PaginatedResponse<TagDto> | null>(null);
+
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 650);
 
     useEffect(() => {
-        fetchGames(gamePageNumber);
-        fetchTags(tagPageNumber);
+        const handleResize = () => setIsMobile(window.innerWidth <= 650);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
     }, []);
 
-    const itemsPerGamePage = 3;
-    const startGameIndex = (gamePageNumber - 1) * itemsPerGamePage;
-    const currentGames = games.slice(startGameIndex, startGameIndex + itemsPerGamePage);
-    const totalGamePages = Math.ceil(games.length / itemsPerGamePage);
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const gamePageSize = isMobile ? 9 : 3;
 
-    const itemsPerTagPage = 5;
-    const startTagIndex = (tagPageNumber - 1) * itemsPerTagPage;
-    const currentTags = tags.slice(startTagIndex, startTagIndex + itemsPerTagPage);
-    const totalTagPages = Math.ceil(tags.length / itemsPerTagPage);
+                const fetchedGames = await storeService.fetchGames(gamePageNumber, gamePageSize);
+                setGames(fetchedGames);
+
+                const fetchedTags = await storeService.fetchTags(tagPageNumber, 5);
+                setTags(fetchedTags);
+            } catch (error) {
+                console.error("Error loading store data:", error);
+            }
+        };
+
+        loadData();
+    }, [gamePageNumber, tagPageNumber, isMobile]);
+
+    const gamesList = games?.items || [];
+    const tagsList = tags?.items || [];
+    const totalGamePages = games?.totalPages || 1;
+    const totalTagPages = tags?.totalPages || 1;
 
     return (
-        <>
-            <div className="main-container">
-                <div className="store-header" />
-                <div className="store-background">
-                    
-                    <div className="btn-container">
-                        <button className="prev-btn" onClick={() => setgamePageNumber(num => num > 1 ? num - 1 : num)}></button>
-                        <div className="games-container">
-                            {gameLoading ? (
-                                [...Array(3)].map((_, index) => <div key={index} className="game-loading" />)
-                            ) : (
-                                currentGames.map((game: GameDto) => <Game key={game.id} gameDto={game} />)
-                            )}
-                        </div>
-                        <button className="next-btn" onClick={() => setgamePageNumber(num => num < totalGamePages ? num + 1 : num)}></button>
+        <div className="main-container">
+            <div className="store-header" />
+            <div className="store-background">
+
+                <div className="btn-container">
+                    <button
+                        className="prev-btn"
+                        onClick={() => setGamePageNumber(num => Math.max(1, num - 1))}
+                    />
+                    <div className="games-container">
+                        {gamesList.map((game: GameDto) => (
+                            <Game key={game.id} gameDto={game} />
+                        ))}
                     </div>
-
-                    <div className="mobile-games-scroll">
-                        {gameLoading ? (
-                            [...Array(5)].map((_, index) => <div key={index} className="game-loading" />)
-                        ) : (
-                            games.map((game: GameDto) => <Game key={game.id} gameDto={game} />)
-                        )}
-                    </div>
-
-                    <div className="categories-section">
-                        <h3>Browse by Category</h3>
-
-                        <div className="btn-container">
-                            <button className="prev-btn" onClick={() => settagPageNumber(num => num > 1 ? num - 1 : num)}></button>
-                            <div className="category-container">
-                                {tagLoading ? (
-                                    [...Array(5)].map((_, index) => <div key={index} className="category-loading" />)
-                                ) : (
-                                    currentTags.map((tag: TagDto) => <Category key={tag.id} tagDto={tag} />)
-                                )}
-                            </div>
-                            <button className="next-btn" onClick={() => settagPageNumber(num => num < totalTagPages ? num + 1 : num)}></button>
-                        </div>
-
-                        <div className="mobile-tags-scroll">
-                            {tagLoading ? (
-                                [...Array(5)].map((_, index) => <div key={index} className="category-loading" />)
-                            ) : (
-                                tags.map((tag: TagDto) => <Category key={tag.id} tagDto={tag} />)
-                            )}
-                        </div>
-                    </div>
-
+                    <button
+                        className="next-btn"
+                        onClick={() => setGamePageNumber(num => Math.min(totalGamePages, num + 1))}
+                    />
                 </div>
+
+                <div className="mobile-games-scroll">
+                    {gamesList.length > 0 && (
+                        <Swiper
+                            loop={true}
+                            centeredSlides={true}
+                            slidesPerView={1.5}
+                            spaceBetween={0}
+                            grabCursor={true}
+                        >
+                            {gamesList.map((game: GameDto) => (
+                                <SwiperSlide key={game.id}>
+                                    <div className="game-card-wrapper">
+                                        <Game gameDto={game} />
+                                    </div>
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    )}
+                </div>
+
+                <div className="categories-section">
+                    <h3>Browse by Category</h3>
+
+                    <div className="btn-tag-container">
+                        <button
+                            className="prev-btn"
+                            onClick={() => setTagPageNumber(num => Math.max(1, num - 1))}
+                        />
+                        <div className="category-container">
+                            {tagsList.map((tag: TagDto) => (
+                                <Category key={tag.id} tagDto={tag} />
+                            ))}
+                        </div>
+                        <button
+                            className="next-btn"
+                            onClick={() => setTagPageNumber(num => Math.min(totalTagPages, num + 1))}
+                        />
+                    </div>
+                </div>
+
             </div>
-        </>
+        </div>
     );
 }

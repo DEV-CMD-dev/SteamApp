@@ -46,3 +46,26 @@
 {
     margin: 0;
 }
+
+@media (max-width: 1350px) {
+    .category-content {
+    font-size: 20px;
+    }
+}
+
+@media (max-width: 700px) {
+    .category-content {
+    font-size: 17px;
+    }
+}
+
+@media (max-width: 650px) {
+    .category-content {
+    font-size: 25px;
+    }
+}
+@media (max-width: 450px) {
+    .category-content {
+    font-size: 21px;
+    }
+}
