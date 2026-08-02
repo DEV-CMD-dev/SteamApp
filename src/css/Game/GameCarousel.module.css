@@ -144,6 +144,6 @@
     }
 
     .cardWrapper {
-        flex: 0 0 calc((100% - 8px) / 2);
+        flex: 0 0 calc((100% - 16px) / 3);
     }
 }

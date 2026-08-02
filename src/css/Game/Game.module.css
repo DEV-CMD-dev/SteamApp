@@ -13,7 +13,7 @@
 .imageContainer {
     position: relative;
     width: 100%;
-    aspect-ratio: 2 / 3;
+    height: 100%;
     overflow: hidden;
 }
 
