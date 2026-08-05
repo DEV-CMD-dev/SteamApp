@@ -1,7 +1,6 @@
 .carouselContainer {
     max-width: var(--website-layout-max-width);
-    margin: 0 auto;
-    padding: 20px 20px;
+    margin-bottom: 50px;
     font-family: Arial, sans-serif;
 }
 
@@ -108,13 +107,6 @@
 }
 
 @media (max-width: 992px) {
-    .carouselContainer {
-        padding: 16px;
-    }
-
-    .carouselWrapper {
-        padding: 0 36px;
-    }
 
     .scrollButton {
         width: 28px;
@@ -132,13 +124,6 @@
 }
 
 @media (max-width: 576px) {
-    .carouselContainer {
-        padding: 12px;
-    }
-
-    .carouselWrapper {
-        padding: 0 28px;
-    }
 
     .scrollButton {
         width: 24px;
