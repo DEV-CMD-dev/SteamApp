@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Game from "./Game";
 import type { GameDto } from "../../DTOs/Game/GameDto";
-import styles from "../../css/Game/GameCarousel.module.css";
+import styles from "../../css/Store/GameCarousel.module.css";
 import arrow from "../../assets/store/arrow.svg";
 import { gameService } from "../../services/gameService";
 

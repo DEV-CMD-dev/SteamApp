@@ -1,5 +1,5 @@
 import type { GameDto } from "../../DTOs/Game/GameDto";
-import styles from "../../css/Game/Game.module.css";
+import styles from "../../css/Store/Game.module.css";
 
 export default function Game(game: GameDto) {
     const hasDiscount = game.discount > 0;
