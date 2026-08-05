@@ -1,4 +1,4 @@
-import GameCarousel from "../components/Games/GameCarousel";
+import GameCarousel from "../components/Store/GameCarousel";
 
 export default function StorePage(){
     return(

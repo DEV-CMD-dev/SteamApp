@@ -1,6 +1,6 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './partials/Navbar'
-import StoreBanner from './partials/StoreBanner';
+import StoreBanner from './components/Store/StoreBanner';
 
 export default function MainLayout() {
 
