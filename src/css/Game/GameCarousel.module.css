@@ -35,6 +35,13 @@
         );
 }
 
+.carouselTitle{
+    color: white;
+    margin: 0 0 10px 0;
+    font-size: clamp(1rem, 1.75cqi, 1.5rem);
+    font-weight: 600;
+}
+
 .scrollButton {
     position: absolute;
     top: 50%;

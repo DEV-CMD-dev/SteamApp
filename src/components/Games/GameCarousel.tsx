@@ -38,30 +38,33 @@ export default function GameCarousel() {
 };
 
     return (
-        <div className={styles.carouselContainer}>
-            <div className={styles.carouselWrapper}>
-                <button 
-                    className={`${styles.scrollButton} ${styles.leftButton}`} 
-                    onClick={() => handleScroll("left")}
-                    aria-label="Scroll left">
-                    <img className={styles.scrollButtonImageLeft} src={arrow} alt="" />
-                </button>
+        <>
+            <div className={styles.carouselContainer}>
+                <h3 className={styles.carouselTitle}>Discounts & Events</h3>
+                <div className={styles.carouselWrapper}>
+                    <button 
+                        className={`${styles.scrollButton} ${styles.leftButton}`} 
+                        onClick={() => handleScroll("left")}
+                        aria-label="Scroll left">
+                        <img className={styles.scrollButtonImageLeft} src={arrow} alt="" />
+                    </button>
 
-                <div className={styles.carouselRow}>
-                    {items.map((game, index) => (
-                        <div className={styles.cardWrapper} key={`${game.id}-${index}`}>
-                            <Game {...game} />
-                        </div>
-                    ))}
+                    <div className={styles.carouselRow}>
+                        {items.map((game, index) => (
+                            <div className={styles.cardWrapper} key={`${game.id}-${index}`}>
+                                <Game {...game} />
+                            </div>
+                        ))}
+                    </div>
+
+                    <button 
+                        className={`${styles.scrollButton} ${styles.rightButton}`} 
+                        onClick={() => handleScroll("right")}
+                        aria-label="Scroll right">
+                        <img className={styles.scrollButtonImageRight} src={arrow} alt="" />
+                    </button>
                 </div>
-
-                <button 
-                    className={`${styles.scrollButton} ${styles.rightButton}`} 
-                    onClick={() => handleScroll("right")}
-                    aria-label="Scroll right">
-                    <img className={styles.scrollButtonImageRight} src={arrow} alt="" />
-                </button>
             </div>
-        </div>
+        </>
     );
 }
