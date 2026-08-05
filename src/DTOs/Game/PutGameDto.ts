@@ -1,8 +1,6 @@
-export type GameDto = {
-        id: number;
+export type PutGameDto = {
         title: string;
         description: string;
-        developerId: string;
         releaseDate: Date | string;
         price: number;
         discount: number;
