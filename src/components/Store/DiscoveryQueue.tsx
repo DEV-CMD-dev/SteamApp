@@ -1,8 +1,17 @@
-import styles from "../../css/Store/DiscoveryQueue.module.css"
+import styles from "../../css/Store/DiscoveryQueue.module.css";
+import { AuthContext } from "../../contexts/AuthContext";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
 
-export default function DiscoveryQueue(){
+export default function DiscoveryQueue() {
+    const { accessToken } = useContext(AuthContext);
+
+    if (accessToken) {
+        return null;
+    }
+
     return (
-        <>
+        <Link to='/auth' style={{textDecoration: "none"}}>
             <div className={styles.discoveryWrapper}>
                 <div className={styles.discoveryGradient}>
                     <div className={styles.discoveryContent}>
@@ -12,11 +21,11 @@ export default function DiscoveryQueue(){
                             <div className={styles.widgetButton}>Sign In</div>
                         </div>
                         <div className={styles.widgetScroll}>
-                            
+
                         </div>
                     </div>
                 </div>
             </div>
-        </>
-    )
+        </Link>
+    );
 }
