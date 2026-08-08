@@ -7,5 +7,6 @@ export type GameDto = {
         price: number;
         discount: number;
         systemRequirements: string;
-        coverImage: string;
+        coverImageHorizontal: string;
+        coverImageVertical: string;
     }

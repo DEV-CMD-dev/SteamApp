@@ -4,5 +4,6 @@ export type CreateGameDto = {
         releaseDate: Date | string;
         price: number;
         systemRequirements: string;
-        coverImage: string;
+        coverImageHorizontal: string;
+        coverImageVertical: string;
     }

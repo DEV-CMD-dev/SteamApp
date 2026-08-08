@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { gameService } from "../../services/gameService";
 import type { GameDto } from "../../DTOs/Game/GameDto";
-import styles from "../../css/Store/DiscountGames.module.css"
+import styles from "../../css/Store/DiscountGames.module.css";
 import Game from "./Game";
 
 export default function DiscountGames(){
     const [items, setItems] = useState<GameDto[]>([]);
     
-        useEffect(() => {
+    useEffect(() => {
         const fetchGames = async () => {
             try {
-            const games = await gameService.getAll(2, 12);
-            setItems(games.items);gameService
+                const games = await gameService.getAll(2, 12);
+                setItems(games.items);
             } catch (err) {
-            console.error(err);
+                console.error(err);
             }
         };
     
         fetchGames();
-        }, []); 
+    }, []); 
 
     return (
         <div className={styles.wrapper}>
@@ -28,17 +28,11 @@ export default function DiscountGames(){
                         Fighting games
                     </div>
                     <div className={styles.games}>
-                        {items.slice(0, Math.ceil(items.length / 2)).map((item) => (
+                        {items.slice(0, Math.ceil(items.length / 2)).map((item, index) => (
                             <Game
-                                id={item.id}
-                                title={item.title}
-                                description={item.description}
-                                developerId={item.developerId}
-                                releaseDate={item.releaseDate}
-                                coverImage={item.coverImage}
-                                price={item.price}
-                                discount={item.discount}
-                                systemRequirements={item.systemRequirements}
+                                key={`${item.id}-${index}`}
+                                game={item}
+                                isVerticalCoverImage={false}
                             />
                         ))}
                     </div>
@@ -48,22 +42,16 @@ export default function DiscountGames(){
                         First person shooters
                     </div>
                     <div className={styles.games}>
-                        {items.slice(Math.ceil(items.length / 2)).map((item) => (
+                        {items.slice(Math.ceil(items.length / 2)).map((item, index) => (
                             <Game
-                                id={item.id}
-                                title={item.title}
-                                description={item.description}
-                                developerId={item.developerId}
-                                releaseDate={item.releaseDate}
-                                coverImage={item.coverImage}
-                                price={item.price}
-                                discount={item.discount}
-                                systemRequirements={item.systemRequirements}
+                                key={`${item.id}-${index}`}
+                                game={item}
+                                isVerticalCoverImage={false}
                             />
                         ))}
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }

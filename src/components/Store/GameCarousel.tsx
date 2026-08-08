@@ -52,7 +52,7 @@ export default function GameCarousel() {
                     <div className={styles.carouselRow}>
                         {items.map((game, index) => (
                             <div className={styles.cardWrapper} key={`${game.id}-${index}`}>
-                                <Game {...game} />
+                                <Game game={game} isVerticalCoverImage={true}/>
                             </div>
                         ))}
                     </div>

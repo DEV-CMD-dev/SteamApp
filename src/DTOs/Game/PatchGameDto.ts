@@ -5,5 +5,6 @@ export type PatchGameDto = {
         price: number | null;
         discount: number | null;
         systemRequirements: string | null;
-        coverImage: string | null;
+        coverImageHorizontal: string | null;
+        coverImageVertical: string | null;
     }

@@ -1,7 +1,7 @@
 import type { GameDto } from "../../DTOs/Game/GameDto";
 import styles from "../../css/Store/Game.module.css";
 
-export default function Game(game: GameDto) {
+export default function Game({ game, isVerticalCoverImage }: { game: GameDto; isVerticalCoverImage: boolean }) {
     const hasDiscount = game.discount > 0;
     const finalPrice = hasDiscount 
         ? (game.price * (1 - game.discount / 100)).toFixed(2) 
@@ -10,7 +10,7 @@ export default function Game(game: GameDto) {
     return (
         <div className={styles.gameCard}>
             <div className={styles.imageContainer}>
-                <img src={game.coverImage} alt={game.title || "Game cover"} className={styles.coverImage} />
+                <img src={isVerticalCoverImage ? game.coverImageVertical : game.coverImageHorizontal} alt={game.title || "Game cover"} className={styles.coverImage} />
             </div>
             
             <div className={styles.purchaseSection}>
