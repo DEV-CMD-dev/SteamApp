@@ -1,6 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Navbar from './partials/Navbar'
 import StoreBanner from './components/Store/StoreBanner';
+import Footer from './partials/Footer';
 
 export default function MainLayout() {
 
@@ -13,6 +14,7 @@ export default function MainLayout() {
       <div className="pages-container">
         <Outlet />
       </div>
+      <Footer />
     </div>
   );
 }
