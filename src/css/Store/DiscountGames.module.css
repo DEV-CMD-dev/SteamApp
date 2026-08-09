@@ -32,6 +32,7 @@
     grid-auto-rows: 1fr;
     height: clamp(300px, 30vw, 350px);
     
+
     background:
         linear-gradient(
             0deg,
