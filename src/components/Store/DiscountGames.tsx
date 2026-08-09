@@ -5,13 +5,17 @@ import styles from "../../css/Store/DiscountGames.module.css";
 import Game from "./Game";
 
 export default function DiscountGames(){
-    const [items, setItems] = useState<GameDto[]>([]);
+    const [fightGames, setfightGames] = useState<GameDto[]>([]);
+    const [racingGames, setracingGames] = useState<GameDto[]>([]);
     
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const games = await gameService.getAll(2, 8);
-                setItems(games.items);
+                const fightGames = await gameService.getAll(1, 4, {tagIds: [25], onSaleOnly: true});
+                setfightGames(fightGames.items);
+
+                const racingGames = await gameService.getAll(1, 4, {tagIds: [11], onSaleOnly: true});
+                setracingGames(racingGames.items);
             } catch (err) {
                 console.error(err);
             }
@@ -28,7 +32,7 @@ export default function DiscountGames(){
                         Fighting games
                     </div>
                     <div className={styles.games}>
-                        {items.slice(0, Math.ceil(items.length / 2)).map((item, index) => (
+                        {fightGames.map((item, index) => (
                             <Game
                                 key={`${item.id}-${index}`}
                                 game={item}
@@ -39,10 +43,10 @@ export default function DiscountGames(){
                 </div>
                 <div className={styles.discountsBlock}>
                     <div className={styles.title}>
-                        First person shooters
+                        Racing games
                     </div>
                     <div className={styles.games}>
-                        {items.slice(Math.ceil(items.length / 2)).map((item, index) => (
+                        {racingGames.map((item, index) => (
                             <Game
                                 key={`${item.id}-${index}`}
                                 game={item}

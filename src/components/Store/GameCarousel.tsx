@@ -13,7 +13,7 @@ export default function GameCarousel() {
     useEffect(() => {
     const fetchGames = async () => {
         try {
-        const games = await gameService.getAll(1, 12);
+        const games = await gameService.getAll(1, 12, {onSaleOnly: true});
         setItems(games.items);
         } catch (err) {
         console.error(err);
