@@ -30,6 +30,7 @@
     padding: clamp(8px, 2vw, 18px);
     margin-bottom: 10px;
     grid-auto-rows: 1fr;
+    height: clamp(300px, 30vw, 350px);
 
     background:
         linear-gradient(
