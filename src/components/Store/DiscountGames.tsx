@@ -10,7 +10,7 @@ export default function DiscountGames(){
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const games = await gameService.getAll(2, 12);
+                const games = await gameService.getAll(2, 8);
                 setItems(games.items);
             } catch (err) {
                 console.error(err);

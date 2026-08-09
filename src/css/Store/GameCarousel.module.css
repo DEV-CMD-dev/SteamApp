@@ -1,7 +1,15 @@
 .carouselContainer {
+    width: 100%;
     max-width: var(--website-layout-max-width);
     margin-bottom: 50px;
     font-family: Arial, sans-serif;
+}
+
+.carouselTitle {
+    color: white;
+    margin: 0 0 10px 0;
+    font-size: clamp(1rem, 1.75cqi, 1.5rem);
+    font-weight: 600;
 }
 
 .carouselWrapper {
@@ -9,8 +17,8 @@
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0 44px;
     box-sizing: border-box;
+    padding: 0 44px;
     background:
         linear-gradient(
             0deg,
@@ -34,11 +42,102 @@
         );
 }
 
-.carouselTitle{
-    color: white;
-    margin: 0 0 10px 0;
-    font-size: clamp(1rem, 1.75cqi, 1.5rem);
-    font-weight: 600;
+.carouselRow {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+
+    gap: 14px;
+    width: 100%;
+    height: clamp(260px, 30vw, 450px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 12px 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+
+    -webkit-mask-image: linear-gradient(
+        to right,
+        black 92%,
+        transparent 100%
+    );
+
+    mask-image: linear-gradient(
+        to right,
+        black 92%,
+        transparent 100%
+    );
+
+    scrollbar-width: none;
+}
+
+.carouselRow::-webkit-scrollbar {
+    display: none;
+}
+
+.cardWrapper {
+    flex: 0 0 calc((100% - 3.5 * 14px) / 3.5);
+
+    height: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 992px) {
+    .carouselWrapper {
+        padding: 0 38px;
+    }
+
+    .carouselRow {
+        gap: 10px;
+        padding: 10px 0;
+
+        height: clamp(220px, 32vw, 340px);
+    }
+
+    .cardWrapper {
+        flex: 0 0 calc((100% - 2 * 10px) / 3);
+    }
+
+    .scrollButton {
+        width: 28px;
+        height: 42px;
+    }
+}
+
+@media (max-width: 576px) {
+    .carouselContainer {
+        margin-bottom: 30px;
+    }
+
+    .carouselWrapper {
+        padding: 0 32px;
+    }
+
+    .carouselRow {
+        gap: 8px;
+        padding: 8px 0;
+
+        height: clamp(170px, 48vw, 240px);
+    }
+
+    .scrollButton {
+        width: 24px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 380px) {
+    .carouselWrapper {
+        padding: 0 28px;
+    }
+
+    .carouselRow {
+        height: 175px;
+    }
+
+    .cardWrapper {
+        flex: 0 0 calc((100% - 8px) / 2);
+    }
 }
 
 .scrollButton {
@@ -81,61 +180,6 @@
     transform: rotate(180deg);
 }
 
-.carouselRow {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 14px;
-    width: 100%;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    padding: 12px 0;
-    -webkit-mask-image: linear-gradient(to right, black 92%, transparent 100%);
-    mask-image: linear-gradient(to right, black 92%, transparent 100%);
-}
-
-.carouselRow::-webkit-scrollbar {
-    display: none;
-}
-
-.carouselRow {
-    scrollbar-width: none;
-}
-
-.cardWrapper {
-    flex: 0 0 calc((100% - 3.5 * 14px) / 3.5);
-}
-
-@media (max-width: 992px) {
-
-    .scrollButton {
-        width: 28px;
-        height: 42px;
-    }
-
-    .carouselRow {
-        gap: 10px;
-        padding: 10px 0;
-    }
-
-    .cardWrapper {
-        flex: 0 0 calc((100% - 2 * 10px) / 3);
-    }
-}
-
-@media (max-width: 576px) {
-
-    .scrollButton {
-        width: 24px;
-        height: 36px;
-    }
-
-    .carouselRow {
-        gap: 8px;
-        padding: 8px 0;
-    }
-
-    .cardWrapper {
-        flex: 0 0 calc((100% - 16px) / 3);
-    }
+.scrollButtonImageRight {
+    transform: none;
 }
