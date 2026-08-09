@@ -55,7 +55,6 @@
     padding: 12px 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
-
     -webkit-mask-image: linear-gradient(
         to right,
         black 92%,
