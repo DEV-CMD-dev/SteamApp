@@ -3,6 +3,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 100%;
+    padding: 0 40px;
 }
 
 .container{
@@ -70,6 +71,12 @@
     .games {
         gap: 10px;
         padding: 12px;
+    }
+}
+
+@media (max-width: 900px){
+    .wrapper{
+        padding: 0;
     }
 }
 

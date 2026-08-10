@@ -11,7 +11,7 @@ export default function DiscoveryQueue() {
     }
 
     return (
-        <Link to='/auth' style={{textDecoration: "none"}}>
+        <Link to='/auth' className={styles.linkWrapper}>
             <div className={styles.discoveryWrapper}>
                 <div className={styles.discoveryGradient}>
                     <div className={styles.discoveryContent}>

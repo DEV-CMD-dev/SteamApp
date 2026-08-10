@@ -1,8 +1,8 @@
 .carouselContainer {
-    width: 100%;
     max-width: var(--website-layout-max-width);
     margin-bottom: 50px;
     font-family: Arial, sans-serif;
+    padding: 0 40px;
 }
 
 .carouselTitle {
@@ -106,6 +106,12 @@
     .scrollButton {
         width: 28px;
         height: 42px;
+    }
+}
+
+@media (max-width: 900px){
+    .carouselContainer{
+        padding: 0;
     }
 }
 

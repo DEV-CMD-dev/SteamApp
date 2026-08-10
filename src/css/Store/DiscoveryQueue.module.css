@@ -1,3 +1,9 @@
+.linkWrapper{
+    display: block;
+    padding: 0 40px;
+    text-decoration: none;
+}
+
 .discoveryWrapper{
     max-width: var(--website-layout-max-width);
     height: 150px;
@@ -52,4 +58,10 @@
     margin-top: 5px;
     box-shadow: 0px 4px 8px rgba(0,0,0,.25);
     color: white;
+}
+
+@media (max-width: 900px){
+    .linkWrapper{
+        padding: 0;
+    }
 }
