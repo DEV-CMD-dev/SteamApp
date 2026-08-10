@@ -7,4 +7,5 @@ export type PutGameDto = {
         systemRequirements: string;
         coverImageHorizontal: string;
         coverImageVertical: string;
+        tagIds: []
     }

@@ -9,4 +9,5 @@ export type GameDto = {
         systemRequirements: string;
         coverImageHorizontal: string;
         coverImageVertical: string;
+        tagIds: []
     }

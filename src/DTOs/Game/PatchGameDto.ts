@@ -7,4 +7,5 @@ export type PatchGameDto = {
         systemRequirements: string | null;
         coverImageHorizontal: string | null;
         coverImageVertical: string | null;
+        tagIds: [] | null;
     }

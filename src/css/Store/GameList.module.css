@@ -1,0 +1,41 @@
+.gameList {
+    display: flex;
+    flex-direction: column;
+    padding: 0 40px;
+    margin-top: 40px;
+    max-width: var(--website-layout-max-width);
+    gap: 6px;
+}
+
+.carouselTitle {
+    color: white;
+    margin: 0 0 10px 0;
+    font-size: clamp(1rem, 1.75cqi, 1.5rem);
+    font-weight: 600;
+}
+
+.message {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 30px;
+    color: #b8c6d1;
+    background-color: #162737;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.error {
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    color: #ff6b6b;
+    background-color: #162737;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+@media (max-width: 900px){
+    .gameList{
+        padding: 0;
+    }
+}
