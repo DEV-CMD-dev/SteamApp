@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "../css/navbar.css";
 
 import searchIcon from "../assets/navbar/search.png";
@@ -30,14 +30,26 @@ export default function Navbar() {
         </div>
 
         <div className="nav-buttons-container">
-          <Link to="/" className="nav-link">STORE</Link>
-          <Link to="/library" className="nav-link">LIBRARY</Link>
+
+          <NavLink
+              to="/"
+              className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`}>STORE</NavLink>
+          <NavLink
+              to="/library"
+              className={({ isActive }) =>
+                  `nav-link ${isActive ? "active" : ""}`}>LIBRARY</NavLink>
 
           {accessToken ? (
-            <Link to="/profile" className="nav-link">ACCOUNT</Link>
-          ) : (
-            <Link to="/auth" className="nav-link">LOGIN</Link>
-          )}
+              <NavLink
+                  to="/profile"
+                  className={({ isActive }) =>
+                      `nav-link ${isActive ? "active" : ""}`}>ACCOUNT</NavLink>
+                ) : (
+                <NavLink
+                    to="/auth"
+                    className={({ isActive }) =>
+                        `nav-link ${isActive ? "active" : ""}`}>LOGIN</NavLink>)}
         </div>
 
         <div className="categories-container">
