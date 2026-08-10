@@ -50,8 +50,8 @@
     padding: 0;
     margin: 0;
 
-    width: 36px;
-    height: 60px;
+    width: auto;
+    height: 50px;
 
     background: transparent;
     border: none;
