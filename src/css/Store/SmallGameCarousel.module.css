@@ -125,7 +125,6 @@
         display: grid;
         grid-template-columns: repeat(20, clamp(120px, 22vw, 180px));
         gap: 10px;
-        width: max-content;
     }
 
     .scrollButton {
