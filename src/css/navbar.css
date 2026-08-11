@@ -46,6 +46,7 @@
 }
 
 .nav-link {
+    position: relative;
     text-decoration: none;
     color: #bdbdbd; 
     font-weight: 700;
@@ -56,6 +57,20 @@
 
 .nav-link:hover {
     color: #ffffff;
+}
+
+.nav-link.active {
+    color: #ffffff;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -5px;
+    height: 2px;
+    background-color: #009ff5;
 }
 
 .categories-container { 

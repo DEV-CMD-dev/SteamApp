@@ -1,0 +1,98 @@
+.wrapper{
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    padding: 0 40px;
+}
+
+.container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.discountsBlock{
+    flex: 1 1 0;
+    min-width: 300px;
+}
+
+.title{
+    color: white;
+    margin: 0 0 10px 0;
+    font-size: clamp(1rem, 1.75cqi, 1.5rem);
+    font-weight: 600;
+}
+
+.games {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    padding: clamp(8px, 2vw, 18px);
+    margin-bottom: 10px;
+    grid-auto-rows: 1fr;
+    height: clamp(300px, 30vw, 350px);
+    
+
+    background:
+        linear-gradient(
+            0deg,
+            rgba(31, 49, 74, .45) 5%,
+            rgba(33, 54, 77, .65) 20%,
+            rgba(28, 50, 70, 0.5) 65%,
+            rgba(40, 70, 98, 0.45) 95%,
+            rgba(43, 83, 118, 0.55) 100%
+        ),
+        radial-gradient(
+            circle at 10% 0%,
+            rgba(94, 174, 255, 0.2) 0%,
+            rgba(34, 53, 77, 0.05) 50%,
+            rgba(94, 174, 255, 0) 90%
+        ),
+        radial-gradient(
+            circle at 80% 100%,
+            rgba(94, 174, 255, 0.1) 0%,
+            rgba(94, 174, 255, 0.05) 50%,
+            rgba(94, 174, 255, 0) 90%
+        );
+
+    border-radius: 2px;
+}
+
+@media (max-width: 992px) {
+    .container {
+        gap: 14px;
+    }
+
+    .discountsBlock {
+        min-width: 260px;
+    }
+
+    .games {
+        gap: 10px;
+        padding: 12px;
+    }
+}
+
+@media (max-width: 900px){
+    .wrapper{
+        padding: 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .container {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .discountsBlock {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .games {
+        gap: 8px;
+        padding: 8px;
+    }
+}

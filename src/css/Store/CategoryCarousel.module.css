@@ -1,0 +1,134 @@
+.carouselContainer {
+    width: 100%;
+    margin-top: 40px;
+    overflow: hidden;
+}
+
+.carouselContent {
+    display: grid;
+    grid-template-columns: 36px minmax(0, 1fr) 36px;
+    grid-template-rows: auto auto;
+    column-gap: 10px;
+    width: 100%;
+}
+
+.carouselTitle {
+    grid-column: 2;
+    grid-row: 1;
+
+    color: white;
+    margin: 0 0 10px 0;
+
+    font-size: clamp(1rem, 1.75cqi, 1.5rem);
+    font-weight: 600;
+}
+
+.carouselWrapper {
+    grid-column: 2;
+    grid-row: 2;
+
+    min-width: 0;
+    overflow: hidden;
+}
+
+.carouselRow {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 60px) / 5);
+    gap: 15px;
+    width: 100%;
+}
+
+.cardWrapper {
+    min-width: 0;
+    aspect-ratio: 2 / 1;
+}
+
+.scrollButton {
+    align-self: center;
+
+    padding: 0;
+    margin: 0;
+
+    width: auto;
+    height: 50px;
+
+    background: transparent;
+    border: none;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carouselContent > .scrollButton:first-of-type {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.carouselContent > .scrollButton:last-of-type {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.scrollButton:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.scrollButtonImageLeft,
+.scrollButtonImageRight {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.scrollButtonImageLeft:hover,
+.scrollButtonImageRight:hover {
+    opacity: 1;
+}
+
+.scrollButtonImageLeft {
+    transform: rotate(180deg);
+}
+
+.scrollButtonImageRight {
+    transform: none;
+}
+
+@media (max-width: 900px) {
+    .carouselContent {
+        display: block;
+    }
+
+    .carouselTitle {
+        margin-bottom: 10px;
+    }
+
+    .carouselWrapper {
+        width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+    }
+
+    .carouselWrapper::-webkit-scrollbar {
+        display: none;
+    }
+
+    .carouselRow {
+        display: grid;
+        grid-template-columns: repeat(20, clamp(120px, 22vw, 180px));
+        gap: 10px;
+        width: max-content;
+    }
+
+    .scrollButton {
+        display: none;
+    }
+}
