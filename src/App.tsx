@@ -9,7 +9,7 @@ import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
 import {Routes, Route} from 'react-router-dom'
-import WishListPage from './pages/WishlistPage'
+import WishListPage from './pages/WishListPage'
 
 function App() {
   return (
