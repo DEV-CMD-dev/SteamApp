@@ -44,20 +44,20 @@ export const tagService = {
         params.append("pageSize", pageSize.toString());
 
         const res = await fetch(
-            `${API_BASE_URL}/Tag?${params.toString()}`
+            `${API_BASE_URL}/Tags?${params.toString()}`
         );
 
         return handleResponse(res, "Failed to load tags.");
     },
 
     async getById(id: number): Promise<TagDto> {
-        const res = await fetch(`${API_BASE_URL}/Tag/${id}`);
+        const res = await fetch(`${API_BASE_URL}/Tags/${id}`);
 
         return handleResponse(res, "Failed to load tag.");
     },
 
     async create(dto: CreateTagDto): Promise<void> {
-        const res = await fetch(`${API_BASE_URL}/Tag`, {
+        const res = await fetch(`${API_BASE_URL}/Tags`, {
             method: "POST",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -67,7 +67,7 @@ export const tagService = {
     },
 
     async put(id: number, dto: PutTagDto): Promise<void> {
-        const res = await fetch(`${API_BASE_URL}/Tag/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Tags/${id}`, {
             method: "PUT",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -77,7 +77,7 @@ export const tagService = {
     },
 
     async patch(id: number, dto: PatchTagDto): Promise<void> {
-        const res = await fetch(`${API_BASE_URL}/Tag/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Tags/${id}`, {
             method: "PATCH",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -87,7 +87,7 @@ export const tagService = {
     },
 
     async delete(id: number): Promise<void> {
-        const res = await fetch(`${API_BASE_URL}/Tag/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Tags/${id}`, {
             method: "DELETE",
             headers: getAuthHeaders(),
         });
