@@ -5,8 +5,8 @@
 }
 
 .pages-container {
-    max-width: var(--website-layout-max-width);
     width: 100%;
+    max-width: var(--website-layout-max-width);
     margin: 0 auto;
     padding: 10px;
     flex: 1;
