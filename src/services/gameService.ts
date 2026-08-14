@@ -68,20 +68,20 @@ export const gameService = {
         }
 
         const res = await fetch(
-            `${API_BASE_URL}/Game?${params.toString()}`
+            `${API_BASE_URL}/Games?${params.toString()}`
         );
 
         return handleResponse(res, "Failed to load games.");
     },
 
     async getById(id: number): Promise<GameDto> {
-        const res = await fetch(`${API_BASE_URL}/Game/${id}`);
+        const res = await fetch(`${API_BASE_URL}/Games/${id}`);
 
         return handleResponse(res, "Failed to load game.");
     },
 
     async create(dto: CreateGameDto): Promise<GameDto> {
-        const res = await fetch(`${API_BASE_URL}/Game`, {
+        const res = await fetch(`${API_BASE_URL}/Games`, {
             method: "POST",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -91,7 +91,7 @@ export const gameService = {
     },
 
     async put(id: number, dto: PutGameDto) {
-        const res = await fetch(`${API_BASE_URL}/Game/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Games/${id}`, {
             method: "PUT",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -101,7 +101,7 @@ export const gameService = {
     },
 
     async patch(id: number, dto: PatchGameDto) {
-        const res = await fetch(`${API_BASE_URL}/Game/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Games/${id}`, {
             method: "PATCH",
             headers: getAuthHeaders(),
             body: JSON.stringify(dto),
@@ -111,7 +111,7 @@ export const gameService = {
     },
 
     async delete(id: number) {
-        const res = await fetch(`${API_BASE_URL}/Game/${id}`, {
+        const res = await fetch(`${API_BASE_URL}/Games/${id}`, {
             method: "DELETE",
             headers: getAuthHeaders(),
         });
