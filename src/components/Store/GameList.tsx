@@ -6,7 +6,12 @@ import { tagService } from "../../services/tagService";
 import GameListItem from "./GameListItem";
 import styles from "../../css/Store/GameList.module.css";
 
-export default function GameList() {
+interface GameListProps {
+    wishlist?: boolean;
+    games?: GameDto[];
+}
+
+export default function GameList({wishlist = false, games: providedGames}: GameListProps) {
     const [games, setGames] = useState<GameDto[]>([]);
     const [tags, setTags] = useState<TagDto[]>([]);
     const [loading, setLoading] = useState(true);
@@ -16,12 +21,21 @@ export default function GameList() {
         const loadData = async () => {
             try {
                 setLoading(true);
+                setError(null);
 
-                const gamesResult = await gameService.getAll(3, 10, {minPrice: 1});
+                let gamesToDisplay: GameDto[];
+
+                if (wishlist) {
+                    gamesToDisplay = providedGames ?? [];
+                } else {
+                    const gamesResult = await gameService.getAll(3, 10, {minPrice: 1});
+
+                    gamesToDisplay = gamesResult.items;
+                }
 
                 const uniqueTagIds = [
                     ...new Set(
-                        gamesResult.items.flatMap(game => game.tagIds ?? [])
+                        gamesToDisplay.flatMap(game => game.tagIds ?? [])
                     )
                 ];
 
@@ -29,17 +43,19 @@ export default function GameList() {
                     uniqueTagIds.map(id => tagService.getById(id))
                 );
 
-                setGames(gamesResult.items);
+                setGames(gamesToDisplay);
                 setTags(tagsResult);
             } catch (err) {
-                setError((err as Error).message || "Failed to load games.");
+                setError(
+                    (err as Error).message || "Failed to load games."
+                );
             } finally {
                 setLoading(false);
             }
         };
 
         loadData();
-    }, []);
+    }, [wishlist, providedGames]);
 
     if (loading) {
         return (
@@ -64,7 +80,7 @@ export default function GameList() {
     return (
         <div className={styles.gameList}>
             <h3 className={styles.carouselTitle}>
-                Popular New Releases
+                {wishlist ? "My Wishlist" : "Popular New Releases"}
             </h3>
 
             {games.map(game => (

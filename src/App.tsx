@@ -9,6 +9,7 @@ import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
 import {Routes, Route} from 'react-router-dom'
+import WishListPage from './pages/WishListPage'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path='/' element={<StorePage />} />
           <Route path='/library' element={<LibraryPage />} />
           <Route path='/profile' element={<ProfilePage />} />
+          <Route path='/wishlist' element={<WishListPage />} />
         </Route>
       </Routes>
     </AuthProvider>

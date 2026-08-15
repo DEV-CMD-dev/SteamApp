@@ -11,7 +11,7 @@ export default function StorePage(){
             <GameCarousel />
             <DiscoveryQueue />
             <DiscountGames />
-            <GameList />
+            <GameList wishlist={false}/>
             <CategoryCarousel />
             <SmallGameCarousel />
         </>
