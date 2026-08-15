@@ -6,15 +6,13 @@ import type { GameDto } from "../DTOs/Game/GameDto";
 export default function WishListPage(){
 
     const [wishlistGames, setWishlistGames] = useState<GameDto[]>([]);
-    
         useEffect(() => {
-
         const fetchWishlist = async () => {
             try {
-            const games = await wishlistService.getMyWishlist();
-            setWishlistGames(games);
+                const games = await wishlistService.getMyWishlist();
+                setWishlistGames(games);
             } catch (err) {
-            console.error(err);
+                console.error(err);
             }
         };
     
