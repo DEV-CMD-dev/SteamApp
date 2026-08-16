@@ -1,32 +1,57 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 type AuthContextType = {
   accessToken: string | null;
-  login: (accessToken: string, username: string) => void;
+  expirationTime: Date | null;
+  username: string | null;
+  login: (accessToken: string, expirationTime:Date, username: string) => void;
   logout: () => void;
 };
 
 export const AuthContext = createContext<AuthContextType>({
   accessToken: null,
+  expirationTime: null,
+  username: null,
   login: () => {},
   logout: () => {},
 });
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [accessToken, setaccessToken] = useState<string | null>(localStorage.getItem("accessToken"));
+  const [accessToken, setAccessToken] = useState<string | null>(
+    localStorage.getItem("accessToken")
+  );
 
-  const login = (newaccessToken: string) => {
-    setaccessToken(newaccessToken);
-    localStorage.setItem("accessToken", newaccessToken);
+  const [expirationTime, setExpirationTime] = useState<Date | null>(() => {
+    const stored = localStorage.getItem("accessTokenExpirationTime");
+    return stored ? new Date(stored) : null;
+  });
+
+  const [username, setUsername] = useState<string | null>(
+    localStorage.getItem("username")
+  );
+  
+  const login = (accessToken: string, expirationTime: Date, username: string) => {
+    setAccessToken(accessToken);
+    setExpirationTime(expirationTime);
+    setUsername(username);
+
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("accessTokenExpirationTime", expirationTime.toString());
+    localStorage.setItem("username", username);
   };
 
   const logout = () => {
-    setaccessToken(null);
+    setAccessToken(null);
+    setExpirationTime(null);
+    setUsername(null);
+
     localStorage.removeItem("accessToken");
+    localStorage.removeItem("accessTokenExpirationTime");
+    localStorage.removeItem("username");
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, login, logout }}>
+    <AuthContext.Provider value={{ accessToken, expirationTime, username,  login, logout }}>
       {children}
     </AuthContext.Provider>
   );
