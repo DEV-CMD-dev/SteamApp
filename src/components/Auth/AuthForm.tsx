@@ -44,8 +44,7 @@ const AuthForm: React.FC = () => {
           Password: form.password.trim(),
         });
 
-        localStorage.setItem("accessToken", data.accessToken);
-        login(data.accessToken, form.identifier);
+        login(data.accessToken, data.expirationTime, data.userName);
         navigate("/");
       } else {
         await authService.register({
