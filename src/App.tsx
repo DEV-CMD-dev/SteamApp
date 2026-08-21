@@ -3,12 +3,13 @@ import AuthForm from './components/Auth/AuthForm'
 import { AuthProvider } from './contexts/AuthContext'
 import MainLayout from './MainLayout'
 import ConfirmedEmailPage from './pages/ConfirmedEmailPage'
+import EditProfilePage from './pages/EditProfilePage'
 import LibraryPage from './pages/LibraryPage'
 import ProfilePage from './pages/ProfilePage'
 import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
 
@@ -31,6 +32,11 @@ function App() {
           <Route path='/profile' element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          } />
+          <Route path='/profile/edit' element={
+            <ProtectedRoute>
+              <EditProfilePage />
             </ProtectedRoute>
           } />
           <Route path='/wishlist' element={
