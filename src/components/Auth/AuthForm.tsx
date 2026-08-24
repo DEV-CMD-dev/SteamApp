@@ -14,13 +14,13 @@ type FormState = {
 };
 
 const AuthForm: React.FC = () => {
-  const { login } = useContext(AuthContext);
+  const { login, requireTwoFactor } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const [isLoading, setIsLoading] = useState(false);
   const [isLogin, setIsLogin] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [form, setForm] = useState<FormState>({
+    const [form, setForm] = useState<FormState>({
     identifier: "",
     email: "",
     password: "",
@@ -44,7 +44,13 @@ const AuthForm: React.FC = () => {
           Password: form.password.trim(),
         });
 
-        login(data.accessToken, data.expirationTime, data.userName);
+        if (!data.accessToken) {
+          requireTwoFactor(form.identifier.trim());
+          navigate("/login-2fa");
+          return;
+        }
+
+        login(data.accessToken, new Date(data.expirationTime), data.userName);
         navigate("/");
       } else {
         await authService.register({
@@ -65,7 +71,7 @@ const AuthForm: React.FC = () => {
       } else {
         setErrorMessage(err.message || "An unexpected error occurred.");
       }
-    } finally {
+        } finally {
       setIsLoading(false);
     }
   };
@@ -87,13 +93,13 @@ const AuthForm: React.FC = () => {
               {isLogin ? "Username or Email" : "Username"}
             </label>
             <input
-              type="text"
-              name="identifier"
-              placeholder={isLogin ? "Username or Email" : "Username"}
-              value={form.identifier}
-              onChange={handleChange}
-              required/>
-          </div>
+                type="text"
+                name="identifier"
+                placeholder={isLogin ? "Username or Email" : "Username"}
+                value={form.identifier}
+                onChange={handleChange}
+                required/>
+              </div>
 
           {!isLogin && (
             <div className="auth-form-group">

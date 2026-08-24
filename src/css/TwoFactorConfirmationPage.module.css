@@ -1,0 +1,154 @@
+.twoFactorPageWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100dvh;
+    color: white;
+    background-color: #171D25;
+}
+
+.logoWrapper {
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 150px;
+}
+
+.twoFactorFormWrapper {
+    width: 100%;
+    max-width: 400px;
+    background-color: #1E2129;
+    border: 1px solid #313437;
+    border-radius: 6px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.twoFactorFormWrapper p {
+    color: #bdbdbd;
+    line-height: 1.5;
+}
+
+.twoFactorForm {
+    margin-top: 25px;
+}
+
+.twoFactorCodeInputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px 0 20px;
+}
+
+.twoFactorCodeInputs input {
+    width: 48px;
+    height: 56px;
+    box-sizing: border-box;
+    background-color: #15181F;
+    color: white;
+    border: 1px solid #313437;
+    border-radius: 7px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.twoFactorCodeInputs input:focus {
+    border-color: white;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+
+.twoFactorCodeInputs input:disabled {
+    opacity: 0.6;
+}
+
+.twoFactorButton {
+    width: 100%;
+    background: linear-gradient(90deg, #6a4bff, #2f7bff);
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-size: medium;
+    padding: 10px;
+    margin-top: 14px;
+    transition: filter 0.3s ease;
+}
+
+.twoFactorButton:hover {
+    filter: brightness(1.1);
+    cursor: pointer;
+}
+
+.twoFactorButton:disabled {
+    background: #4a4f57;
+    color: #c9c9c9;
+    cursor: not-allowed;
+    filter: none;
+    opacity: 0.7;
+}
+
+.twoFactorError {
+    color: rgb(255, 31, 31);
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-shadow:
+        0 0 4px rgba(255, 31, 31, 0.3),
+        0 0 10px rgba(255, 31, 31, 0.5),
+        0 0 15px rgba(255, 31, 31, 0.8);
+}
+
+.backToLogin {
+    display: block;
+    color: #bdbdbd;
+    margin: 15px 0;
+    transition: color 0.3s ease;
+}
+
+.backToLogin:hover {
+    color: white;
+}
+
+@media (max-width: 480px) {
+    .twoFactorPageWrapper {
+        padding: 16px;
+    }
+
+    .twoFactorFormWrapper {
+        padding: 18px;
+    }
+
+    .twoFactorCodeInputs {
+        gap: 6px;
+    }
+
+    .twoFactorCodeInputs input {
+        width: 42px;
+        height: 50px;
+        font-size: 21px;
+    }
+
+    .logo {
+        width: 130px;
+    }
+}
+
+@media (max-width: 360px) {
+    .twoFactorFormWrapper {
+        padding: 15px;
+    }
+
+    .twoFactorCodeInputs {
+        gap: 4px;
+    }
+
+    .twoFactorCodeInputs input {
+        width: 39px;
+        height: 47px;
+        font-size: 20px;
+    }
+}
