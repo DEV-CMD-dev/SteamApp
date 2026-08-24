@@ -3,12 +3,13 @@ import AuthForm from './components/Auth/AuthForm'
 import { AuthProvider } from './contexts/AuthContext'
 import MainLayout from './MainLayout'
 import ConfirmedEmailPage from './pages/ConfirmedEmailPage'
+import GamePageContainer from './pages/GamePageContainer'
 import LibraryPage from './pages/LibraryPage'
 import ProfilePage from './pages/ProfilePage'
 import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
-import {Routes, Route} from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
 
@@ -36,6 +37,11 @@ function App() {
           <Route path='/wishlist' element={
             <ProtectedRoute>
               <WishListPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/game/:id" element={
+            <ProtectedRoute>
+              <GamePageContainer />
             </ProtectedRoute>
           } />
         </Route>

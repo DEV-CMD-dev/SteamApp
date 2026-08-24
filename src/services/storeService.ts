@@ -1,4 +1,4 @@
-import type { PaginatedResponse } from '../DTOs/PaginatedList';
+import type { PaginatedList } from '../DTOs/PaginatedList';
 import type { GameDto } from '../DTOs/GameDto';
 import type { TagDto } from '../DTOs/TagDto';
 
@@ -19,7 +19,7 @@ const handleResponse = async (res: Response, defaultError: string) => {
 };
 
 export const storeService = {
-    async fetchGames(pageNumber: number, pageSize: number = 3): Promise<PaginatedResponse<GameDto>> {
+    async fetchGames(pageNumber: number, pageSize: number = 3): Promise<PaginatedList<GameDto>> {
         const res = await fetch(`${API_BASE_URL}/Game?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
@@ -27,11 +27,19 @@ export const storeService = {
         return handleResponse(res, "Failed to fetch games.");
     },
 
-    async fetchTags(pageNumber: number, pageSize: number = 5): Promise<PaginatedResponse<TagDto>> {
+    async fetchTags(pageNumber: number, pageSize: number = 5): Promise<PaginatedList<TagDto>> {
         const res = await fetch(`${API_BASE_URL}/Tag?pageNumber=${pageNumber}&pageSize=${pageSize}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" }
         });
         return handleResponse(res, "Failed to fetch tags.");
+    },
+
+    async fetchGameById(id: number): Promise<GameDto> {
+        const res = await fetch(`${API_BASE_URL}/Games/${id}`, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" }
+        });
+        return handleResponse(res, "Failed to fetch game.");
     }
 };
