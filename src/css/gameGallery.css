@@ -1,0 +1,212 @@
+.game-gallery {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.gallery-hero {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #10141d;
+}
+
+.gallery-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-arrow {
+    position: absolute;
+
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: rgba(252, 251, 251, 0.6);
+    color: #ffffff;
+
+    border: none;
+
+    font-size: 2rem;
+    font-weight: 300;
+
+    width: 38px;
+    height: 58px;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 2;
+
+    transition:
+        background-color 0.2s,
+        opacity 0.2s;
+}
+
+.gallery-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.gallery-arrow-left {
+    left: 0;
+
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.gallery-arrow-right {
+    right: 0;
+
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.gallery-thumbs-wrapper {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+}
+
+.gallery-thumbs {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    gap: 8px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-thumb {
+    flex: 0 0 100px;
+
+    width: 100px;
+    height: 56px;
+
+    border: 2px solid transparent;
+    border-radius: 3px;
+
+    overflow: hidden;
+
+    padding: 0;
+
+    cursor: pointer;
+
+
+    background: #10141d;
+
+    transition:
+        opacity 0.2s,
+        border-color 0.2s,
+        transform 0.2s;
+}
+
+.gallery-thumb:hover {
+    opacity: 0.85;
+}
+
+.gallery-thumb.active {
+    border-color: #66c0f4;
+    opacity: 1;
+}
+
+.gallery-thumb img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+.gallery-thumb-empty {
+    background: #171d25;
+
+    border: 2px solid rgba(255, 255, 255, 0.05);
+
+    cursor: default;
+
+    opacity: 1;
+}
+
+.gallery-thumb-empty:hover {
+    opacity: 1;
+}
+
+.gallery-thumbs-arrow {
+    flex: 0 0 36px;
+
+    width: 36px;
+    height: 56px;
+
+    padding: 0;
+    margin: 0;
+
+    border: none;
+    background: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: opacity 0.15s ease;
+}
+
+.gallery-thumbs-arrow img {
+    width: 28px;
+    height: 28px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+.gallery-thumbs-arrow:hover {
+    background: transparent;
+    opacity: 0.8;
+}
+
+.gallery-thumbs-arrow:active {
+    opacity: 0.6;
+}
+
+@media (max-width: 700px) {
+
+    .gallery-thumb {
+        flex-basis: 84px;
+        width: 84px;
+        height: 48px;
+    }
+
+    .gallery-thumbs-arrow {
+        flex-basis: 24px;
+        width: 24px;
+        height: 48px;
+
+        font-size: 1.4rem;
+    }
+
+}

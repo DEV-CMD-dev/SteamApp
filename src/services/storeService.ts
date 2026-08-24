@@ -1,5 +1,5 @@
 import type { PaginatedList } from '../DTOs/PaginatedList';
-import type { GameDto } from '../DTOs/GameDto';
+import type { GameDto } from '../DTOs/Game/GameDto';
 import type { TagDto } from '../DTOs/TagDto';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;

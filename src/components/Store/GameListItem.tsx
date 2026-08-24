@@ -1,9 +1,11 @@
 import type { GameDto } from "../../DTOs/Game/GameDto";
 import type { TagDto } from "../../DTOs/Tag/TagDto";
 import styles from "../../css/Store/GameListItem.module.css";
+import { useNavigate } from "react-router-dom";
 
 export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]}) {
     const hasDiscount = game.discount > 0;
+    const navigate = useNavigate();
 
     const finalPrice = hasDiscount
         ? (game.price * (1 - game.discount / 100)).toFixed(2)
@@ -15,7 +17,8 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
         .join(", ");
 
     return (
-        <div className={styles.gameItem}>
+        <div className={styles.gameItem}
+        onClick={() => navigate(`/game/${game.id}`)}>
             <div className={styles.imageContainer}>
                 <img
                     src={game.coverImageHorizontal}
