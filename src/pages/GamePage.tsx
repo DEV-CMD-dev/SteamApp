@@ -119,7 +119,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                 <div className="game-main">
 
                     <GameGallery
-                        slides={[gameDto.coverImageHorizontal, ...gameDto.screenshots.map((s) => s.url)]}
+                        slides={[...gameDto.screenshots.map((s) => s.url)]}
                         title={gameDto.title}/>
 
                     <div className="game-description-wrapper">
