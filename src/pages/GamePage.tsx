@@ -3,7 +3,7 @@ import "../css/gamePage.css";
 import GameGallery from "../components/GameDetailPage/GameGallery";
 import type { GameDto, GameRating } from "../DTOs/Game/GameDto";
 import { wishlistService } from "../services/wishListService";
-import Bag from "../assets/detail-page/solar_bag-bold.png";
+import CartImg from "../assets/detail-page/cart.png"
 import RatingBadge from "../components/GameDetailPage/RatingBadge";
 
 
@@ -120,8 +120,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
                     <GameGallery
                         slides={[gameDto.coverImageHorizontal, ...gameDto.screenshots.map((s) => s.url)]}
-                        title={gameDto.title}
-                    />
+                        title={gameDto.title}/>
 
                     <div className="game-description-wrapper">
                         <p className={`game-description ${!isExpanded && shouldShowToggle ? "collapsed" : ""}`}>
@@ -130,8 +129,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                         {shouldShowToggle && (
                             <button
                                 className="show-more-btn"
-                                onClick={() => setIsExpanded(!isExpanded)}
-                            >
+                                onClick={() => setIsExpanded(!isExpanded)}>
                                 {isExpanded ? "Show less" : "Show more"}
                             </button>
                         )}
@@ -142,12 +140,11 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
                     <div className="game-sidebar-image">
                         <img
-                            src={gameDto.coverImageVertical}
+                            src={gameDto.coverImageHorizontal}
                             alt={gameDto.title}
                             onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = "none";
-                            }}
-                        />
+                            }}/>
                     </div>
 
                     <p className="game-sidebar-summary">
@@ -157,14 +154,13 @@ export default function GamePage({ gameDto }: GamePageProps) {
                     <div className="game-sidebar-buy-box">
 
                         <button className="game-sidebar-buy-btn">
-                            <img src={Bag} alt="" />Buy Now
+                            <img src={CartImg} alt="" />Add to cart
                         </button>
 
                         <button
                             className="game-sidebar-wishlist-btn"
                             onClick={handleWishlistToggle}
-                            disabled={isWishlistLoading}
-                        >
+                            disabled={isWishlistLoading}>
                             {isWishlistLoading
                                 ? "Loading..."
                                 : isInWishlist
