@@ -44,35 +44,7 @@ export default function ProfilePage() {
         ? profile.badges.split(",").length
         : 0;
 
-    const achievements = [
-        {
-            title: "Need for Speed Unbound",
-            count: "21 of 40 achievements",
-            progress: 52,
-            status: "last played 21th July",
-            hours: "54 hours of playing",
-            coverClass: "cover-nfs",
-            badges: ["positive", "positive", "neutral"],
-        },
-        {
-            title: "Grand Theft Auto V Legacy",
-            count: "15 of 77 achievements",
-            progress: 19,
-            status: "last played 1th August",
-            hours: "250 hours of playing",
-            coverClass: "cover-gta",
-            badges: ["positive", "positive", "neutral"],
-        },
-        {
-            title: "Marvel Rivals",
-            count: "0 of 49 achievements",
-            progress: 0,
-            status: "last played 2th August",
-            hours: "10 minutes of playing",
-            coverClass: "cover-marvel",
-            badges: ["neutral"],
-        },
-    ];
+    const recentlyPlayedGames = profile?.recentlyPlayedGames ?? [];
 
     const friends = [
         { name: "nexus", status: "online", count: 12 },
@@ -132,27 +104,56 @@ export default function ProfilePage() {
 
             <div className="profile-content">
                 <main className="achievement-list">
-                    {achievements.map((achievement) => (
-                        <article key={achievement.title} className="achievement-item">
-                            <div className={`achievement-cover ${achievement.coverClass}`} aria-label={achievement.title} />
+                    {!loading && recentlyPlayedGames.length === 0 && (
+                        <div className="achievement-empty-state">
+                            <strong>No recently played games</strong>
+                            <span>Your recently played games will appear here.</span>
+                        </div>
+                    )}
+                    {recentlyPlayedGames.map((game) => {
+                        const unlockedAchievements = game.achievements.filter((achievement) => achievement.isUnlocked).length;
+                        const progress = game.achievements.length
+                            ? Math.round((unlockedAchievements / game.achievements.length) * 100)
+                            : 0;
+                        const lastPlayDate = new Date(game.lastPlayDate).toLocaleDateString(undefined, {
+                            day: "numeric",
+                            month: "long",
+                        });
 
-                            <div className="achievement-data">
-                                <div className="achievement-header">
-                                    <h3>{achievement.title}</h3>
+                        return (
+                            <article key={game.id} className="achievement-item">
+                                <div className="achievement-cover" aria-label={game.title}>
+                                    {game.coverImageHorizontal && <img src={game.coverImageHorizontal} alt="" />}
                                 </div>
-                                <div className="achievement-meta">{achievement.count}</div>
-                                <div className="achievement-progress">
-                                    <span style={{ width: `${achievement.progress}%` }} />
-                                </div>
-                            </div>
 
-                            <div className="achievement-badges">
-                                {achievement.badges.map((badgeType, index) => (
-                                    <span key={`${achievement.title}-${index}`} className={`achievement-badge ${badgeType}`} />
-                                ))}
-                            </div>
-                        </article>
-                    ))}
+                                <div className="achievement-data">
+                                    <div className="achievement-header">
+                                        <h3>{game.title}</h3>
+                                        <div className="achievement-played">
+                                            <span>last played {lastPlayDate}</span>
+                                            <span>{Math.floor(game.playTimeMinutes / 60)} hours of playing</span>
+                                        </div>
+                                    </div>
+                                    <div className="achievement-meta">{unlockedAchievements} of {game.achievements.length} achievements</div>
+                                    <div className="achievement-progress">
+                                        <span style={{ width: `${progress}%` }} />
+                                    </div>
+                                </div>
+
+                                <div className="achievement-badges">
+                                    {game.achievements.map((achievement) => (
+                                        <span
+                                            key={achievement.id}
+                                            className={`achievement-badge ${achievement.isUnlocked ? "positive" : "neutral"}`}
+                                            aria-label={achievement.name}
+                                            role="img">
+                                            {achievement.iconUrl && <img src={achievement.iconUrl} alt="" aria-hidden="true" />}
+                                        </span>
+                                    ))}
+                                </div>
+                            </article>
+                        );
+                    })}
                 </main>
 
                 <aside className="profile-sidebar">
