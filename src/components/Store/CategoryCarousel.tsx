@@ -40,7 +40,7 @@ export default function CategoryCarousel() {
     };
 
     return (
-        <div className={styles.carouselContainer}>
+        <div className={styles.carouselContainer} id="category-carousel">
             <div className={styles.carouselContent}>
 
                 <h3 className={styles.carouselTitle}>
