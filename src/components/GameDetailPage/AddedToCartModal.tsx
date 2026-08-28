@@ -24,54 +24,61 @@ export default function AddedToCartModal({ game, isOpen, onClose, onGoToCart }: 
 
     return (
         <div className={styles.overlay} onClick={onClose}>
-            <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.ticket} onClick={(e) => e.stopPropagation()}>
 
-                <div className={styles.header}>
-                    <span className={styles.title}>Added to Cart!</span>
-                    <button className={styles.closeBtn} onClick={onClose}>
-                        ✕
-                    </button>
-                </div>
-
-                <div className={styles.body}>
+                <div className={styles.artZone}>
                     <img
                         src={game.coverImageHorizontal}
                         alt={game.title || "Game cover"}
-                        className={styles.thumbnail}
+                        className={styles.art}
                     />
+                    <div className={styles.artGradient} />
 
-                    <div className={styles.info}>
-                        <div className={styles.gameTitle}>
-                            {game.title}
-                        </div>
+                    <button className={styles.closeBtn} onClick={onClose}>
+                        ✕
+                    </button>
 
-                        <div className={styles.pricing}>
+                    <div className={styles.stamp}>
+                        Added
+                    </div>
+
+                    <div className={styles.gameTitle}>
+                        {game.title}
+                    </div>
+                </div>
+
+                <div className={styles.perforation}/>
+
+                <div className={styles.actionZone}>
+
+                    <div className={styles.priceBlock}>
+                        <span className={styles.priceLabel}>Total</span>
+                        <div className={styles.priceRow}>
                             {hasDiscount && (
                                 <span className={styles.discountBadge}>
                                     -{discount}%
                                 </span>
                             )}
-
                             {hasDiscount && (
                                 <span className={styles.originalPrice}>
                                     {price.toFixed(2)}$
                                 </span>
                             )}
-
                             <span className={styles.finalPrice}>
                                 {finalPrice}$
                             </span>
                         </div>
                     </div>
-                </div>
 
-                <div className={styles.footer}>
-                    <button className={styles.secondaryBtn} onClick={onClose}>
-                        Continue Shopping
-                    </button>
-                    <button className={styles.primaryBtn} onClick={onGoToCart}>
-                        Go to Cart
-                    </button>
+                    <div className={styles.buttons}>
+                        <button className={styles.secondaryBtn} onClick={onClose}>
+                            Keep Browsing
+                        </button>
+                        <button className={styles.primaryBtn} onClick={onGoToCart}>
+                            View Cart →
+                        </button>
+                    </div>
+
                 </div>
 
             </div>

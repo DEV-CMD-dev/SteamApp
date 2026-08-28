@@ -1,96 +1,161 @@
 .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(4, 8, 13, 0.78);
+    backdrop-filter: blur(2px);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
 }
 
-.modal {
-    background: #16232f;
-    border: 1px solid #2a3f52;
-    border-radius: 6px;
-    width: min(480px, 90vw);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+.ticket {
+    background: #101b26;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    width: min(420px, 90vw);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+    animation: ticketIn 0.2s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 20px;
-    border-bottom: 1px solid #2a3f52;
+@keyframes ticketIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
-.title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #ffffff;
+.artZone {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+}
+
+.art {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.artGradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(16, 27, 38, 1) 0%,
+        rgba(16, 27, 38, 0.35) 55%,
+        rgba(16, 27, 38, 0) 100%
+    );
 }
 
 .closeBtn {
-    background: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
     border: none;
-    color: #8f9bab;
-    font-size: 1.1rem;
+    background: rgba(4, 8, 13, 0.5);
+    color: #eef3f8;
     cursor: pointer;
+    font-size: 0.85rem;
     line-height: 1;
 }
 
 .closeBtn:hover {
-    color: #ffffff;
-}
-
-.body {
-    display: flex;
-    gap: 14px;
-    padding: 18px 20px;
-}
-
-.thumbnail {
-    width: 160px;
-    height: 75px;
-    object-fit: cover;
-    border-radius: 3px;
-    flex-shrink: 0;
-}
-
-.info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 8px;
-    min-width: 0;
+    background: rgba(4, 8, 13, 0.75);
 }
 
 .gameTitle {
-    color: #ffffff;
+    position: absolute;
+    left: 16px;
+    bottom: 12px;
+    right: 16px;
+    color: #eef3f8;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 1.05rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-.pricing {
+.stamp {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    padding: 4px 12px;
+    border: 2px solid #09ff00;
+    border-radius: 3px;
+    color: #09ff00;
+    font-family: "Space Grotesk", "Inter", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transform: rotate(-8deg);
+    animation: stampDown 0.32s cubic-bezier(0.2, 0.9, 0.3, 1.4) 0.08s both;
+}
+
+@keyframes stampDown {
+    from {
+        opacity: 0;
+        transform: rotate(-24deg) scale(1.6);
+    }
+    to {
+        opacity: 1;
+        transform: rotate(-8deg) scale(1);
+    }
+}
+
+.perforation {
+    position: relative;
+    height: 0;
+    border-top: 2px solid rgba(255, 255, 255, 0.15);
+    margin: 0 0;
+}
+
+.actionZone {
+    padding: 18px 20px 20px;
+}
+
+.priceBlock {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.priceLabel {
+    color: #7e93a8;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.priceRow {
     display: flex;
     align-items: center;
     gap: 8px;
+    font-family: "JetBrains Mono", ui-monospace, monospace;
 }
 
 .discountBadge {
     background: #4c6b22;
     color: #a3d648;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.78rem;
     padding: 2px 6px;
     border-radius: 2px;
 }
 
 .originalPrice {
-    color: #8f9bab;
+    color: #7e93a8;
     text-decoration: line-through;
     font-size: 0.85rem;
 }
@@ -98,42 +163,43 @@
 .finalPrice {
     color: #a3d648;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.15rem;
 }
 
-.footer {
+.buttons {
     display: flex;
-    justify-content: flex-end;
     gap: 10px;
-    padding: 16px 20px;
-    border-top: 1px solid #2a3f52;
 }
 
 .secondaryBtn {
-    background: #2a3f52;
-    color: #ffffff;
-    border: none;
-    border-radius: 3px;
-    padding: 10px 16px;
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #eef3f8;
+    border-radius: 5px;
+    padding: 11px 14px;
     cursor: pointer;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+
 }
 
 .secondaryBtn:hover {
-    background: #34506a;
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .primaryBtn {
-    background: #2977c9;
-    color: #ffffff;
+    flex: 1;
+    background: #5cc8ff;
     border: none;
-    border-radius: 3px;
-    padding: 10px 16px;
+    color: #04202e;
+    border-radius: 5px;
+    padding: 11px 14px;
     cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.88rem;
+    font-weight: 700;
 }
 
 .primaryBtn:hover {
-    background: #3a8ae0;
+    background: #7fd4ff;
 }
