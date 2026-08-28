@@ -3,7 +3,7 @@ import "../css/gamePage.css";
 import GameGallery from "../components/GameDetailPage/GameGallery";
 import type { GameDto, GameRating } from "../DTOs/Game/GameDto";
 import { wishlistService } from "../services/wishListService";
-import Bag from "../assets/detail-page/solar_bag-bold.png";
+import Cart from "../assets/detail-page/cart.png";
 import RatingBadge from "../components/GameDetailPage/RatingBadge";
 import { cartService } from "../services/cartService";
 import { useNavigate } from "react-router-dom";
@@ -175,7 +175,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                 <div className="game-main">
 
                     <GameGallery
-                        slides={[gameDto.coverImageHorizontal, ...gameDto.screenshots.map((s) => s.url)]}
+                        slides={gameDto.screenshots?.length ? gameDto.screenshots.map((s) => s.url) : [gameDto.coverImageHorizontal]}
                         title={gameDto.title}
                     />
 
@@ -198,7 +198,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
                     <div className="game-sidebar-image">
                         <img
-                            src={gameDto.coverImageVertical}
+                            src={gameDto.coverImageHorizontal}
                             alt={gameDto.title}
                             onError={(e) => {
                                 (e.target as HTMLImageElement).style.display = "none";
@@ -217,13 +217,14 @@ export default function GamePage({ gameDto }: GamePageProps) {
                             onClick={handleCart}
                             disabled={isCartLoading}
                         >
-                            <img src={Bag} alt="" />
+                            <img src={Cart} alt="" />
 
                             {isCartLoading
                                 ? "Loading..."
                                 : isInCart
                                     ? "Remove from Cart"
-                                    : "Buy Now"}
+                                    : "Add to cart"}
+
                         </button>
 
                         <button
@@ -285,15 +286,6 @@ export default function GamePage({ gameDto }: GamePageProps) {
                                 {gameDto?.developerName?.trim() ? gameDto.developerName : "Unknown"}
                             </span>
                         </div>
-                        <div className="game-sidebar-info-row">
-                            <span className="game-sidebar-info-label">
-                                Publisher
-                            </span>
-                            <span className="game-sidebar-info-value">
-                                {gameDto?.developerName?.trim() ? gameDto.developerName : "Unknown"}
-                            </span>
-                        </div>
-
                     </div>
 
                 </aside>
