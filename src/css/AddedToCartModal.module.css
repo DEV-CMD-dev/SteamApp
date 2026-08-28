@@ -1,0 +1,139 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #16232f;
+    border: 1px solid #2a3f52;
+    border-radius: 6px;
+    width: min(480px, 90vw);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    border-bottom: 1px solid #2a3f52;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    color: #8f9bab;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.closeBtn:hover {
+    color: #ffffff;
+}
+
+.body {
+    display: flex;
+    gap: 14px;
+    padding: 18px 20px;
+}
+
+.thumbnail {
+    width: 160px;
+    height: 75px;
+    object-fit: cover;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+    min-width: 0;
+}
+
+.gameTitle {
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.pricing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.discountBadge {
+    background: #4c6b22;
+    color: #a3d648;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.originalPrice {
+    color: #8f9bab;
+    text-decoration: line-through;
+    font-size: 0.85rem;
+}
+
+.finalPrice {
+    color: #a3d648;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 16px 20px;
+    border-top: 1px solid #2a3f52;
+}
+
+.secondaryBtn {
+    background: #2a3f52;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.secondaryBtn:hover {
+    background: #34506a;
+}
+
+.primaryBtn {
+    background: #2977c9;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.primaryBtn:hover {
+    background: #3a8ae0;
+}
