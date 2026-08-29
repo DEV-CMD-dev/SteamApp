@@ -160,9 +160,19 @@ export default function ProfilePage() {
                     <div className="sidebar-panel">
                         <h4>Settings</h4>
                         <div className="settings-list">
-                            <div className="setting-row"><span>Activity</span><span className="dot" /></div>
-                            <div className="setting-row"><span>Groups</span></div>
-                            <div className="setting-row"><span>Badges</span></div>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=security")}>
+                                <span>Security</span>
+                            </button>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=activity")}>
+                                <span>Activity</span>
+                                <span className="dot" />
+                            </button>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=groups")}>
+                                <span>Groups</span>
+                            </button>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=badges")}>
+                                <span>Badges</span>
+                            </button>
                         </div>
                     </div>
 

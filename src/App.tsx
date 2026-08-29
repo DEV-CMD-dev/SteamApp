@@ -9,6 +9,7 @@ import ProfilePage from './pages/ProfilePage'
 import RequestResetPasswordPage from './pages/RequestResetPasswordPage'
 import ResetPasswordPage from './pages/ResetPasswordPage'
 import StorePage from './pages/StorePage'
+import SettingsPage from './pages/SettingsPage'
 import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
@@ -37,6 +38,11 @@ function App() {
           <Route path='/profile/edit' element={
             <ProtectedRoute>
               <EditProfilePage />
+            </ProtectedRoute>
+          } />
+          <Route path='/settings' element={
+            <ProtectedRoute>
+              <SettingsPage />
             </ProtectedRoute>
           } />
           <Route path='/wishlist' element={
