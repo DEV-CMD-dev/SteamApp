@@ -1,5 +1,6 @@
 import type { LoginRequestDto } from "../DTOs/LoginRequestDto";
 import type { RegisterRequestDto } from "../DTOs/RegisterRequestDto";
+import type { TwoFactorLoginRequestDto } from "../DTOs/UserHelper/TwofactorLoginRequestDto";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -26,6 +27,16 @@ export const authService = {
     });
     return handleResponse(res, "Login failed. Please check your credentials.");
   },
+
+  async loginTwoFactor(dto: TwoFactorLoginRequestDto) {
+  const res = await fetch(`${API_BASE_URL}/Auth/login-2FA`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dto),
+  });
+
+  return handleResponse(res, "Failed to verify 2FA code.");
+},
 
   async register(dto: RegisterRequestDto) {
     const res = await fetch(`${API_BASE_URL}/Auth/register`, {

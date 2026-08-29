@@ -1,0 +1,49 @@
+.rating-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.rating-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.rating-badge {
+  font-weight: 700;
+  font-size: 15px;
+  padding: 2px 0;
+}
+
+.rating-percentage {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.rating-tier-1 {
+  color: #ff4d4d;
+}
+.rating-tier-2 {
+  color: #e6785c;
+}
+
+.rating-tier-3 {
+  color: #d4b04a;
+}
+.rating-tier-4 {
+  color: #7fc954;
+}
+.rating-tier-5 {
+  color: #66c0f4;
+}
+
+.rating-tier-none {
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+}

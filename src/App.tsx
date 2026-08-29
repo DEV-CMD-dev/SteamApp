@@ -13,6 +13,7 @@ import SettingsPage from './pages/SettingsPage'
 import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
+import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
         <Route path='/reset-password' element={<ResetPasswordPage />} />
         <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
+        <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
@@ -48,6 +50,11 @@ function App() {
           <Route path='/wishlist' element={
             <ProtectedRoute>
               <WishListPage />
+            </ProtectedRoute>
+          } />
+          <Route path="/game/:id" element={
+            <ProtectedRoute>
+              <GamePageContainer />
             </ProtectedRoute>
           } />
         </Route>
