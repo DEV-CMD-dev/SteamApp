@@ -42,9 +42,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/game/:id" element={
-            <ProtectedRoute>
-              <GamePageContainer />
-            </ProtectedRoute>
+            <GamePageContainer />
           } />
         </Route>
       </Routes>
