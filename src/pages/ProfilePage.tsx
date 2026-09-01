@@ -78,11 +78,11 @@ export default function ProfilePage() {
 
                 <div className="profile-right">
                     <div className="profile-rank">
-                        <div className="level-badge">
-                            <strong>{loading ? "..." : level}</strong>
-                        </div>
                         <div className="profile-rank-label">
                             <span>Level</span>
+                        </div>
+                        <div className="level-badge">
+                            <strong>{loading ? "..." : level}</strong>
                         </div>
                     </div>
 
@@ -111,45 +111,51 @@ export default function ProfilePage() {
                         </div>
                     )}
                     {recentlyPlayedGames.map((game) => {
-                        const unlockedAchievements = game.achievements.filter((achievement) => achievement.isUnlocked).length;
+                        const unlockedList = game.achievements.filter((achievement) => achievement.isUnlocked);
                         const progress = game.achievements.length
-                            ? Math.round((unlockedAchievements / game.achievements.length) * 100)
+                            ? Math.round((unlockedList.length / game.achievements.length) * 100)
                             : 0;
                         const lastPlayDate = new Date(game.lastPlayDate).toLocaleDateString(undefined, {
                             day: "numeric",
                             month: "long",
                         });
+                        const visibleAchievements = unlockedList.slice(0, 5);
+                        const remainingCount = unlockedList.length - visibleAchievements.length;
 
                         return (
                             <article key={game.id} className="achievement-item">
-                                <div className="achievement-cover" aria-label={game.title}>
-                                    {game.coverImageHorizontal && <img src={game.coverImageHorizontal} alt="" />}
+                                <div className="achievement-top">
+                                    <div className="achievement-cover" aria-label={game.title}>
+                                        {game.coverImageHorizontal && <img src={game.coverImageHorizontal} alt="" />}
+                                    </div>
+
+                                    <h3 className="achievement-title">{game.title}</h3>
+
+                                    <div className="achievement-played">
+                                        <span>{Math.floor(game.playTimeMinutes / 60)} hrs on record</span>
+                                        <span>last played {lastPlayDate}</span>
+                                    </div>
                                 </div>
 
-                                <div className="achievement-data">
-                                    <div className="achievement-header">
-                                        <h3>{game.title}</h3>
-                                        <div className="achievement-played">
-                                            <span>last played {lastPlayDate}</span>
-                                            <span>{Math.floor(game.playTimeMinutes / 60)} hours of playing</span>
-                                        </div>
-                                    </div>
-                                    <div className="achievement-meta">{unlockedAchievements} of {game.achievements.length} achievements</div>
+                                <div className="achievement-stats-bar">
+                                    <span className="achievement-meta">{unlockedList.length} of {game.achievements.length} achievements</span>
                                     <div className="achievement-progress">
                                         <span style={{ width: `${progress}%` }} />
                                     </div>
-                                </div>
-
-                                <div className="achievement-badges">
-                                    {game.achievements.map((achievement) => (
-                                        <span
-                                            key={achievement.id}
-                                            className={`achievement-badge ${achievement.isUnlocked ? "positive" : "neutral"}`}
-                                            aria-label={achievement.name}
-                                            role="img">
-                                            {achievement.iconUrl && <img src={achievement.iconUrl} alt="" aria-hidden="true" />}
-                                        </span>
-                                    ))}
+                                    <div className="achievement-badges">
+                                        {visibleAchievements.map((achievement) => (
+                                            <span
+                                                key={achievement.id}
+                                                className="achievement-badge positive"
+                                                aria-label={achievement.name}
+                                                role="img">
+                                                {achievement.iconUrl && <img src={achievement.iconUrl} alt="" aria-hidden="true" />}
+                                            </span>
+                                        ))}
+                                        {remainingCount > 0 && (
+                                            <span className="achievement-more">+{remainingCount}</span>
+                                        )}
+                                    </div>
                                 </div>
                             </article>
                         );
@@ -158,10 +164,9 @@ export default function ProfilePage() {
 
                 <aside className="profile-sidebar">
                     <div className="sidebar-panel">
-                        <h4>Settings</h4>
                         <div className="settings-list">
-                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=security")}>
-                                <span>Security</span>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings")}>
+                                <span>Settings</span>
                             </button>
                             <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=activity")}>
                                 <span>Activity</span>
@@ -176,7 +181,7 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    <div className="sidebar-panel">
+                    <div className="sidebar-panel" id="friends-panel">
                         <h4>Friends</h4>
                         <div className="friend-list">
                             {friends.map((friend) => (
@@ -184,7 +189,9 @@ export default function ProfilePage() {
                                     <div className="friend-avatar" />
                                     <div className="friend-content">
                                         <span className="friend-name">{friend.name}</span>
-                                        <span className="friend-status">{friend.status}</span>
+                                        <span className={`friend-status ${friend.status === "online" ? "online" : "offline"}`}>
+                                            {friend.status}
+                                        </span>
                                     </div>
                                     <div className="friend-count">{friend.count}</div>
                                 </div>

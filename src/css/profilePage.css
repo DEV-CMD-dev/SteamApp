@@ -21,52 +21,22 @@
 }
 
 .profile-avatar-shell {
-    width: 210px;
-    height: 210px;
-    border-radius: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    width: 190px;
+    height: 190px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: #10151d;
     border: 1px solid rgba(255, 255, 255, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    overflow: hidden;
 }
 
 .profile-avatar {
-    width: 160px;
-    height: 160px;
-    border-radius: 0;
-    background: radial-gradient(circle at 35% 30%, #f9d1a0 0%, #d4884b 20%, #654431 55%, #1a1a1b 100%);
-    border: 4px solid rgba(255, 255, 255, 0.18);
-    position: relative;
-    overflow: hidden;
-    object-fit: cover;
+    width: 100%;
+    height: 100%;
     display: block;
-}
-
-.profile-avatar::before,
-.profile-avatar::after {
-    content: "";
-    position: absolute;
-    inset: auto;
-}
-
-.profile-avatar::before {
-    width: 52%;
-    height: 52%;
-    left: 24%;
-    top: 22%;
-    border-radius: 50%;
-    background: rgba(46, 33, 23, 0.9);
-}
-
-.profile-avatar::after {
-    width: 74%;
-    height: 42%;
-    left: 13%;
-    bottom: 8%;
-    border-radius: 50% 50% 42% 42%;
-    background: rgba(50, 36, 27, 0.85);
+    border-radius: inherit;
+    background: #10151d;
+    object-fit: cover;
 }
 
 .profile-meta {
@@ -128,7 +98,7 @@
 .profile-rank-label {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-end;
     color: #e4eaf6;
     font-weight: 600;
 }
@@ -157,7 +127,7 @@
 .profile-identity-card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0;
+    border-radius: 10px;
     padding: 10px 12px;
     display: flex;
     align-items: center;
@@ -211,7 +181,7 @@
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     color: #edf2f7;
-    border-radius: 0;
+    border-radius: 8px;
     padding: 10px 18px;
     font-size: 0.9rem;
     cursor: pointer;
@@ -266,21 +236,27 @@
 }
 
 .achievement-item {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(16, 24, 35, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 16px;
+}
+
+.achievement-top {
     display: grid;
-    grid-template-columns: minmax(220px, 1.2fr) minmax(0, 1.8fr) auto;
-    align-items: center;
+    grid-template-columns: minmax(180px, 260px) 1fr auto;
+    align-items: flex-start;
     gap: 18px;
-    background: rgba(16, 24, 35, 0.78);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0;
-    padding: 14px 16px;
 }
 
 .achievement-cover {
     width: 100%;
     max-width: 260px;
     height: 110px;
-    border-radius: 0;
+    border-radius: 8px;
     position: relative;
     overflow: hidden;
     background: linear-gradient(135deg, #4f6b7a, #161d2a);
@@ -317,25 +293,12 @@
     display: block;
 }
 
-.achievement-data {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 0;
-}
-
-.achievement-header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-}
-
-.achievement-header h3 {
+.achievement-title {
     margin: 0;
-    font-size: clamp(1.5rem, 2vw, 2rem);
-    font-weight: 700;
-    letter-spacing: -0.05em;
+    padding-top: 4px;
+    font-size: clamp(1.3rem, 2vw, 1.8rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
     line-height: 1.1;
     color: #edf2f7;
 }
@@ -345,31 +308,43 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 2px;
-    color: rgba(228, 234, 246, 0.72);
-    font-size: 0.82rem;
+    padding-top: 4px;
+    color: rgba(228, 234, 246, 0.6);
+    font-size: 0.85rem;
     line-height: 1.35;
     text-align: right;
     white-space: nowrap;
-    margin-left: auto;
+}
+
+.achievement-stats-bar {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
 }
 
 .achievement-meta {
-    color: rgba(228, 234, 246, 0.78);
-    font-size: 0.83rem;
+    color: #edf2f7;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .achievement-progress {
-    width: 100%;
-    height: 10px;
+    width: 150px;
+    flex-shrink: 0;
+    height: 8px;
     background: rgba(255, 255, 255, 0.12);
-    border-radius: 0;
+    border-radius: 999px;
     overflow: hidden;
 }
 
 .achievement-progress>span {
     display: block;
     height: 100%;
-    border-radius: 0;
+    border-radius: 999px;
     background: linear-gradient(90deg, #3b92ff, #6ed2ff);
 }
 
@@ -379,13 +354,13 @@
     align-items: center;
     gap: 8px;
     flex-wrap: wrap;
-    min-width: 130px;
+    margin-left: auto;
 }
 
 .achievement-badge {
     width: 34px;
     height: 34px;
-    border-radius: 0;
+    border-radius: 6px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     background: linear-gradient(135deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.03));
     display: inline-flex;
@@ -409,6 +384,20 @@
     object-fit: cover;
 }
 
+.achievement-more {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 8px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.45);
+    color: #edf2f7;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
 .profile-sidebar {
     display: flex;
     flex-direction: column;
@@ -418,7 +407,7 @@
 .sidebar-panel {
     background: rgba(16, 24, 35, 0.78);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 0;
+    border-radius: 10px;
     padding: 16px 18px;
 }
 
@@ -497,6 +486,14 @@
     color: rgba(228, 234, 246, 0.62);
 }
 
+.friend-status.online {
+    color: #52d17a;
+}
+
+.friend-status.offline {
+    color: rgba(228, 234, 246, 0.5);
+}
+
 .friend-count {
     min-width: 30px;
     height: 30px;
@@ -544,17 +541,17 @@
     }
 
     .profile-avatar-shell {
-        width: 170px;
-        height: 170px;
+        width: 150px;
+        height: 150px;
     }
 
-    .profile-avatar {
-        width: 126px;
-        height: 126px;
-    }
-
-    .achievement-item {
+    .achievement-top {
         grid-template-columns: 1fr;
+    }
+
+    .achievement-played {
+        align-items: flex-start;
+        text-align: left;
     }
 
     .achievement-cover {
@@ -562,7 +559,12 @@
         height: 110px;
     }
 
+    .achievement-stats-bar {
+        flex-wrap: wrap;
+    }
+
     .achievement-badges {
         justify-content: flex-start;
+        margin-left: 0;
     }
 }
