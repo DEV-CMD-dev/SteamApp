@@ -7,18 +7,19 @@
 .navbar-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         "logo primary-nav"
         "categories actions";
     row-gap: 20px;
     column-gap: 40px;
     padding: 20px 50px;
+    padding-bottom: 0.5%;
     align-items: center;
     max-width: var(--website-layout-max-width);
     margin: 0 auto;
 }
 
-.logo-container { 
+.logo-container {
     grid-area: logo;
     display: flex;
     align-items: center;
@@ -37,7 +38,7 @@
     object-fit: contain;
 }
 
-.nav-buttons-container { 
+.nav-buttons-container {
     grid-area: primary-nav;
     display: flex;
     justify-content: flex-end;
@@ -48,7 +49,7 @@
 .nav-link {
     position: relative;
     text-decoration: none;
-    color: #bdbdbd; 
+    color: #bdbdbd;
     font-weight: 700;
     font-size: 20px;
     letter-spacing: 0.5px;
@@ -73,7 +74,7 @@
     background-color: #009ff5;
 }
 
-.categories-container { 
+.categories-container {
     grid-area: categories;
     display: flex;
     flex-direction: row;
@@ -112,7 +113,7 @@
     transform: translateY(2px);
 }
 
-.nav-actions-container { 
+.nav-actions-container {
     grid-area: actions;
     display: flex;
     flex-direction: row;
@@ -161,7 +162,7 @@
 .search-bar-button img {
     height: 16px;
     width: 16px;
-    transition: transform 0.2s ease; 
+    transition: transform 0.2s ease;
 }
 
 .search-bar-button:hover img {
@@ -282,7 +283,7 @@
 @media (max-width: 768px) {
     .navbar-container {
         grid-template-columns: 1fr;
-        grid-template-areas: 
+        grid-template-areas:
             "logo"
             "primary-nav"
             "categories"
