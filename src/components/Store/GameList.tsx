@@ -10,12 +10,14 @@ interface GameListProps {
     wishlist?: boolean;
     cart?: boolean;
     games?: GameDto[];
+    onRemoveFromCart?: (gameId: number) => void;
 }
 
 export default function GameList({
     wishlist = false,
     cart = false,
-    games: providedGames
+    games: providedGames,
+    onRemoveFromCart
 }: GameListProps) {
 
     const [games, setGames] = useState<GameDto[]>([]);
@@ -35,9 +37,7 @@ export default function GameList({
                 let gamesToDisplay: GameDto[];
 
                 if (wishlist || cart) {
-
                     gamesToDisplay = providedGames ?? [];
-
                 } else {
 
                     const gamesResult = await gameService.getAll(
@@ -104,21 +104,21 @@ export default function GameList({
     }
 
     return (
-        <div className={styles.gameList}>
+        <div className={`${styles.gameList} ${cart ? styles.cartGameList : ""}`}>
 
-            <h3 className={styles.carouselTitle}>
-                {wishlist
-                    ? "My Wishlist"
-                    : cart
-                        ? "My Cart"
-                        : "Popular New Releases"}
-            </h3>
+            {!cart && (
+    <h3 className={styles.carouselTitle}>
+        {wishlist ? "My Wishlist" : "Popular New Releases"}
+    </h3>
+)}
 
             {games.map(game => (
                 <GameListItem
                     key={game.id}
                     game={game}
                     tags={tags}
+                    cart={cart}
+                    onRemoveFromCart={onRemoveFromCart}
                 />
             ))}
 

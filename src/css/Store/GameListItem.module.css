@@ -139,6 +139,24 @@
     white-space: nowrap;
 }
 
+.removeFromCart {
+    margin-top: 8px;
+    padding: 5px 8px;
+
+    border: none;
+    background: transparent;
+
+    color: #6b7280;
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.removeFromCart:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
 @media (max-width: 992px) {
     .gameItem {
         height: 82px;
