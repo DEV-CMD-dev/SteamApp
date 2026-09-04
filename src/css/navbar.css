@@ -206,7 +206,7 @@
 .categories-dropdown-inner {
   min-height: 0;
   overflow: hidden;
-  padding: 0 0 16px;
+  width: 100%;
 }
 
 .categories-dropdown-title {
@@ -225,9 +225,11 @@
 }
 
 .categories-dropdown-item {
-  min-width: 0;
-  overflow: hidden;
-  aspect-ratio: 4 / 2.6;
+    min-width: 0;
+    overflow: hidden;
+    aspect-ratio: 4 / 2.6;
+
+    --tag-height: 100%;
 }
 
 .categories-dropdown-view-all {
@@ -264,10 +266,6 @@
 .categories-dropdown.open {
     max-height: 220px;
     opacity: 1;
-}
-
-.categories-dropdown-inner {
-    width: 100%;
 }
 
 .categories-dropdown-content {
