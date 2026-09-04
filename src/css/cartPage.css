@@ -1,0 +1,295 @@
+.cart-page {
+    width: 100%;
+    max-width: 1660px;
+    margin: 0 auto;
+
+    padding: 25px 40px 60px;
+
+    box-sizing: border-box;
+}
+
+.cart-breadcrumb {
+    color: #6b7280;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.cart-breadcrumb span {
+    margin: 0 6px;
+}
+
+.cart-title {
+    margin: 0 0 22px;
+
+    color: #ffffff;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.cart-layout {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 340px;
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+.cart-main {
+    min-width: 0;
+}
+
+
+/* =========================
+   GAME LIST
+========================= */
+
+.cart-main .gameList {
+    width: 100%;
+}
+
+
+/*
+   Робимо GameListItem коротшим,
+   як на макеті
+*/
+
+.cart-main .gameItem {
+    width: 100%;
+    max-width: none;
+    min-height: 108px;
+    margin-bottom: 16px;
+}
+
+
+/* =========================
+   BOTTOM BUTTONS
+========================= */
+
+.cart-bottom-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+.cart-back-btn,
+.cart-checkout-btn {
+    border: none;
+    border-radius: 2px;
+
+    padding: 10px 20px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.cart-back-btn {
+    background: #3b4a5c;
+    color: #ffffff;
+}
+
+.cart-back-btn:hover {
+    background: #4a5b70;
+}
+
+.cart-checkout-btn {
+    background: linear-gradient(
+        90deg,
+        #2497e8,
+        #2b63d9
+    );
+
+    color: #ffffff;
+}
+
+.cart-checkout-btn:hover {
+    filter: brightness(1.08);
+}
+
+.cart-checkout-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.cart-sidebar {
+    width: 100%;
+}
+
+.cart-summary {
+    background: #162536;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+}
+
+.cart-summary-title {
+    color: #d6e1eb;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    margin-bottom: 12px;
+}
+
+.cart-total {
+    text-align: right;
+
+    color: #ffffff;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    margin-bottom: 18px;
+}
+
+.cart-tax-text {
+    color: #b8c5d1;
+
+    font-size: 12px;
+    line-height: 1.45;
+
+    margin: 0 0 14px;
+}
+
+.cart-sidebar-checkout-btn {
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+    border-radius: 2px;
+
+    background: linear-gradient(
+        90deg,
+        #259ff6,
+        #2867dc
+    );
+
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.cart-sidebar-checkout-btn:hover {
+    filter: brightness(1.08);
+}
+
+.cart-sidebar-checkout-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* =========================
+   INFO BLOCK
+========================= */
+
+.cart-info {
+    margin-top: 18px;
+
+    padding: 18px;
+
+    background: #1a2b3d;
+
+    box-sizing: border-box;
+}
+
+.cart-info-image {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    margin-bottom: 14px;
+}
+
+.cart-info-image img {
+    width: 85%;
+    height: 85%;
+
+    object-fit: contain;
+}
+
+.cart-info p {
+    margin: 0 0 10px;
+
+    color: #d4dce5;
+
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.cart-info span {
+    color: #aebdca;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
+.cart-loading {
+    min-height: 400px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ffffff;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 900px) {
+
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-sidebar {
+        max-width: 100%;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .cart-page {
+        padding: 20px;
+    }
+
+    .cart-bottom-buttons {
+        flex-direction: column;
+    }
+
+    .cart-back-btn,
+    .cart-checkout-btn {
+        width: 100%;
+    }
+
+}

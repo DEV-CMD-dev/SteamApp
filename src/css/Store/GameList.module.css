@@ -6,7 +6,11 @@
     max-width: var(--website-layout-max-width);
     gap: 6px;
 }
-
+.cartGameList {
+    padding: 0;
+    margin-top: 0;
+    max-width: none;
+}
 .carouselTitle {
     color: white;
     margin: 0 0 10px 0;

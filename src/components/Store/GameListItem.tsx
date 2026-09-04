@@ -3,7 +3,17 @@ import type { TagDto } from "../../DTOs/Tag/TagDto";
 import styles from "../../css/Store/GameListItem.module.css";
 import { useNavigate } from "react-router-dom";
 
-export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]}) {
+export default function GameListItem({
+    game,
+    tags,
+    cart = false,
+    onRemoveFromCart
+}: {
+    game: GameDto;
+    tags: TagDto[];
+    cart?: boolean;
+    onRemoveFromCart?: (gameId: number) => void;
+}) {
     const hasDiscount = game.discount > 0;
     const navigate = useNavigate();
 
@@ -48,24 +58,41 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
             </div>
 
             <div className={styles.purchaseSection}>
-                {hasDiscount && (
-                    <span className={styles.discountBadge}>
-                        -{game.discount}%
-                    </span>
-                )}
 
-                <div className={styles.pricing}>
-                    {hasDiscount && (
-                        <span className={styles.originalPrice}>
-                            {game.price.toFixed(2)}$
-                        </span>
-                    )}
+    {hasDiscount && (
+        <span className={styles.discountBadge}>
+            -{game.discount}%
+        </span>
+    )}
 
-                    <span className={styles.finalPrice}>
-                        {finalPrice}$
-                    </span>
-                </div>
-            </div>
+    <div className={styles.pricing}>
+
+        {hasDiscount && (
+            <span className={styles.originalPrice}>
+                {game.price.toFixed(2)}$
+            </span>
+        )}
+
+        <span className={styles.finalPrice}>
+            {finalPrice}$
+        </span>
+
+    </div>
+
+    {cart && (
+        <button
+            className={styles.removeFromCart}
+            onClick={(e) => {
+                e.stopPropagation();
+
+                onRemoveFromCart?.(game.id);
+            }}
+        >
+            Remove
+        </button>
+    )}
+
+</div>
         </div>
     );
 }

@@ -8,34 +8,52 @@ import styles from "../../css/Store/GameList.module.css";
 
 interface GameListProps {
     wishlist?: boolean;
+    cart?: boolean;
     games?: GameDto[];
+    onRemoveFromCart?: (gameId: number) => void;
 }
 
-export default function GameList({wishlist = false, games: providedGames}: GameListProps) {
+export default function GameList({
+    wishlist = false,
+    cart = false,
+    games: providedGames,
+    onRemoveFromCart
+}: GameListProps) {
+
     const [games, setGames] = useState<GameDto[]>([]);
     const [tags, setTags] = useState<TagDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+
         const loadData = async () => {
+
             try {
+
                 setLoading(true);
                 setError(null);
 
                 let gamesToDisplay: GameDto[];
 
-                if (wishlist) {
+                if (wishlist || cart) {
                     gamesToDisplay = providedGames ?? [];
                 } else {
-                    const gamesResult = await gameService.getAll(3, 10, {minPrice: 1});
+
+                    const gamesResult = await gameService.getAll(
+                        3,
+                        10,
+                        { minPrice: 1 }
+                    );
 
                     gamesToDisplay = gamesResult.items;
                 }
 
                 const uniqueTagIds = [
                     ...new Set(
-                        gamesToDisplay.flatMap(game => game.tagIds ?? [])
+                        gamesToDisplay.flatMap(
+                            game => game.tagIds ?? []
+                        )
                     )
                 ];
 
@@ -45,17 +63,25 @@ export default function GameList({wishlist = false, games: providedGames}: GameL
 
                 setGames(gamesToDisplay);
                 setTags(tagsResult);
+
             } catch (err) {
+
                 setError(
-                    (err as Error).message || "Failed to load games."
+                    (err as Error).message ||
+                    "Failed to load games."
                 );
+
             } finally {
+
                 setLoading(false);
+
             }
+
         };
 
         loadData();
-    }, [wishlist, providedGames]);
+
+    }, [wishlist, cart, providedGames]);
 
     if (loading) {
         return (
@@ -78,17 +104,24 @@ export default function GameList({wishlist = false, games: providedGames}: GameL
     }
 
     return (
-        <div className={styles.gameList}>
-            <h3 className={styles.carouselTitle}>
-                {wishlist ? "My Wishlist" : "Popular New Releases"}
-            </h3>
+        <div className={`${styles.gameList} ${cart ? styles.cartGameList : ""}`}>
+
+            {!cart && (
+    <h3 className={styles.carouselTitle}>
+        {wishlist ? "My Wishlist" : "Popular New Releases"}
+    </h3>
+)}
 
             {games.map(game => (
                 <GameListItem
                     key={game.id}
                     game={game}
-                    tags={tags}/>
+                    tags={tags}
+                    cart={cart}
+                    onRemoveFromCart={onRemoveFromCart}
+                />
             ))}
+
         </div>
     );
 }

@@ -5,6 +5,9 @@ import type { GameDto, GameRating } from "../DTOs/Game/GameDto";
 import { wishlistService } from "../services/wishListService";
 import Cart from "../assets/detail-page/cart.png";
 import RatingBadge from "../components/GameDetailPage/RatingBadge";
+import { cartService } from "../services/cartService";
+import { useNavigate } from "react-router-dom";
+import AddedToCartModal from "../components/GameDetailPage/AddedToCartModal";
 
 
 type GamePageProps = {
@@ -43,6 +46,10 @@ export default function GamePage({ gameDto }: GamePageProps) {
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isWishlistLoading, setIsWishlistLoading] = useState(false);
     const [wishlistError, setWishlistError] = useState<string | null>(null);
+    const [isInCart, setIsInCart] = useState(false);
+    const [isCartLoading, setIsCartLoading] = useState(false);
+    const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const rawRequirements = (gameDto.systemRequirements ?? "")
         .split(/[;,]/)
@@ -93,6 +100,37 @@ export default function GamePage({ gameDto }: GamePageProps) {
             setIsWishlistLoading(false);
         }
     };
+
+    const handleCart = async () => {
+
+        try {
+
+            setIsCartLoading(true);
+
+            if (isInCart) {
+
+                await cartService.removeGame(gameDto.id);
+                setIsInCart(false);
+
+            } else {
+
+                await cartService.addGame(gameDto.id);
+                setIsInCart(true);
+                setIsCartModalOpen(true);
+
+            }
+
+        } catch (err) {
+
+            console.error(err);
+
+        } finally {
+
+            setIsCartLoading(false);
+
+        }
+    };
+
     useEffect(() => {
         const checkWishlist = async () => {
             try {
@@ -109,6 +147,24 @@ export default function GamePage({ gameDto }: GamePageProps) {
         };
 
         checkWishlist();
+    }, [gameDto.id]);
+
+    useEffect(() => {
+        const checkCart = async () => {
+            try {
+                const cart = await cartService.getMyCart();
+
+                const exists = cart.some(
+                    game => game.id === gameDto.id
+                );
+
+                setIsInCart(exists);
+            } catch (err) {
+                console.error("Failed to check cart:", err);
+            }
+        };
+
+        checkCart();
     }, [gameDto.id]);
 
     return (
@@ -156,8 +212,19 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
                     <div className="game-sidebar-buy-box">
 
-                        <button className="game-sidebar-buy-btn">
-                            <img src={Cart} alt="" />Add to cart
+                        <button
+                            className="game-sidebar-buy-btn"
+                            onClick={handleCart}
+                            disabled={isCartLoading}
+                        >
+                            <img src={Cart} alt="" />
+
+                            {isCartLoading
+                                ? "Loading..."
+                                : isInCart
+                                    ? "Remove from Cart"
+                                    : "Add to cart"}
+
                         </button>
 
                         <button
@@ -407,6 +474,12 @@ export default function GamePage({ gameDto }: GamePageProps) {
                 </section>
 
             </div>
+            <AddedToCartModal
+                game={gameDto}
+                isOpen={isCartModalOpen}
+                onClose={() => setIsCartModalOpen(false)}
+                onGoToCart={() => navigate("/cart")}
+            />
         </div>
     );
 }
