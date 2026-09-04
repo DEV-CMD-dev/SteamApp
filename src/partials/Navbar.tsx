@@ -13,6 +13,7 @@ import arrowDownIcon from "../assets/navbar/arrow-down.svg";
 import arrowUpIcon from "../assets/navbar/arrow-up.svg";
 
 const TOP_CATEGORIES_COUNT = 6;
+const DROPDOWN_ANIMATION_DURATION = 280;
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
@@ -41,23 +42,27 @@ export default function Navbar() {
     }
   };
 
-  const DROPDOWN_ANIMATION_DURATION = 280;
-
   const handleViewAllTags = () => {
     setActiveDropdown(null);
 
-    setTimeout(() => {
+    const scrollToCarousel = () => {
       const carousel = document.getElementById("category-carousel");
 
       if (carousel) {
-        carousel.scrollIntoView({
+        const elementPosition = carousel.getBoundingClientRect().top + window.scrollY;
+
+        const navbarHeight = navRef.current?.offsetHeight || 0;
+        window.scrollTo({
+          top: elementPosition - navbarHeight - 20,
           behavior: "smooth",
-          block: "start",
         });
       } else {
         window.location.href = "/#category-carousel";
       }
-    }, DROPDOWN_ANIMATION_DURATION);
+    };
+    requestAnimationFrame(() => {
+      setTimeout(scrollToCarousel, DROPDOWN_ANIMATION_DURATION);
+    });
   };
 
   const recalculatePanelPosition = () => {
@@ -81,6 +86,28 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", recalculatePanelPosition);
   }, [activeDropdown, categories]);
 
+  // Публікуємо реальну висоту навбару в CSS-змінну для розрахунку відступів сторінки
+  useLayoutEffect(() => {
+    if (!navRef.current) {
+      return;
+    }
+
+    const updateHeight = () => {
+      if (navRef.current) {
+        document.documentElement.style.setProperty(
+          "--navbar-height",
+          `${navRef.current.offsetHeight}px`
+        );
+      }
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(navRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
@@ -94,8 +121,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`navbar ${activeDropdown === "Categories" ? "navbar-expanded" : ""
-        }`}
+      className={`navbar ${activeDropdown === "Categories" ? "navbar-expanded" : ""}`}
       ref={navRef}
     >
       <div className="navbar-container">
