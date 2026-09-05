@@ -1,0 +1,127 @@
+.edit-profile-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.edit-profile-card {
+    width: min(100%, 720px);
+    background: rgba(12, 19, 27, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 32px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
+.edit-profile-card h1 {
+    margin: 0 0 24px;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: #edf2f7;
+    letter-spacing: -0.06em;
+}
+
+.edit-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.edit-profile-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.96rem;
+    color: #dfe8f5;
+}
+
+.edit-profile-form input,
+.edit-profile-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font: inherit;
+    color: #edf2f7;
+    resize: vertical;
+}
+
+.edit-profile-form input:focus,
+.edit-profile-form textarea:focus {
+    outline: none;
+    border-color: rgba(59, 146, 255, 0.9);
+    box-shadow: 0 0 0 3px rgba(59, 146, 255, 0.18);
+}
+
+.edit-profile-form textarea {
+    min-height: 110px;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.primary-button,
+.secondary-button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.primary-button {
+    background: linear-gradient(135deg, #3b92ff, #66b7ff);
+    color: #081620;
+}
+
+.secondary-button {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #edf2f7;
+}
+
+.primary-button:hover,
+.secondary-button:hover {
+    transform: translateY(-1px);
+}
+
+.primary-button:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
+
+.loading-state {
+    color: #dfe8f5;
+    padding: 12px 0;
+}
+
+.form-error {
+    background: rgba(255, 87, 87, 0.1);
+    border: 1px solid rgba(255, 87, 87, 0.25);
+    color: #ffd4d4;
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+}
+
+@media (max-width: 600px) {
+    .edit-profile-card {
+        padding: 22px 18px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .primary-button,
+    .secondary-button {
+        width: 100%;
+    }
+}
