@@ -13,6 +13,7 @@ import SettingsPage from './pages/SettingsPage'
 import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
+import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 
 function App() {
   return (
@@ -49,6 +50,9 @@ function App() {
             <ProtectedRoute>
               <WishListPage />
             </ProtectedRoute>
+          } />
+          <Route path="/game/:id" element={
+            <GamePageContainer />
           } />
         </Route>
       </Routes>
