@@ -15,6 +15,7 @@ import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
+import TopSellersPage from './pages/TopSellersPage'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
+          <Route path='/top-sellers' element={<TopSellersPage />} />
           <Route path='/library' element={
             <ProtectedRoute>
               <LibraryPage />
