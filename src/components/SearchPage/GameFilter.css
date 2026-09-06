@@ -1,0 +1,31 @@
+.filter-container {
+    width: 100%;
+    height: min-content;
+    background-color: transparent;
+    border-radius: 1px;
+}
+
+.filter-header {
+    width: 100%;
+    background-color: #323e4c;
+    padding: 6px;
+    font-size: 13px;
+    color: #c7d5e0;
+    cursor: pointer;
+}
+
+.filter-content {
+    width: 100%;
+    height: min-content;
+    background-color: #1b2838;
+    border: 1px solid #323e4c;
+    border-top: none;
+    padding: 3px;
+    box-sizing: border-box;
+    border-radius: 0px 0px 1px 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 0;
+    overflow: hidden;
+}

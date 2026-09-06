@@ -15,6 +15,7 @@ import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
+import SearchPage from './pages/SearchPage'
 
 function App() {
   return (
@@ -55,6 +56,9 @@ function App() {
           } />
           <Route path="/game/:id" element={
             <GamePageContainer />
+          } />
+          <Route path="/search" element={
+            <SearchPage />
           } />
         </Route>
       </Routes>
