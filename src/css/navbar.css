@@ -13,6 +13,7 @@
     row-gap: 20px;
     column-gap: 40px;
     padding: 20px 50px;
+    padding-bottom: 0.5%;
     align-items: center;
     max-width: var(--website-layout-max-width);
     margin: 0 auto;

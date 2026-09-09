@@ -14,6 +14,7 @@ import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
+import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
         <Route path='/reset-password' element={<ResetPasswordPage />} />
         <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
+        <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
@@ -52,9 +54,7 @@ function App() {
             </ProtectedRoute>
           } />
           <Route path="/game/:id" element={
-            <ProtectedRoute>
-              <GamePageContainer />
-            </ProtectedRoute>
+            <GamePageContainer />
           } />
         </Route>
       </Routes>

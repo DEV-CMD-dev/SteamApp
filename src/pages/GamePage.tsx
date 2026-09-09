@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../css/gamePage.css";
 import GameGallery from "../components/GameDetailPage/GameGallery";
 import type { GameDto, GameRating } from "../DTOs/Game/GameDto";
 import { wishlistService } from "../services/wishListService";
 import Cart from "../assets/detail-page/cart.png";
 import RatingBadge from "../components/GameDetailPage/RatingBadge";
+import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 type GamePageProps = {
@@ -39,10 +41,12 @@ const ratingText = (rating: GameRating): string => {
 };
 
 export default function GamePage({ gameDto }: GamePageProps) {
+    const {accessToken} = useContext(AuthContext)
     const [isExpanded, setIsExpanded] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isWishlistLoading, setIsWishlistLoading] = useState(false);
     const [wishlistError, setWishlistError] = useState<string | null>(null);
+    const navigate = useNavigate()
 
     const rawRequirements = (gameDto.systemRequirements ?? "")
         .split(/[;,]/)
@@ -73,6 +77,10 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
     const handleWishlistToggle = async () => {
         try {
+            if(!accessToken){
+                navigate("/auth")
+                return;
+            }
             setIsWishlistLoading(true);
             setWishlistError(null);
 
