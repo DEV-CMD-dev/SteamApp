@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "../css/gamePage.css";
 import GameGallery from "../components/GameDetailPage/GameGallery";
 import type { GameDto, GameRating } from "../DTOs/Game/GameDto";
@@ -8,6 +8,7 @@ import RatingBadge from "../components/GameDetailPage/RatingBadge";
 import { cartService } from "../services/cartService";
 import { useNavigate } from "react-router-dom";
 import AddedToCartModal from "../components/GameDetailPage/AddedToCartModal";
+import { AuthContext } from "../contexts/AuthContext";
 
 
 type GamePageProps = {
@@ -42,6 +43,7 @@ const ratingText = (rating: GameRating): string => {
 };
 
 export default function GamePage({ gameDto }: GamePageProps) {
+    const {accessToken} = useContext(AuthContext)
     const [isExpanded, setIsExpanded] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isWishlistLoading, setIsWishlistLoading] = useState(false);
@@ -80,6 +82,10 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
     const handleWishlistToggle = async () => {
         try {
+            if(!accessToken){
+                navigate("/auth")
+                return;
+            }
             setIsWishlistLoading(true);
             setWishlistError(null);
 
