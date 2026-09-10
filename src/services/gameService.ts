@@ -37,13 +37,15 @@ export const gameService = {
     async getAll(
         pageNumber = 1,
         pageSize = 10,
-        filters: GameFilters = {}
+        filters: GameFilters = {},
+        withScreenshots = false
     ): Promise<PaginatedList<GameDto>> {
 
         const params = new URLSearchParams();
 
         params.append("pageNumber", pageNumber.toString());
         params.append("pageSize", pageSize.toString());
+        params.append("withScreenshots", withScreenshots.toString());
 
         if (filters.minPrice !== undefined) {
             params.append("MinPrice", filters.minPrice.toString());

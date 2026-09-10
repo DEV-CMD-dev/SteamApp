@@ -3,6 +3,7 @@ import type { TagDto } from "../../DTOs/Tag/TagDto";
 import { tagService } from "../../services/tagService";
 import Tag from "../../components/Store/Tag";
 import NavDropdownPanel, { type PanelStyle } from "./NavDropdownPanel";
+import { Link } from "react-router-dom";
 
 const TOP_CATEGORIES_COUNT = 6;
 
@@ -10,9 +11,10 @@ interface CategoriesDropdownProps {
     isOpen: boolean;
     panelStyle: PanelStyle | null;
     onNavigateToAllTags: () => void;
+    onLinkClick: () => void;
 }
 
-export default function CategoriesDropdown({ isOpen, panelStyle, onNavigateToAllTags }: CategoriesDropdownProps) {
+export default function CategoriesDropdown({ isOpen, panelStyle, onNavigateToAllTags, onLinkClick }: CategoriesDropdownProps) {
     const [categories, setCategories] = useState<TagDto[]>([]);
 
     useEffect(() => {
@@ -38,9 +40,14 @@ export default function CategoriesDropdown({ isOpen, panelStyle, onNavigateToAll
 
             <div className="categories-dropdown-grid">
                 {categories.slice(0, TOP_CATEGORIES_COUNT).map((tag) => (
-                    <div className="categories-dropdown-item" key={tag.id}>
+                    <Link
+                        to={`/category/${tag.id}`}
+                        className="categories-dropdown-item"
+                        key={tag.id}
+                        onClick={onLinkClick}
+                    >
                         <Tag {...tag} />
-                    </div>
+                    </Link>
                 ))}
             </div>
 

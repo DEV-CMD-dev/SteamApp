@@ -171,7 +171,8 @@ export default function Navbar() {
             <CategoriesDropdown
                 isOpen={activeDropdown === "Categories"}
                 panelStyle={panelStyle}
-                onNavigateToAllTags={handleViewAllTags} />
+                onNavigateToAllTags={handleViewAllTags}
+                onLinkClick={closeDropdown} />
         </nav>
     );
 }

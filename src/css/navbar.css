@@ -253,6 +253,8 @@
     overflow: hidden;
 
     aspect-ratio: 4 / 2.6;
+    text-decoration: none;
+    color: inherit;
 }
 
 .categories-dropdown-view-all {
