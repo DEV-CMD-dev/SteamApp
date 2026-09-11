@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import type { GameDto } from "../../../../DTOs/Game/GameDto";
 import type { TagDto } from "../../../../DTOs/Tag/TagDto";
 import styles from "./HeroCarousel.module.css";
-import ArrowLeft from "../../../../assets/hero-carousel/arrow-left.png";
-import ArrowRight from "../../../../assets/hero-carousel/arrow-right.png";
+import ArrowLeft from "../../../../assets/discounts&events-page/arrow-left.png";
+import ArrowRight from "../../../../assets/discounts&events-page/arrow-right.png";
 import { Link } from "react-router-dom";
 
 type HeroCarouselProps = {
@@ -11,7 +11,8 @@ type HeroCarouselProps = {
     tagsById: Record<number, TagDto>;
 };
 
-const SCREENSHOT_INTERVAL_MS = 3000;
+const SCREENSHOT_INTERVAL_MS = 2000;
+const SLIDE_INTERVAL_MS = 14000;
 
 export default function HeroCarousel({ games, tagsById }: HeroCarouselProps) {
     const [activeIndex, setActiveIndex] = useState(0);
@@ -31,7 +32,6 @@ export default function HeroCarousel({ games, tagsById }: HeroCarouselProps) {
     // при зміні гри завжди починаємо з першого скріншота
     useEffect(() => {
         setScreenshotIndex(0);
-        setTransitionEnabled(false);
     }, [activeIndex]);
 
     // авто-перемикання скріншотів, тільки якщо їх більше одного
@@ -45,6 +45,17 @@ export default function HeroCarousel({ games, tagsById }: HeroCarouselProps) {
 
         return () => clearInterval(interval);
     }, [screenshots]);
+
+    useEffect(() => {
+        if (games.length <= 1) return;
+
+        const interval = setInterval(() => {
+            setTransitionEnabled(true);
+            setActiveIndex((prev) => (prev === games.length - 1 ? 0 : prev + 1));
+        }, SLIDE_INTERVAL_MS);
+
+        return () => clearInterval(interval);
+    }, [activeIndex, games.length]);
 
     if (games.length === 0) return null;
 
@@ -70,10 +81,12 @@ export default function HeroCarousel({ games, tagsById }: HeroCarouselProps) {
             : activeGame.coverImageHorizontal;
 
     const goToPrev = () => {
+        setTransitionEnabled(false);
         setActiveIndex((prev) => (prev === 0 ? games.length - 1 : prev - 1));
     };
 
     const goToNext = () => {
+        setTransitionEnabled(false);
         setActiveIndex((prev) => (prev === games.length - 1 ? 0 : prev + 1));
     };
 

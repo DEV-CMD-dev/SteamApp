@@ -1,0 +1,19 @@
+.panel {
+    margin-top: 3rem;
+    background: #101c31;
+    border-radius: 8px;
+    padding: 1.5rem;
+}
+
+.body {
+    display: flex;
+    gap: 2rem;
+}
+
+.list {
+    flex: 1;
+    min-width: 0;
+    max-height: 970px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}

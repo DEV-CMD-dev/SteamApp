@@ -4,6 +4,8 @@ import HeroCarousel from "./HeroCarousel/HeroCarousel";
 import styles from "./GameCollectionPage.module.css";
 import GameCarouselSection from "./GameCarouselSection/GameCarouselSection";
 import { NavLink  } from "react-router-dom";
+import GameListPanel from "./GameListPanel/GameListPanel";
+import type { ReactNode } from "react";
 
 type CarouselSection = {
     title: string;
@@ -21,6 +23,7 @@ type GameCollectionPageProps = {
     carouselSections: CarouselSection[];
     listGames: GameDto[];
     tagsById: Record<number, TagDto>;
+    extraContent?: ReactNode;
 };
 
 
@@ -31,6 +34,7 @@ export default function GameCollectionPage({
     carouselSections,
     listGames,
     tagsById,
+    extraContent
 }: GameCollectionPageProps) {
     return (
         <div className={styles.page}>
@@ -61,8 +65,8 @@ export default function GameCollectionPage({
                 />
                 </div>
             ))}
-
-            {/* GameListPanel(listGames, tagsById) сюди */}
+                {extraContent}
+            <GameListPanel games={listGames} tagsById={tagsById} />
         </div>
     );
 }

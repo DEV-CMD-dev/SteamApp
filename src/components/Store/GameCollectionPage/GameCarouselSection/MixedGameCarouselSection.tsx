@@ -2,8 +2,8 @@ import { useState } from "react";
 import type { GameDto } from "../../../../DTOs/Game/GameDto";
 import styles from "./MixedGameCarouselSection.module.css";
 import { Link } from "react-router-dom";
-import ArrowLeft from "../../../../assets/hero-carousel/arrow-left.png";
-import ArrowRight from "../../../../assets/hero-carousel/arrow-right.png";
+import ArrowLeft from "../../../../assets/discounts&events-page/arrow-left.png";
+import ArrowRight from "../../../../assets/discounts&events-page/arrow-right.png";
 
 type MixedGameCarouselSectionProps = {
     title: string;

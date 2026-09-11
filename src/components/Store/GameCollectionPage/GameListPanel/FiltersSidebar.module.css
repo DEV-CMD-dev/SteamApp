@@ -1,0 +1,53 @@
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.heading {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.25rem;
+}
+
+.matches {
+    color: #8a94a8;
+    font-size: 0.75rem;
+    margin: 0 0 1rem;
+}
+
+.group {
+    border-top: 1px solid #2a3a5a;
+}
+
+.groupHeader {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #dfe4ee;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    cursor: pointer;
+}
+
+.chevron {
+    color: #8a94a8;
+    font-size: 0.7rem;
+}
+
+.groupBody {
+    padding: 0 0 0.75rem;
+}
+
+.groupPlaceholder {
+    color: #5a6785;
+    font-size: 0.75rem;
+    margin: 0;
+    font-style: italic;
+}
