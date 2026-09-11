@@ -7,6 +7,7 @@ import Cart from "../assets/detail-page/cart.png";
 import RatingBadge from "../components/GameDetailPage/RatingBadge";
 import { AuthContext } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 
 type GamePageProps = {
@@ -85,10 +86,22 @@ export default function GamePage({ gameDto }: GamePageProps) {
             setWishlistError(null);
 
             if (isInWishlist) {
-                await wishlistService.removeGame(gameDto.id);
+                const promise = wishlistService.removeGame(gameDto.id);
+                toast.promise(promise, {
+                        loading: "Removing game from wishlist",
+                        success: "Game removed from wishlist",
+                        error: "Error occured while trying to remove game from wishlist",
+                    });
+                await promise;
                 setIsInWishlist(false);
             } else {
-                await wishlistService.addGame(gameDto.id);
+                const promise = wishlistService.addGame(gameDto.id);
+                toast.promise(promise, {
+                    loading: "Adding game to wishlist",
+                    success: "Game added to wishlist",
+                    error: "Error occured while trying to add game to wishlist",
+                    });
+                await promise;
                 setIsInWishlist(true);
             }
         } catch (err) {
@@ -177,7 +190,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                                 ? "Loading..."
                                 : isInWishlist
                                     ? "★ Remove from Wishlist"
-                                    : "★ Add to Wishlist"}
+                                    : "★ Add to Wishlist"} 
                         </button>
                         {wishlistError && (
                             <p className="wishlist-error">

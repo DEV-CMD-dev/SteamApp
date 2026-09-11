@@ -5,6 +5,7 @@ import { authService } from "../../services/authService";
 import "../../css/authForm.css";
 import logo from "../../assets/logo.svg";
 import googleLogo from "../../assets/auth/google.png"
+import toast from 'react-hot-toast';
 
 type FormState = {
   identifier: string;
@@ -39,16 +40,18 @@ const AuthForm: React.FC = () => {
 
     try {
       if (isLogin) {
-        const data = await authService.login({
+        const promise = authService.login({
           Identifier: form.identifier.trim(),
           Password: form.password.trim(),
         });
 
-        if (!data.accessToken) {
-          requireTwoFactor(form.identifier.trim());
-          navigate("/login-2fa");
-          return;
-        }
+        toast.promise(promise, {
+          loading: "Trying to log you in",
+          success: "Successful",
+          error: "Log in error",
+        });
+
+        const data = await promise;
 
         login(data.accessToken, new Date(data.expirationTime), data.userName);
         navigate("/");
