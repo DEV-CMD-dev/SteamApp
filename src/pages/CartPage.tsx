@@ -89,9 +89,6 @@ export default function CartPage() {
             </h1>
 
             <div className="cart-layout">
-
-                {/* LEFT SIDE */}
-
                 <div className="cart-main">
 
                     <GameList
@@ -120,9 +117,6 @@ export default function CartPage() {
                     </div>
 
                 </div>
-
-
-                {/* RIGHT SIDEBAR */}
 
                 <aside className="cart-sidebar">
 

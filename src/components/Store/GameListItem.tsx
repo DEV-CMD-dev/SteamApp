@@ -28,12 +28,12 @@ export default function GameListItem({
 
     return (
         <div className={styles.gameItem}
-        onClick={() => navigate(`/game/${game.id}`)}>
+            onClick={() => navigate(`/game/${game.id}`)}>
             <div className={styles.imageContainer}>
                 <img
                     src={game.coverImageHorizontal}
                     alt={game.title || "Game cover"}
-                    className={styles.coverImage}/>
+                    className={styles.coverImage} />
             </div>
 
             <div className={styles.gameInfo}>
@@ -59,40 +59,40 @@ export default function GameListItem({
 
             <div className={styles.purchaseSection}>
 
-    {hasDiscount && (
-        <span className={styles.discountBadge}>
-            -{game.discount}%
-        </span>
-    )}
+                {hasDiscount && (
+                    <span className={styles.discountBadge}>
+                        -{game.discount}%
+                    </span>
+                )}
 
-    <div className={styles.pricing}>
+                <div className={styles.pricing}>
 
-        {hasDiscount && (
-            <span className={styles.originalPrice}>
-                {game.price.toFixed(2)}$
-            </span>
-        )}
+                    {hasDiscount && (
+                        <span className={styles.originalPrice}>
+                            {game.price.toFixed(2)}$
+                        </span>
+                    )}
 
-        <span className={styles.finalPrice}>
-            {finalPrice}$
-        </span>
+                    <span className={styles.finalPrice}>
+                        {finalPrice}$
+                    </span>
 
-    </div>
+                </div>
 
-    {cart && (
-        <button
-            className={styles.removeFromCart}
-            onClick={(e) => {
-                e.stopPropagation();
+                {cart && (
+                    <button
+                        className={styles.removeFromCart}
+                        onClick={(e) => {
+                            e.stopPropagation();
 
-                onRemoveFromCart?.(game.id);
-            }}
-        >
-            Remove
-        </button>
-    )}
+                            onRemoveFromCart?.(game.id);
+                        }}
+                    >
+                        Remove
+                    </button>
+                )}
 
-</div>
+            </div>
         </div>
     );
 }
