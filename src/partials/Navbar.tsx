@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useSearchParams } from "react-router-dom";
 import "../css/navbar.css";
 
 import searchIcon from "../assets/navbar/search.png";
@@ -12,6 +12,7 @@ import type { GameDto } from "../DTOs/Game/GameDto";
 
 export default function Navbar() {
   const [isFocused, setIsFocused] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchResults, setSearchResults] = useState<GameDto[]>([]);
   const [popularGames, setPopularGames] = useState<GameDto[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -36,7 +37,6 @@ export default function Navbar() {
     try {
       const response = await fetch(`https://localhost:7166/api/Games?OnSaleOnly=true&pageNumber=1&pageSize=4`);
       const data = await response.json();
-      console.log(data.items);
       setPopularGames(data.items);
     } catch (error) {
       console.error("Error fetching popular games:", error);
@@ -135,8 +135,12 @@ export default function Navbar() {
                   onBlur={() => setIsFocused(false)}
                 />
                 <button onClick={() => {
+                  const params = new URLSearchParams();
+                  if (searchTerm.trim() !== "") {
+                    params.set("term", searchTerm);
+                  }
+                  navigate(`/search?${params.toString()}`);
                   setSearchTerm("");
-                  navigate("/search");
                   setIsFocused(false);
                 }} type="submit" className="search-bar-button">
                   <img src={searchIcon} alt="Search" />

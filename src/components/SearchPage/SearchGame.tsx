@@ -2,6 +2,7 @@ import "./SearchGame.css"
 import windowsIcon from "../../assets/search/windows.svg"
 import appleIcon from "../../assets/search/apple.svg"
 import type { GameDto } from "../../DTOs/Game/GameDto"
+import { useNavigate } from "react-router-dom";
 
 export default function SearchGame({ gameDto }: { gameDto: GameDto }) {
     const hasDiscount = gameDto.discount > 0;
@@ -10,9 +11,9 @@ export default function SearchGame({ gameDto }: { gameDto: GameDto }) {
         ? (gameDto.price * (1 - gameDto.discount / 100)).toFixed(2)
         : gameDto.price.toFixed(2);
 
-    console.log()
+    const navigate = useNavigate()
     return (
-        <div className="search-game-container">
+        <div onClick={() => navigate(`/game/${gameDto.id}`)} className="search-game-container">
             <div className="search-game-image">
                 <img
                     src={gameDto.coverImageHorizontal}
@@ -25,7 +26,7 @@ export default function SearchGame({ gameDto }: { gameDto: GameDto }) {
                     <h3 className="search-game-title">{gameDto.title}</h3>
                     <div className="search-game-os">
                         {hasOs?.includes("windows") && (<img className="os-icon" src={windowsIcon} alt="OS Icon" />)}
-                        <img className="os-icon" src={appleIcon} alt="OS Icon" />
+                        {/* <img className="os-icon" src={appleIcon} alt="OS Icon" /> */}
                     </div>
                 </div>
                 <div className="search-game-price">
