@@ -22,7 +22,7 @@
 .message,
 .error {
     padding: 30px;
-    background-color: rgba(100, 101, 102, 0.308);;
+    background-color: rgba(100, 101, 102, 0.308);
     color: #b8c6d1;
     text-align: center;
 }
@@ -59,7 +59,7 @@
 }
 
 .row {
-    height: 64px;
+    height: 78px;
     padding: 0 16px;
     background: rgba(100, 101, 102, 0.308);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -91,11 +91,11 @@
 
 .imageContainer {
     width: 192px;
-    height: 64px;
+    height: 78px;
     min-width: 192px;
     overflow: hidden;
     border-radius: 2px;
-    padding: 4px;
+    padding: 6px;
 }
 
 .coverImage {
@@ -142,6 +142,7 @@
 }
 
 @media (max-width: 700px) {
+
     .headerRow,
     .row {
         grid-template-columns: 36px 1fr 90px 60px;
