@@ -6,6 +6,7 @@ import GameCarouselSection from "./GameCarouselSection/GameCarouselSection";
 import { NavLink  } from "react-router-dom";
 import GameListPanel from "./GameListPanel/GameListPanel";
 import type { ReactNode } from "react";
+import type { GameFilters } from "../../../Extensions/GameParameters";
 
 type CarouselSection = {
     title: string;
@@ -21,7 +22,7 @@ type GameCollectionPageProps = {
     subNavItems: SubNavItem[];
     heroGames: GameDto[];
     carouselSections: CarouselSection[];
-    listGames: GameDto[];
+    baseFilters: GameFilters;
     tagsById: Record<number, TagDto>;
     extraContent?: ReactNode;
 };
@@ -32,7 +33,7 @@ export default function GameCollectionPage({
     subNavItems,
     heroGames,
     carouselSections,
-    listGames,
+    baseFilters,
     tagsById,
     extraContent
 }: GameCollectionPageProps) {
@@ -66,7 +67,7 @@ export default function GameCollectionPage({
                 </div>
             ))}
                 {extraContent}
-            <GameListPanel games={listGames} tagsById={tagsById} />
+            <GameListPanel baseFilters={baseFilters} tagsById={tagsById} />
         </div>
     );
 }

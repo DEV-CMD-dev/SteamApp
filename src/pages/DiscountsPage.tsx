@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { gameService } from "../services/gameService";
 import { tagService } from "../services/tagService";
 import GameCollectionPage from "../components/Store/GameCollectionPage/GameCollectionPage";
@@ -8,40 +8,60 @@ import type { TagDto } from "../DTOs/Tag/TagDto";
 const HERO_POOL_SIZE = 30;
 const RANDOM_SECTIONS_COUNT = 2;
 const GAMES_PER_SECTION = 12;
-const LIST_POOL_SIZE = 30;
-const LIST_GAMES_COUNT = 10;
+// const LIST_POOL_SIZE = 30;
+// const LIST_GAMES_COUNT = 10;
 
 export default function DiscountsPage() {
     const [heroGames, setHeroGames] = useState<GameDto[]>([]);
     const [sections, setSections] = useState<{ title: string; games: GameDto[] }[]>([]);
     const [tagsById, setTagsById] = useState<Record<number, TagDto>>({});
-    const [listGames, setListGames] = useState<GameDto[]>([]);
+    // const [listGames, setListGames] = useState<GameDto[]>([]);
+
+    const baseFilters = useMemo(() => ({ onSaleOnly: true }), []);
 
     useEffect(() => {
+        let cancelled = false;
+
         gameService.getAll(1, HERO_POOL_SIZE, { onSaleOnly: true }, true).then((res) => {
+            if (cancelled) return;
             const shuffled = [...res.items].sort(() => Math.random() - 0.5);
             setHeroGames(shuffled.slice(0, 4));
         });
-        gameService.getAll(1, LIST_POOL_SIZE, { onSaleOnly: true }, true).then((res) => {
-            const shuffled = [...res.items].sort(() => Math.random() - 0.5);
-            setListGames(shuffled.slice(0, LIST_GAMES_COUNT));
-        });
+        // gameService.getAll(1, LIST_POOL_SIZE, { onSaleOnly: true }, true).then((res) => {
+        //     const shuffled = [...res.items].sort(() => Math.random() - 0.5);
+        //     setListGames(shuffled.slice(0, LIST_GAMES_COUNT));
+        // });
         tagService.getAll(1, 50).then((res) => {
             const map: Record<number, TagDto> = {};
             res.items.forEach((tag) => { map[tag.id] = tag; });
             setTagsById(map);
 
             const shuffledTags = [...res.items].sort(() => Math.random() - 0.5);
-            const chosenTags = shuffledTags.slice(0, RANDOM_SECTIONS_COUNT);
+            const collectSections = async () => {
+                const found: { title: string; games: GameDto[] }[] = [];
 
-            Promise.all(
-                chosenTags.map((tag) =>
-                    gameService
-                        .getAll(1, GAMES_PER_SECTION, { tagIds: [tag.id], onSaleOnly: true })
-                        .then((gamesRes) => ({ title: `${tag.name} Games`, games: gamesRes.items }))
-                )
-            ).then((results) => setSections(results.filter((s) => s.games.length > 0)));
+                for (const tag of shuffledTags) {
+                    if (found.length >= RANDOM_SECTIONS_COUNT) break;
+                    if (cancelled) return;
+
+                    const gamesRes = await gameService.getAll(1, GAMES_PER_SECTION, {
+                        tagIds: [tag.id],
+                        onSaleOnly: true,
+                    });
+
+                    if (gamesRes.items.length > 0) {
+                        found.push({ title: `${tag.name} Games`, games: gamesRes.items });
+                    }
+                }
+
+                if (!cancelled) setSections(found);
+            };
+
+            collectSections();
         });
+        return () => {
+            cancelled = true;
+        };
     }, []);
 
     return (
@@ -53,7 +73,7 @@ export default function DiscountsPage() {
             }))}
             heroGames={heroGames}
             carouselSections={sections}
-            listGames={listGames}
+            baseFilters={baseFilters}
             tagsById={tagsById}
         />
     );

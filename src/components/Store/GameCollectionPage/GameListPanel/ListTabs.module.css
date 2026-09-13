@@ -20,3 +20,8 @@
 .tabActive {
     color: #fff;
 }
+
+.tabDisabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+}

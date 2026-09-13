@@ -82,6 +82,22 @@ export const gameService = {
         return handleResponse(res, "Failed to load game.");
     },
 
+    async getTopSellers(
+        pageNumber = 1,
+        pageSize = 10
+    ): Promise<PaginatedList<GameDto>> {
+        const params = new URLSearchParams();
+
+        params.append("pageNumber", pageNumber.toString());
+        params.append("pageSize", pageSize.toString());
+
+        const res = await fetch(
+            `${API_BASE_URL}/Games/top-sellers?${params.toString()}`
+        );
+
+        return handleResponse(res, "Failed to load top sellers.");
+    },
+
     async create(dto: CreateGameDto): Promise<GameDto> {
         const res = await fetch(`${API_BASE_URL}/Games`, {
             method: "POST",
