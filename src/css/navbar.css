@@ -164,7 +164,7 @@
     width: 100%;
     max-width: 450px;
     border-radius: 2px;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .search-bar-container {
