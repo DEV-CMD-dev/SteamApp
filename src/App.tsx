@@ -13,9 +13,11 @@ import SettingsPage from './pages/SettingsPage'
 import { Routes, Route } from 'react-router-dom'
 import WishListPage from './pages/WishListPage'
 import { ProtectedRoute } from './contexts/ProtectedRoute'
+import CartPage from './pages/CartPage'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
 import { Toaster } from 'react-hot-toast';
+import TopSellersPage from './pages/TopSellersPage'
 
 function App() {
   return (
@@ -41,6 +43,7 @@ function App() {
 
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
+          <Route path='/top-sellers' element={<TopSellersPage />} />
           <Route path='/library' element={
             <ProtectedRoute>
               <LibraryPage />
@@ -64,6 +67,11 @@ function App() {
           <Route path='/wishlist' element={
             <ProtectedRoute>
               <WishListPage />
+            </ProtectedRoute>
+          } />
+          <Route path='/cart' element={
+            <ProtectedRoute>
+              <CartPage />
             </ProtectedRoute>
           } />
           <Route path="/game/:id" element={
