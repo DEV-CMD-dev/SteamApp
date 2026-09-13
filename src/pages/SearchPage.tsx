@@ -12,7 +12,7 @@ export default function SearchPage() {
     const lastChunk = useRef(0);
     const [games, setGames] = useState<GameDto[]>()
     const [pageNumber, setpageNumber] = useState(1);
-    const [searchParams] = useSearchParams();
+    const [searchParams,setSearchParams] = useSearchParams();
     const initialTerm = searchParams.get("term") || "";
     const [searchValue, setSearchValue] = useState<string>(initialTerm);
     const [searchDiv, setSearchDiv] = useState<string>(initialTerm);
@@ -76,7 +76,14 @@ export default function SearchPage() {
         lastChunk.current = 0;
         setSearchValue("");
         setSearchDiv("");
+        setSearchParams("")
     };
+
+    useEffect(() => {
+        const newTerm = searchParams.get("term") || "";
+        setSearchValue(newTerm)
+        setSearchDiv(newTerm)
+    }, [searchParams])
 
     useEffect(() => {
         setpageNumber(1);
@@ -106,15 +113,6 @@ export default function SearchPage() {
 
     return (
         <div className="search-background">
-            <p style={{
-                position: "fixed",
-                top: "20px",
-                right: "20px",
-                color: "#c9c9c9",
-                fontSize: "30px"
-            }}>
-                {games?.length || 0} games found
-            </p>
             <div className="search-gradient">
 
                 {
@@ -157,7 +155,11 @@ export default function SearchPage() {
                 {isFiltersOpen && (
                     <div
                         className="mobile-overlay"
-                        onClick={() => setIsFiltersOpen(false)}
+                        onClick={(e) => 
+                            {
+                                e.preventDefault();
+                                setIsFiltersOpen(false);
+                            }}
                     ></div>
                 )}
                 <div className={`search-page-filters ${isFiltersOpen ? "open" : ""}`}>
