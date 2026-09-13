@@ -3,7 +3,17 @@ import type { TagDto } from "../../DTOs/Tag/TagDto";
 import styles from "../../css/Store/GameListItem.module.css";
 import { useNavigate } from "react-router-dom";
 
-export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]}) {
+export default function GameListItem({
+    game,
+    tags,
+    cart = false,
+    onRemoveFromCart
+}: {
+    game: GameDto;
+    tags: TagDto[];
+    cart?: boolean;
+    onRemoveFromCart?: (gameId: number) => void;
+}) {
     const hasDiscount = game.discount > 0;
     const navigate = useNavigate();
 
@@ -18,12 +28,12 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
 
     return (
         <div className={styles.gameItem}
-        onClick={() => navigate(`/game/${game.id}`)}>
+            onClick={() => navigate(`/game/${game.id}`)}>
             <div className={styles.imageContainer}>
                 <img
                     src={game.coverImageHorizontal}
                     alt={game.title || "Game cover"}
-                    className={styles.coverImage}/>
+                    className={styles.coverImage} />
             </div>
 
             <div className={styles.gameInfo}>
@@ -48,6 +58,7 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
             </div>
 
             <div className={styles.purchaseSection}>
+
                 {hasDiscount && (
                     <span className={styles.discountBadge}>
                         -{game.discount}%
@@ -55,6 +66,7 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
                 )}
 
                 <div className={styles.pricing}>
+
                     {hasDiscount && (
                         <span className={styles.originalPrice}>
                             {game.price.toFixed(2)}$
@@ -64,7 +76,22 @@ export default function GameListItem({game,tags}: {game: GameDto; tags: TagDto[]
                     <span className={styles.finalPrice}>
                         {finalPrice}$
                     </span>
+
                 </div>
+
+                {cart && (
+                    <button
+                        className={styles.removeFromCart}
+                        onClick={(e) => {
+                            e.stopPropagation();
+
+                            onRemoveFromCart?.(game.id);
+                        }}
+                    >
+                        Remove
+                    </button>
+                )}
+
             </div>
         </div>
     );
