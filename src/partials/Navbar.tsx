@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import { Link, NavLink } from "react-router-dom";
 import "../css/navbar.css";
@@ -10,19 +10,6 @@ import arrowDownIcon from "../assets/navbar/arrow-down.svg";
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
-  const [isRecommendationsOpen, setIsRecommendationsOpen] = useState(false);
-  const recommendationsRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (!recommendationsRef.current?.contains(e.target as Node)) {
-        setIsRecommendationsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -82,61 +69,13 @@ export default function Navbar() {
             <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
           </button>
 
-          <div className="dropdown-wrapper" ref={recommendationsRef}>
-            <button
-              type="button"
-              className="category-dropdown-btn"
-              onClick={() => setIsRecommendationsOpen(prev => !prev)}>
-              <span>Recommendations</span>
-              <img
-                src={arrowDownIcon}
-                alt="v"
-                className={`dropdown-icon ${isRecommendationsOpen ? "open" : ""}`} />
-            </button>
-
-            {isRecommendationsOpen && (
-              <div className="recommendations-panel">
-                <div className="recommendations-content">
-                  <div className="recommendations-menu">
-                    <Link
-                      to="/"
-                      className="recommendations-menu-item"
-                      onClick={() => setIsRecommendationsOpen(false)}>
-                      <span className="recommendations-menu-title">Store Home</span>
-                    </Link>
-
-                    <div className="recommendations-menu-item">
-                      <span className="recommendations-menu-title">New Releases</span>
-                      <span className="recommendations-menu-subtitle">Explore new content on nexus</span>
-                    </div>
-
-                    <div className="recommendations-menu-item">
-                      <span className="recommendations-menu-title">Upcoming Releases</span>
-                      <span className="recommendations-menu-subtitle">See what's on the release calendar</span>
-                    </div>
-
-                    <div className="recommendations-menu-item">
-                      <span className="recommendations-menu-title">All Charts &amp; Stats</span>
-                      <span className="recommendations-menu-subtitle">Explore top titles by week, month, or year</span>
-                    </div>
-                  </div>
-
-                  <div className="recommendations-banners">
-                    <Link
-                      to="/top-sellers"
-                      className="recommendations-banner top-sellers-banner"
-                      onClick={() => setIsRecommendationsOpen(false)}>
-                      <span className="recommendations-banner-btn">TOP SELLERS</span>
-                    </Link>
-
-                    <div className="recommendations-banner discounts-banner">
-                      <span className="recommendations-banner-btn">DISCOUNTS &amp; EVENTS</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          <button 
+            type="button" 
+            className="category-dropdown-btn" 
+            onClick={() => handleDropdownClick("Recommendations")}>
+            <span>Recommendations</span>
+            <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
+          </button>
         </div>
 
         <div className="nav-actions-container">
