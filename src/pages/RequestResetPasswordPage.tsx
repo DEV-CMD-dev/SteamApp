@@ -5,6 +5,7 @@ import '../css/resetPasswordPage.css'
 import logo from '../assets/logo.svg';
 import { useState } from 'react';
 import type { RequestPasswordResetTokenDto } from '../DTOs/UserHelper/RequestPasswordResetTokenDto';
+import toast from 'react-hot-toast';
 
 export default function RequestResetPasswordPage(){
     const [isLoading, setIsLoading] = useState(false);
@@ -34,15 +35,24 @@ export default function RequestResetPasswordPage(){
             setIsLoading(true);
             setErrorMessage(null);
 
-            await userHelperService.requestResetPassword({
+            const promise = userHelperService.requestResetPassword({
                 identifier: form.identifier.trim()
             })
+            toast.promise(promise, {
+                loading: "Requesting password reset",
+                success: "If user existed the reset link has been sent to your email",
+                error: "Error occured while trying to request password reset"
+            },
+            {
+                duration: 5000
+            });
+            await promise;
+            
             setForm({identifier: ""});
-            alert("If account existed link has been sent to your email")
 
             setTimeout(() => {
                 navigate("/auth");
-            }, 3000);
+            }, 5000);
         }
         catch (err: any) 
         {
