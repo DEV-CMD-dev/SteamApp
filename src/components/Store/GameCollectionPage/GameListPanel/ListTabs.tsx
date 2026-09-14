@@ -3,7 +3,7 @@ import styles from "./ListTabs.module.css";
 export const TABS = ["ALL", "NEW & TRENDING", "TOP SELLERS", "TOP RATED", "POPULAR UPCOMING"] as const;
 export type ListTab = (typeof TABS)[number];
 
-const DISABLED_TABS: ListTab[] = ["TOP SELLERS", "POPULAR UPCOMING"];
+const DISABLED_TABS: ListTab[] = ["POPULAR UPCOMING"];
 
 type ListTabsProps = {
     activeTab: ListTab;

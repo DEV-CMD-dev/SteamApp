@@ -14,7 +14,8 @@ type GameListPanelProps = {
     tagsById: Record<number, TagDto>;
 };
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 50; // максимум, який дозволяє бекенд (MaxPaginationPageSize)
+const TOP_SELLERS_POOL_SIZE = 50;
 
 export const MIN_RATING_OPTIONS = [
     { label: "Any", value: GameRating.None },
@@ -23,13 +24,34 @@ export const MIN_RATING_OPTIONS = [
     { label: "Overwhelmingly Positive", value: GameRating.OverwhelminglyPositive },
 ];
 
+// getTopSellers не приймає фільтрів — накладаємо baseFilters/жанри/ціну вручну на фронті
+function matchesManualFilters(
+    game: GameDto,
+    baseFilters: GameFilters,
+    selectedGenreIds: number[],
+    minPrice: number | undefined,
+    maxPrice: number | undefined
+): boolean {
+    const tagIds = game.tagIds as unknown as number[];
+
+    if (baseFilters.onSaleOnly && game.discount <= 0) return false;
+
+    const requiredTagIds = [...(baseFilters.tagIds ?? []), ...selectedGenreIds];
+    if (requiredTagIds.length > 0 && !requiredTagIds.every((id) => tagIds.includes(id))) return false;
+
+    if (minPrice !== undefined && game.price < minPrice) return false;
+    if (maxPrice !== undefined && game.price > maxPrice) return false;
+
+    return true;
+}
+
 export default function GameListPanel({ baseFilters, tagsById }: GameListPanelProps) {
+    const [activeTab, setActiveTab] = useState<ListTab>("ALL");
     const [selectedGenreIds, setSelectedGenreIds] = useState<number[]>([]);
     const [minRating, setMinRating] = useState<number>(GameRating.None);
-    const [fetchedGames, setFetchedGames] = useState<GameDto[]>([]);
     const [minPrice, setMinPrice] = useState<number | undefined>(undefined);
     const [maxPrice, setMaxPrice] = useState<number | undefined>(undefined);
-    const [activeTab, setActiveTab] = useState<ListTab>("ALL");
+    const [fetchedGames, setFetchedGames] = useState<GameDto[]>([]);
 
     const toggleGenre = (tagId: number) => {
         setSelectedGenreIds((prev) =>
@@ -38,6 +60,18 @@ export default function GameListPanel({ baseFilters, tagsById }: GameListPanelPr
     };
 
     useEffect(() => {
+        let cancelled = false;
+
+        if (activeTab === "TOP SELLERS") {
+            gameService.getTopSellers(1, TOP_SELLERS_POOL_SIZE).then((res) => {
+                if (!cancelled) setFetchedGames(res.items);
+            });
+
+            return () => {
+                cancelled = true;
+            };
+        }
+
         const combinedFilters: GameFilters = {
             ...baseFilters,
             tagIds: [...(baseFilters.tagIds ?? []), ...selectedGenreIds],
@@ -45,21 +79,29 @@ export default function GameListPanel({ baseFilters, tagsById }: GameListPanelPr
             maxPrice,
         };
 
-        let cancelled = false;
-
         const fetchAllPages = async () => {
             const allItems: GameDto[] = [];
             let pageNumber = 1;
 
             while (!cancelled) {
-                const res = await gameService.getAll(pageNumber, PAGE_SIZE, combinedFilters);
+                const res = await gameService.getAll(pageNumber, PAGE_SIZE, combinedFilters, true);
                 allItems.push(...res.items);
 
                 if (!res.hasNextPage) break;
                 pageNumber += 1;
             }
 
-            if (!cancelled) setFetchedGames(allItems);
+            if (cancelled) return;
+
+            const isDefaultView =
+                activeTab === "ALL" &&
+                selectedGenreIds.length === 0 &&
+                minPrice === undefined &&
+                maxPrice === undefined;
+
+            setFetchedGames(
+                isDefaultView ? [...allItems].sort(() => Math.random() - 0.5) : allItems
+            );
         };
 
         fetchAllPages();
@@ -67,12 +109,15 @@ export default function GameListPanel({ baseFilters, tagsById }: GameListPanelPr
         return () => {
             cancelled = true;
         };
-        // baseFilters приходить від батька як новий об'єкт на кожен рендер —
-        // batьківські сторінки мають обгортати його в useMemo, інакше цей ефект зациклиться
-    }, [baseFilters, selectedGenreIds, minPrice, maxPrice]);
+    }, [activeTab, baseFilters, selectedGenreIds, minPrice, maxPrice]);
 
-    const visibleGames = fetchedGames.filter((game) => game.rating >= minRating);
-    const genreOptions = Object.values(tagsById);
+    const visibleGames = fetchedGames
+        .filter((game) => game.rating >= minRating)
+        .filter((game) =>
+            activeTab === "TOP SELLERS"
+                ? matchesManualFilters(game, baseFilters, selectedGenreIds, minPrice, maxPrice)
+                : true
+        );
 
     const sortedGames = [...visibleGames].sort((a, b) => {
         if (activeTab === "NEW & TRENDING") {
@@ -81,8 +126,10 @@ export default function GameListPanel({ baseFilters, tagsById }: GameListPanelPr
         if (activeTab === "TOP RATED") {
             return b.rating - a.rating;
         }
-        return 0; // ALL — порядок від бекенду
+        return 0; // ALL / TOP SELLERS — порядок від бекенду
     });
+
+    const genreOptions = Object.values(tagsById);
 
     return (
         <div className={styles.panel}>
