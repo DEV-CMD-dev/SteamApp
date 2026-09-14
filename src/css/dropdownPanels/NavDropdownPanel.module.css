@@ -1,0 +1,23 @@
+.navDropdown {
+    width: 100%;
+
+    display: grid;
+    grid-template-rows: 0fr;
+
+    background-color: #171a21;
+
+    transition: grid-template-rows 280ms ease;
+}
+
+.navDropdown.open {
+    grid-template-rows: 1fr;
+}
+
+.navDropdownInner {
+    min-height: 0;
+    overflow: hidden;
+}
+
+.navDropdownContent {
+    padding-bottom: 16px;
+}

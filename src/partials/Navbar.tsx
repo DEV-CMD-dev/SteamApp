@@ -3,6 +3,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { Link, NavLink } from "react-router-dom";
 import CategoriesDropdown from "./dropdowns/CategoriesDropdown";
 import BrowseDropdown from "./dropdowns/BrowseDropdown";
+import RecommendationsDropdown from "./dropdowns/RecommendationsDropdown";
 import type { PanelStyle } from "./dropdowns/NavDropdownPanel";
 import "../css/navbar.css";
 
@@ -148,14 +149,14 @@ export default function Navbar() {
                             <input
                                 className="search-bar"
                                 type="text"
-                                placeholder="Search for games"/>
+                                placeholder="Search for games" />
                             <button type="submit" className="search-bar-button">
                                 <img src={searchIcon} alt="Search" />
                             </button>
                         </div>
                     </form>
 
-                    <Link to="/wishlist" className="wishlist-container" style={accessToken ? {} : {display: "none"}}>
+                    <Link to="/wishlist" className="wishlist-container" style={accessToken ? {} : { display: "none" }}>
                         <img src={starIcon} alt="Wishlist star" className="wishlist-icon" />
                         <span className="wishlist-text">Wishlist</span>
                     </Link>
@@ -172,6 +173,10 @@ export default function Navbar() {
                 isOpen={activeDropdown === "Categories"}
                 panelStyle={panelStyle}
                 onNavigateToAllTags={handleViewAllTags}
+                onLinkClick={closeDropdown} />
+            <RecommendationsDropdown
+                isOpen={activeDropdown === "Recommendations"}
+                panelStyle={panelStyle}
                 onLinkClick={closeDropdown} />
         </nav>
     );

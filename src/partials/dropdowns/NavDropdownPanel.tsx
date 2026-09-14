@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import styles from "../../css/dropdownPanels/NavDropdownPanel.module.css";
 
 export interface PanelStyle {
     marginLeft: number;
@@ -13,15 +14,15 @@ interface NavDropdownPanelProps {
 
 export default function NavDropdownPanel({ isOpen, panelStyle, children }: NavDropdownPanelProps) {
     return (
-        <div className={`nav-dropdown ${isOpen ? "open" : ""}`}>
+        <div className={`${styles.navDropdown} ${isOpen ? styles.open : ""}`}>
             <div
-                className="nav-dropdown-inner"
+                className={styles.navDropdownInner}
                 style={
                     panelStyle
                         ? { marginLeft: panelStyle.marginLeft, width: panelStyle.width }
                         : undefined
                 }>
-                <div className="nav-dropdown-content">
+                <div className={styles.navDropdownContent}>
                     {children}
                 </div>
             </div>

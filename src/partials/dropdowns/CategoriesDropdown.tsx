@@ -3,7 +3,7 @@ import type { TagDto } from "../../DTOs/Tag/TagDto";
 import { tagService } from "../../services/tagService";
 import Tag from "../../components/Store/Tag";
 import NavDropdownPanel, { type PanelStyle } from "./NavDropdownPanel";
-import { Link } from "react-router-dom";
+import styles from "../../css/dropdownPanels/CategoriesDropdown.module.css";
 
 const TOP_CATEGORIES_COUNT = 6;
 
@@ -14,7 +14,12 @@ interface CategoriesDropdownProps {
     onLinkClick: () => void;
 }
 
-export default function CategoriesDropdown({ isOpen, panelStyle, onNavigateToAllTags, onLinkClick }: CategoriesDropdownProps) {
+export default function CategoriesDropdown({
+    isOpen,
+    panelStyle,
+    onNavigateToAllTags,
+    onLinkClick,
+}: CategoriesDropdownProps) {
     const [categories, setCategories] = useState<TagDto[]>([]);
 
     useEffect(() => {
@@ -36,24 +41,19 @@ export default function CategoriesDropdown({ isOpen, panelStyle, onNavigateToAll
 
     return (
         <NavDropdownPanel isOpen={isOpen} panelStyle={panelStyle}>
-            <span className="categories-dropdown-title">YOUR TOP CATEGORIES</span>
+            <span className={styles.title}>YOUR TOP CATEGORIES</span>
 
-            <div className="categories-dropdown-grid">
+            <div className={styles.grid}>
                 {categories.slice(0, TOP_CATEGORIES_COUNT).map((tag) => (
-                    <Link
-                        to={`/category/${tag.id}`}
-                        className="categories-dropdown-item"
-                        key={tag.id}
-                        onClick={onLinkClick}
-                    >
+                    <div className={styles.item} key={tag.id} onClick={onLinkClick}>
                         <Tag {...tag} />
-                    </Link>
+                    </div>
                 ))}
             </div>
 
             <button
                 type="button"
-                className="categories-dropdown-view-all"
+                className={styles.viewAll}
                 onClick={onNavigateToAllTags}>
                 View all tags &gt;
             </button>

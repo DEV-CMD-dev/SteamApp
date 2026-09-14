@@ -1,7 +1,7 @@
 import type { GameDto } from "../../../../DTOs/Game/GameDto";
 import type { TagDto } from "../../../../DTOs/Tag/TagDto";
 import styles from "./GameListItem.module.css";
-import WindowsIcon from "../../../../assets/windowsIcon.png";
+import WindowsIcon from "../../../../assets/discounts&events-page/windowsIcon.png";
 import { useNavigate } from "react-router-dom";
 
 type GameListItemProps = {

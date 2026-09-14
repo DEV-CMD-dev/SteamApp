@@ -1,0 +1,51 @@
+.layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding-top: 20px;
+    max-width: 650px;
+}
+
+.links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 18px;
+    flex-shrink: 0;
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+
+    text-decoration: none;
+    color: #ffffff;
+
+    transition: color 0.2s ease;
+}
+
+.link:hover {
+    color: #4da3ff;
+}
+
+.linkTitle {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.linkDescription {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 470px;
+    flex-shrink: 0;
+}

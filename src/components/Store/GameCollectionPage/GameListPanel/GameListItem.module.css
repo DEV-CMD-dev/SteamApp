@@ -4,11 +4,8 @@
     grid-template-rows: 270px 40px;
 
     background: #16233b;
-    /* border-radius: 6px; */
     overflow: hidden;
     margin-bottom: 1rem;
-
-    /* max-width: 750px; */
     cursor: pointer;
 }
 
@@ -24,7 +21,6 @@
     height: 310px;
 
     object-fit: cover;
-    /* border-radius: 4px 0 0 4px; */
 
     display: block;
 }
@@ -103,8 +99,6 @@
 }
 
 .reviews {
-    /* margin: auto 0 0; */
-
     font-size: 0.8rem;
     color: #8a94a8;
     overflow-wrap: break-word;
@@ -127,7 +121,6 @@
     gap: 6px;
 
     padding: 12px 10px 10px 8px;
-    /* margin-left: -20px; */
     box-sizing: border-box;
 }
 

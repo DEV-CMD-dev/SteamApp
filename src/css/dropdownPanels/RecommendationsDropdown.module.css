@@ -1,0 +1,118 @@
+.title {
+    display: block;
+
+    padding-top: 14px;
+
+    font-size: 12px;
+    letter-spacing: 0.05em;
+
+    color: rgba(255, 255, 255, 0.5);
+
+    margin-bottom: 10px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    width: 480px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    column-gap: 14px;
+
+    padding: 8px;
+    border-radius: 6px;
+
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.08),
+        rgba(255, 255, 255, 0.02));
+
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.row:hover {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.14),
+        rgba(255, 255, 255, 0.05));
+}
+
+.imageContainer {
+    flex-shrink: 0;
+    width: 120px;
+    aspect-ratio: 16 / 9;
+
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.coverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 6px;
+
+    min-width: 0;
+}
+
+.gameTitle {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 600;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.price {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.message {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    padding-top: 14px;
+}
+
+.priceRow {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+}
+
+.discountBadge {
+    background-color: #4c6b22;
+    color: #a3d139;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    padding: 3px 6px;
+    border-radius: 3px;
+}
+
+.originalPrice {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: line-through;
+}
+
+.finalPrice {
+    font-size: 14px;
+    color: #a3d139;
+    font-weight: 600;
+}

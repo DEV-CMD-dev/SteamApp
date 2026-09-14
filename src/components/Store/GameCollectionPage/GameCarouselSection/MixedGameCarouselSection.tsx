@@ -10,7 +10,7 @@ type MixedGameCarouselSectionProps = {
     games: GameDto[];
 };
 
-const GAMES_PER_PAGE = 5; // 2 великі + 3 менші
+const GAMES_PER_PAGE = 5; 
 
 function PriceTag({ game }: { game: GameDto }) {
     const discountedPrice =

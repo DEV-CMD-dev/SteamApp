@@ -14,7 +14,7 @@ type GameListPanelProps = {
     tagsById: Record<number, TagDto>;
 };
 
-const PAGE_SIZE = 50; // максимум, який дозволяє бекенд (MaxPaginationPageSize)
+const PAGE_SIZE = 50;
 const TOP_SELLERS_POOL_SIZE = 50;
 
 export const MIN_RATING_OPTIONS = [
@@ -24,7 +24,6 @@ export const MIN_RATING_OPTIONS = [
     { label: "Overwhelmingly Positive", value: GameRating.OverwhelminglyPositive },
 ];
 
-// getTopSellers не приймає фільтрів — накладаємо baseFilters/жанри/ціну вручну на фронті
 function matchesManualFilters(
     game: GameDto,
     baseFilters: GameFilters,
@@ -126,7 +125,7 @@ export default function GameListPanel({ baseFilters, tagsById }: GameListPanelPr
         if (activeTab === "TOP RATED") {
             return b.rating - a.rating;
         }
-        return 0; // ALL / TOP SELLERS — порядок від бекенду
+        return 0; 
     });
 
     const genreOptions = Object.values(tagsById);

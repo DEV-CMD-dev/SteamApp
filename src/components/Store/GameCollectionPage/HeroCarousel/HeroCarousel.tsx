@@ -29,12 +29,10 @@ export default function HeroCarousel({ games, tagsById }: HeroCarouselProps) {
          setBrokenUrls(new Set());
      }, [activeIndex]);
 
-    // при зміні гри завжди починаємо з першого скріншота
     useEffect(() => {
         setScreenshotIndex(0);
     }, [activeIndex]);
 
-    // авто-перемикання скріншотів, тільки якщо їх більше одного
     useEffect(() => {
         if (!screenshots || screenshots.length <= 1) return;
 
