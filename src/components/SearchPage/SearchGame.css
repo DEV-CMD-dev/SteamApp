@@ -74,6 +74,10 @@
     .search-game-title {
         font-size: 18px;
     }
+    .search-game-title-container
+    {
+        padding-bottom: 5px;
+    }
 }
 
 @media(max-width: 450px) {

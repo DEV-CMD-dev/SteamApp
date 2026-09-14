@@ -17,7 +17,6 @@ export default function SearchBar() {
         try {
             const response = await fetch(`https://localhost:7166/api/Games?SearchTerm=${searchTerm}&pageSize=4`);
             const data = await response.json();
-            console.log(data.items);
             setSearchResults(data.items);
         } catch (error) {
             console.error("Error fetching search results:", error);

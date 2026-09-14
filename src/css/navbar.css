@@ -156,7 +156,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
 }
 
 .search-form {
@@ -196,6 +196,7 @@
 
 .search-bar:hover {
     border: 1px solid #009ff5;
+       
 }
 
 .search-bar-button {
@@ -267,6 +268,7 @@
     flex-direction: column;
     gap: 6px;
     border-radius: 2px;
+    z-index: 10000;
 }
 
 .nav-search-container p {
@@ -304,6 +306,11 @@
     display: none;
     position: absolute;
     left: 0;
+    border: 0;
+    background: url(../assets/navbar/header_menu_hamburger.png);
+    background-size: 80%;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
 .mobile-profile-container {
@@ -352,7 +359,7 @@
 .profile-container {
     width: 100%;
     height: 140px;
-    background: url("https://s0.tchkcdn.com/g-eUDvtxKEfeGLVZ6YE8am3w/17/258037/660x480/f/0/cd1_depositphotos_21510387_m_2015.jpg");
+    background: url("https://www.pfpgeeks.com/static/images/black-pfp/webp/black-pfp-5.webp");
     background-size: 200%;
     display: flex;
     flex-direction: column;
@@ -365,10 +372,11 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px 15px;
+    align-items: start;
+    padding: 20px 15px 10px 15px;
     backdrop-filter: blur(25px);
     box-sizing: border-box;
+
 }
 
 .pfp-container {
@@ -447,10 +455,160 @@
     padding: 0 12px;
     font-size: 20px;
     color: #bdbdbd;
-    font-family: 'Motiva Sans', sans-serif;
+    font-family: "Motiva Sans Bold";
     font-weight: 700;
 
 
+}
+
+.store-container {
+    background-color: #30353f;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+
+}
+
+.store-btn {
+    background-color: transparent;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    outline: none;
+    border: 0;
+    font-size: 14px;
+    padding: 10px 0px;
+    padding-inline-start: 28px;
+    color: #DCDEDF;
+}
+
+.mobile-profile-container {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 70%;
+    max-width: 320px;
+    height: 100vh;
+    background-color: #171a21;
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+    box-shadow: 10px 0 20px rgba(0, 0, 0, 0.2);
+    /* Додаємо скрол для довгого меню */
+    overflow-y: auto;
+}
+
+/* Прибираємо скролбар, щоб було як у додатку (опціонально) */
+.mobile-profile-container::-webkit-scrollbar {
+    display: none;
+}
+
+.buttons-containers {
+    display: flex;
+    flex-direction: column;
+    height: max-content;
+    background-color: #171a21;
+}
+
+.menu-item.active {
+    background-color: #3d4450;
+}
+
+.dropdown-icon_pfp {
+    transition: transform 0.3s ease;
+    width: 14px;
+}
+
+
+.dropdown-icon_pfp.open {
+    transform: rotate(180deg);
+}
+
+.store-btn:hover {
+    color: #ffffff;
+}
+
+
+.footer-links-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 16px;
+    gap: 16px;
+    border-top: 1px solid #2f3138;
+}
+
+.footer-links-container a {
+    color: #8f98a0;
+    text-decoration: none;
+    font-size: 14px;
+    font-family: 'Motiva Sans Normal', sans-serif;
+}
+
+.footer-links-container a:hover {
+    color: #ffffff;
+}
+
+/* СТИЛІ VALVE БЛОКУ */
+.valve-footer {
+    padding: 10px 16px 30px 16px;
+    color: #8f98a0;
+    font-size: 11px;
+    font-family: 'Motiva Sans Normal', sans-serif;
+    line-height: 1.4;
+}
+
+.valve-logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    color: #8f98a0;
+    margin-bottom: 5px;
+    letter-spacing: 2px;
+    font-family: Arial, sans-serif;
+}
+
+.valve-footer p {
+    margin: 0;
+}
+
+.valve-footer a {
+    color: #8f98a0;
+    text-decoration: none;
+}
+
+.valve-footer a:hover {
+    color: #ffffff;
+}
+
+.profile-wallet-cart {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    /* Притискає блок до низу контейнера */
+    font-family: 'Motiva Sans Normal', sans-serif;
+    font-size: 14px;
+}
+
+.profile-wallet-cart a {
+    color: #8f98a0;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.profile-wallet-cart a:hover {
+    color: #ffffff;
+}
+
+.cart-link {
+    display: flex;
+    align-items: center;
+}
+
+.logo-footer
+{
+    margin: 0;
+    width: 130px;
 }
 
 @media (max-width: 970px) {

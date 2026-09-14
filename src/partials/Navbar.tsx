@@ -1,16 +1,49 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "../css/navbar.css";
 import starIcon from "../assets/navbar/star.png";
 import cartIcon from "../assets/navbar/cart.svg";
 import logo from "../assets/logo.svg";
 import arrowDownIcon from "../assets/navbar/arrow-down.svg";
 import SearchBar from "../components/Navbar/SearchBar";
+import header_burger from "../assets/navbar/header_menu_hamburger.png";
+import { orderService } from "../services/navbarService";
+import type { MiniProfileDto } from "../DTOs/Profile/MiniProfileDto";
+
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
   const [profileOpen, setprofileOpen] = useState<boolean>(false);
+  const [balance, setBalance] = useState(0);
+  const [profile, setprofile] = useState<MiniProfileDto>();
+
+
+  const [isStoreOpen, setIsStoreOpen] = useState(false);
+  const [isFriendsOpen, setIsFriendsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  async function GetBalance() {
+    try {
+      const data = await orderService.getBalance();
+      setBalance(data);
+    } catch (error) {
+      console.error(error);
+      setBalance(0);
+    }
+  }
+  async function GetUser() {
+    try {
+      const data = await orderService.getUser();
+      setprofile(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  useEffect(() => {
+    GetBalance()
+    GetUser()
+  }, [])
 
   const handleDropdownClick = (category: string) => {
     console.log(`${category} dropdown clicked`);
@@ -24,24 +57,88 @@ export default function Navbar() {
           onClick={() => setprofileOpen(false)}
         ></div>
         <div className={`mobile-profile-container ${profileOpen ? "open" : ""}`}>
-          <div className="profile-container">
-            <div className="profile-background">
-              <div className="pfp-container">
-                <img className="profile-picture" src="https://s0.tchkcdn.com/g-eUDvtxKEfeGLVZ6YE8am3w/17/258037/660x480/f/0/cd1_depositphotos_21510387_m_2015.jpg" alt="" />
-                <div className="profile-description">
-                  <p>ch1llboy</p>
-                  <div className="playerProfile_area_profilebtn">
-                    <a  className="profile-wiewv">View your profile</a>
-                  </div>
+          {accessToken ? (
+            <div className="profile-container" style={{background : `${profile?.avatar}`}}>
+              <div className="profile-background">
+                <div className="pfp-container">
+                  <img className="profile-picture" src={profile?.avatar ?? 'https://www.pfpgeeks.com/static/images/black-pfp/webp/black-pfp-5.webp'} alt="" />
+                  <div className="profile-description">
+                    <p>{profile?.name}</p>
+                    <div onClick={() => { setprofileOpen(false); navigate("/profile"); }} className="playerProfile_area_profilebtn">
+                      <a className="profile-wiewv">View your profile</a>
+                    </div>
 
+                  </div>
+                </div>
+                <div className="profile-wallet-cart">
+                  <a href="#" className="cart-link">Cart (3)</a>
+                  <a href="#" className="wallet-link">Wallet ({balance}$)</a>
                 </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <div onClick={() => navigate("/auth")} className={`menu-item ${isStoreOpen ? "active" : ""}`}>
+              <p>Sign in</p>
+            </div>
+          )}
+
           <div className="buttons-containers">
-            <div className="menu-item">
-              <p>Notifications</p>
-              <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
+            <div onClick={() => setIsStoreOpen(prev => !prev)} className={`menu-item ${isStoreOpen ? "active" : ""}`}>
+              <p>Store</p>
+              <img src={arrowDownIcon} alt="v" className={`dropdown-icon_pfp ${isStoreOpen ? "open" : ""}`} />
+            </div>
+            <div className="store-container" style={{ height: `${isStoreOpen ? "108px" : "0px"}` }}>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/");
+              }} className="store-btn">Home</button>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/wishlist");
+              }} className="store-btn">Wishlist</button>
+              <button className="store-btn">News</button>
+            </div>
+            <div onClick={() => setIsFriendsOpen(prev => !prev)} className={`menu-item ${isFriendsOpen ? "active" : ""}`}>
+              <p>You & Friends</p>
+              <img src={arrowDownIcon} alt="v" className={`dropdown-icon_pfp ${isFriendsOpen ? "open" : ""}`} />
+            </div>
+            <div className="store-container" style={{ height: `${isFriendsOpen ? "180px" : "0px"}` }}>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/profile");
+              }} className="store-btn">Profile</button>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/friends");
+              }} className="store-btn">Friends</button>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/library");
+              }} className="store-btn">Games</button>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/badges");
+              }} className="store-btn">Badges</button>
+              <button onClick={() => {
+                setprofileOpen(false);
+                navigate("/inventory");
+              }} className="store-btn">Inventory</button>
+            </div>
+
+            <div className="footer-links-container">
+              <a href="#">Account details</a>
+              <a href="#">Store preferences</a>
+              <a href="#">Change language</a>
+              <a href="#">Change user</a>
+              <a href="#">Get the Steam Mobile App</a>
+              <a href="#">View desktop website</a>
+            </div>
+
+            <div className="valve-footer">
+              <div className="valve-logo-text"><img className="logo-footer" src={logo}></img></div>
+              <p>
+                © Nexus Corporation. All rights reserved. All trademarks are property of their respective owners in the US and other countries. <a href="#">Privacy Policy</a> | <a href="#">Legal</a> | <a href="#">Accessibility</a> | <a href="#">Nexus Subscriber Agreement</a> | <a href="#">Refunds</a> | <a href="#">Cookies</a>
+              </p>
             </div>
           </div>
         </div>
