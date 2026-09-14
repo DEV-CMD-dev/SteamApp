@@ -16,6 +16,8 @@ import { ProtectedRoute } from './contexts/ProtectedRoute'
 import CartPage from './pages/CartPage'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
+import DiscountsPage from './pages/DiscountsPage'
+import CategoryPage from './pages/CategoryPage'
 import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
 
@@ -77,6 +79,14 @@ function App() {
           <Route path="/game/:id" element={
             <GamePageContainer />
           } />
+          <Route path="/discounts" element={
+            <DiscountsPage />
+          } 
+          />
+          <Route path="/category/:tagId" element={
+            <CategoryPage />
+          } 
+          />
         </Route>
       </Routes>
     </AuthProvider>

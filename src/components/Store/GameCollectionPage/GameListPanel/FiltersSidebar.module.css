@@ -1,0 +1,168 @@
+.sidebar {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.heading {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.25rem;
+}
+
+.matches {
+    color: #8a94a8;
+    font-size: 0.75rem;
+    margin: 0 0 1rem;
+}
+
+.group {
+    border-top: 1px solid #2a3a5a;
+}
+
+.groupHeader {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #dfe4ee;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    cursor: pointer;
+}
+
+.groupHeader:hover {
+    color: #5b9bd5;
+}
+
+.chevron {
+    color: #8a94a8;
+    font-size: 0.7rem;
+}
+
+.groupBody {
+    padding: 0 0 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.groupPlaceholder {
+    color: #5a6785;
+    font-size: 0.75rem;
+    margin: 0;
+    font-style: italic;
+}
+
+.checkboxRow {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    padding: 0.15rem 0;
+}
+
+.checkboxInput,
+.radioInput {
+    position: absolute;
+    opacity: 0;
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.checkboxBox,
+.radioCircle {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    background: #0b1424;
+    border: 1px solid #3d4b66;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.checkboxBox {
+    border-radius: 3px;
+}
+
+.radioCircle {
+    border-radius: 50%;
+}
+
+.checkboxInput:checked + .checkboxBox {
+    background: #5b9bd5;
+    border-color: #5b9bd5;
+}
+
+.checkboxInput:checked + .checkboxBox::after {
+    content: "";
+    display: block;
+    width: 4px;
+    height: 8px;
+    border: solid #0b1424;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    margin: 1px auto 0;
+}
+
+.radioInput:checked + .radioCircle {
+    border-color: #5b9bd5;
+}
+
+.radioInput:checked + .radioCircle::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #5b9bd5;
+    border-radius: 50%;
+    margin: 3px auto;
+}
+
+.checkboxInput:hover + .checkboxBox,
+.radioInput:hover + .radioCircle {
+    border-color: #5b9bd5;
+}
+
+.checkboxLabel {
+    font-size: 0.78rem;
+    color: #c7d0e0;
+}
+
+.priceInputs {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.priceInput {
+    width: 72px;
+    background: #0b1424;
+    border: 1px solid #3d4b66;
+    border-radius: 4px;
+    color: #dfe4ee;
+    font-size: 0.78rem;
+    padding: 0.4rem 0.5rem;
+    transition: border-color 0.15s ease;
+}
+
+.priceInput:focus {
+    outline: none;
+    border-color: #5b9bd5;
+}
+
+.priceInput::placeholder {
+    color: #5a6785;
+}
+
+.priceSeparator {
+    color: #8a94a8;
+    font-size: 0.85rem;
+}

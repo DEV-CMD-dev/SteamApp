@@ -101,6 +101,11 @@
     transform: none;
 }
 
+.cardWrapper {
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (max-width: 900px) {
     .carouselContent {
         display: block;

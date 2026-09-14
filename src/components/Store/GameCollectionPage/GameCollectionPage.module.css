@@ -1,0 +1,52 @@
+.page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem 4rem;
+    padding: 2rem 1rem 0;
+}
+
+.title {
+    text-align: center;
+    color: #fff;
+    font-size: 1.8rem;
+    letter-spacing: 0.05em;
+    margin: 0 0 2rem;
+}
+
+.subNav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.75rem;
+    background: #1b2a44;
+    border-radius: 6px;
+    padding: 1.1rem 1.5rem;
+    margin: 3rem 0 2rem;
+}
+
+.subNavItem {
+    color: #dfe4ee;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.subNavItemActive {
+    color: #5b9bd5;
+}
+
+.subNavItem:hover {
+    color: #5b9bd5;
+}
+
+.section {
+    margin-top: 2rem;
+}
+
+.sectionTitle {
+    color: #fff;
+    font-size: 1.1rem;
+    margin: 0 0 0.75rem;
+}
