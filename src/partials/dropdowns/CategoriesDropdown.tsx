@@ -4,6 +4,7 @@ import { tagService } from "../../services/tagService";
 import Tag from "../../components/Store/Tag";
 import NavDropdownPanel, { type PanelStyle } from "./NavDropdownPanel";
 import styles from "../../css/dropdownPanels/CategoriesDropdown.module.css";
+import { Link } from "react-router-dom";
 
 const TOP_CATEGORIES_COUNT = 6;
 
@@ -45,9 +46,9 @@ export default function CategoriesDropdown({
 
             <div className={styles.grid}>
                 {categories.slice(0, TOP_CATEGORIES_COUNT).map((tag) => (
-                    <div className={styles.item} key={tag.id} onClick={onLinkClick}>
+                    <Link to={`/category/${tag.id}`} className={styles.item} key={tag.id} onClick={onLinkClick}>
                         <Tag {...tag} />
-                    </div>
+                    </Link>
                 ))}
             </div>
 
