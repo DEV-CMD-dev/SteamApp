@@ -8,14 +8,11 @@ import type { TagDto } from "../DTOs/Tag/TagDto";
 const HERO_POOL_SIZE = 30;
 const RANDOM_SECTIONS_COUNT = 2;
 const GAMES_PER_SECTION = 12;
-// const LIST_POOL_SIZE = 30;
-// const LIST_GAMES_COUNT = 10;
 
 export default function DiscountsPage() {
     const [heroGames, setHeroGames] = useState<GameDto[]>([]);
     const [sections, setSections] = useState<{ title: string; games: GameDto[] }[]>([]);
     const [tagsById, setTagsById] = useState<Record<number, TagDto>>({});
-    // const [listGames, setListGames] = useState<GameDto[]>([]);
 
     const baseFilters = useMemo(() => ({ onSaleOnly: true }), []);
 
@@ -27,10 +24,6 @@ export default function DiscountsPage() {
             const shuffled = [...res.items].sort(() => Math.random() - 0.5);
             setHeroGames(shuffled.slice(0, 4));
         });
-        // gameService.getAll(1, LIST_POOL_SIZE, { onSaleOnly: true }, true).then((res) => {
-        //     const shuffled = [...res.items].sort(() => Math.random() - 0.5);
-        //     setListGames(shuffled.slice(0, LIST_GAMES_COUNT));
-        // });
         tagService.getAll(1, 50).then((res) => {
             const map: Record<number, TagDto> = {};
             res.items.forEach((tag) => { map[tag.id] = tag; });

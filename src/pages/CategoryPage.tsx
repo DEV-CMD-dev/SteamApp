@@ -7,16 +7,12 @@ import MixedGameCarouselSection from "../components/Store/GameCollectionPage/Gam
 import type { GameDto } from "../DTOs/Game/GameDto";
 import type { TagDto } from "../DTOs/Tag/TagDto";
 
-// const LIST_POOL_SIZE = 30;
-// const LIST_GAMES_COUNT = 10;
-
 export default function CategoryPage() {
     const { tagId } = useParams<{ tagId: string }>();
     const [heroGames, setHeroGames] = useState<GameDto[]>([]);
     const [currentTag, setCurrentTag] = useState<TagDto | null>(null);
     const [tagsById, setTagsById] = useState<Record<number, TagDto>>({});
     const [popularDiscounted, setPopularDiscounted] = useState<GameDto[]>([]);
-    // const [listGames, setListGames] = useState<GameDto[]>([]);
 
     const baseFilters = useMemo(
         () => (tagId ? { tagIds: [Number(tagId)] } : {}),
@@ -33,11 +29,6 @@ export default function CategoryPage() {
         gameService
             .getAll(1, 12, { tagIds: [Number(tagId)], onSaleOnly: true })
             .then((res) => setPopularDiscounted(res.items));
-
-        // gameService.getAll(1, LIST_POOL_SIZE, { onSaleOnly: true }, true).then((res) => {
-        //         const shuffled = [...res.items].sort(() => Math.random() - 0.5);
-        //         setListGames(shuffled.slice(0, LIST_GAMES_COUNT));
-        //     });
 
         tagService.getById(Number(tagId)).then(setCurrentTag);
 
