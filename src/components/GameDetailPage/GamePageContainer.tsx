@@ -29,7 +29,7 @@ export default function GamePageContainer() {
         loadGame();
     }, [id]);
 
-    if (isLoading) return <div className="game-page-status">Loading...</div>;
+    if (isLoading) return null;
     if (error) return <div className="game-page-status">{error}</div>;
     if (!gameDto) return <div className="game-page-status">Game not found.</div>;
 
