@@ -23,10 +23,10 @@
 
 .item {
     min-width: 0;
-
     overflow: hidden;
-
     aspect-ratio: 4 / 2.6;
+    text-decoration: none;
+    color: inherit;
 }
 
 .viewAll {
