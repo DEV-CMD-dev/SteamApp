@@ -4,6 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { authService } from "../services/authService";
 import styles from "../css/TwoFactorConfirmationPage.module.css";
 import logo from "../assets/logo.svg";
+import toast from 'react-hot-toast';
 
 export default function TwoFactorConfirmationPage() {
     const { username, login } = useContext(AuthContext);
@@ -22,10 +23,17 @@ export default function TwoFactorConfirmationPage() {
         setErrorMessage(null);
 
         try {
-            const data = await authService.loginTwoFactor({
+            const promise = authService.loginTwoFactor({
                 identifier: username,
                 code: verificationCode
             });
+            toast.promise(promise, {
+                loading: "Verifying your code",
+                success: "Succesful",
+                error: "Error occured while trying to verify your code",
+            });
+
+            const data = await promise;
 
             login(data.accessToken, new Date(data.expirationTime), data.userName);
             navigate("/");

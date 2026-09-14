@@ -16,11 +16,24 @@ import { ProtectedRoute } from './contexts/ProtectedRoute'
 import CartPage from './pages/CartPage'
 import GamePageContainer from './components/GameDetailPage/GamePageContainer'
 import TwoFactorConfirmationPage from './pages/TwoFactorConfirmationPage'
+import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
 
 function App() {
   return (
     <AuthProvider>
+      <Toaster 
+        position="top-right"
+        reverseOrder={false}
+        toastOptions={{
+          style:{
+            borderRadius: '8px',
+            background: '#333',
+            color: '#fff',
+          },
+          duration: 1500
+        }}
+        />
       <Routes>
         <Route path='/auth' element={<AuthForm />} />
         <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
