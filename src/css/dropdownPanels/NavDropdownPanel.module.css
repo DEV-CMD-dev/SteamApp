@@ -1,11 +1,12 @@
 .navDropdown {
     width: 100%;
-
+    max-width: var(--website-layout-max-width);
     display: grid;
     grid-template-rows: 0fr;
-
-    background-color: #171a21;
-
+    align-self: center;
+    padding: 0 50px;
+    background-color: transparent;
+    margin: 0 auto;
     transition: grid-template-rows 280ms ease;
 }
 

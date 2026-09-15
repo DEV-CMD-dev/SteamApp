@@ -86,7 +86,7 @@
     padding: 8px 0px;
     box-sizing: border-box;
     align-items: center;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1); */
     position: sticky;
     top: 0;
     z-index: 50;
@@ -194,7 +194,7 @@
 
 .search-bar:hover {
     border: 1px solid #009ff5;
-       
+
 }
 
 .search-bar-button {
@@ -600,10 +600,17 @@
     align-items: center;
 }
 
-.logo-footer
-{
+.logo-footer {
     margin: 0;
     width: 130px;
+}
+
+.dropdowns-container {
+    width: 100%;
+    background-color: #182534;
+    height: fit-content;
+
+
 }
 
 @media (max-width: 970px) {
