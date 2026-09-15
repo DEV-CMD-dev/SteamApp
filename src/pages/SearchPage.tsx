@@ -6,6 +6,8 @@ import type { GameDto } from "../DTOs/Game/GameDto";
 import GameFilter from "../components/SearchPage/GameFilter";
 import OsFilter from "../components/SearchPage/OsFilter";
 import TagFilter from "../components/SearchPage/TagFilter";
+import burger_icon from "../assets/navbar/header_menu_hamburger.png";
+
 import { SearchContext } from "../contexts/SearchContext";
 
 export default function SearchPage() {
@@ -134,7 +136,7 @@ export default function SearchPage() {
                     className="mobile-filter-btn"
                     onClick={() => setIsFiltersOpen(!isFiltersOpen)}
                 >
-                    ☰
+                    <img src={burger_icon}></img>
                 </button>
                 <div className="search-page-content">
                     <div className="search-inputs">

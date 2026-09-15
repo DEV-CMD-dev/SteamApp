@@ -16,6 +16,7 @@ export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
   const [profileOpen, setprofileOpen] = useState<boolean>(false);
   const [balance, setBalance] = useState(0);
+  const [cart, setCart] = useState(0);
   const [profile, setprofile] = useState<MiniProfileDto>();
 
 
@@ -40,9 +41,18 @@ export default function Navbar() {
       console.error(error);
     }
   }
+  async function GetNumberOfCarts() {
+    try {
+      const data = await orderService.getNumberofCart();
+      setCart(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   useEffect(() => {
     GetBalance()
     GetUser()
+    GetNumberOfCarts()
   }, [])
 
   const handleDropdownClick = (category: string) => {
@@ -58,7 +68,7 @@ export default function Navbar() {
         ></div>
         <div className={`mobile-profile-container ${profileOpen ? "open" : ""}`}>
           {accessToken ? (
-            <div className="profile-container" style={{background : `${profile?.avatar}`}}>
+            <div className="profile-container" style={{ background: `${profile?.avatar}` }}>
               <div className="profile-background">
                 <div className="pfp-container">
                   <img className="profile-picture" src={profile?.avatar ?? 'https://www.pfpgeeks.com/static/images/black-pfp/webp/black-pfp-5.webp'} alt="" />
@@ -71,7 +81,7 @@ export default function Navbar() {
                   </div>
                 </div>
                 <div className="profile-wallet-cart">
-                  <a href="#" className="cart-link">Cart (3)</a>
+                  <a href="#" className="cart-link">Cart ({cart})</a>
                   <a href="#" className="wallet-link">Wallet ({balance}$)</a>
                 </div>
               </div>

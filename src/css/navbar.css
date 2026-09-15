@@ -109,7 +109,6 @@
 }
 
 .categories-container {
-    /* grid-area: categories; */
     display: flex;
     width: min-content;
     background-color: transparent;
@@ -164,7 +163,6 @@
     width: 100%;
     max-width: 450px;
     border-radius: 2px;
-    /* overflow: hidden; */
 }
 
 .search-bar-container {
@@ -494,11 +492,9 @@
     transition: left 0.3s ease-in-out;
     z-index: 1000;
     box-shadow: 10px 0 20px rgba(0, 0, 0, 0.2);
-    /* Додаємо скрол для довгого меню */
     overflow-y: auto;
 }
 
-/* Прибираємо скролбар, щоб було як у додатку (опціонально) */
 .mobile-profile-container::-webkit-scrollbar {
     display: none;
 }
@@ -548,7 +544,7 @@
     color: #ffffff;
 }
 
-/* СТИЛІ VALVE БЛОКУ */
+
 .valve-footer {
     padding: 10px 16px 30px 16px;
     color: #8f98a0;
@@ -585,7 +581,6 @@
     align-items: center;
     gap: 12px;
     margin-top: auto;
-    /* Притискає блок до низу контейнера */
     font-family: 'Motiva Sans Normal', sans-serif;
     font-size: 14px;
 }

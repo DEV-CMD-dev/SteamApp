@@ -132,12 +132,6 @@
     color: white !important;
 }
 
-@media (max-width: 1240px) {
-    /* .search-gradient {
-        
-    } */
-}
-
 @media (max-width: 910px) {
     .search-page-container {
         width: 100%;
@@ -173,6 +167,11 @@
     top: 10%;
     z-index: 1001;
 
+}
+.mobile-filter-btn img
+{
+    width: 100%;
+    opacity: 0.3;
 }
 
 

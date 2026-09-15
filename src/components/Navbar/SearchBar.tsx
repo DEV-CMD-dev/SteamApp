@@ -4,6 +4,7 @@ import SearchItem from "./SearchItem";
 import type { GameDto } from "../../DTOs/Game/GameDto";
 import searchIcon from "../../assets/navbar/search.svg";
 import "../../css/navbar.css"
+import { searchService } from "../../services/searchService";
 export default function SearchBar() {
     const [isFocused, setIsFocused] = useState(false);
     const [searchResults, setSearchResults] = useState<GameDto[]>([]);
@@ -15,14 +16,24 @@ export default function SearchBar() {
     };
     async function GetSearchResults() {
         try {
-            const response = await fetch(`https://localhost:7166/api/Games?SearchTerm=${searchTerm}&pageSize=4`);
-            const data = await response.json();
+            const data = await searchService.searchGames(searchTerm);
             setSearchResults(data.items);
         } catch (error) {
             console.error("Error fetching search results:", error);
             setSearchResults([]);
         }
     }
+
+    async function GetPopularGames() {
+        try {
+            const data = await searchService.getPopularGames();
+            setPopularGames(data.items);
+        } catch (error) {
+            console.error("Error fetching popular games:", error);
+            setPopularGames([]);
+        }
+    }
+    
     useEffect(() => {
         if (searchTerm.trim() === "") {
             return;
@@ -36,16 +47,7 @@ export default function SearchBar() {
 
 
 
-    async function GetPopularGames() {
-        try {
-            const response = await fetch(`https://localhost:7166/api/Games?OnSaleOnly=true&pageNumber=1&pageSize=4`);
-            const data = await response.json();
-            setPopularGames(data.items);
-        } catch (error) {
-            console.error("Error fetching popular games:", error);
-            setPopularGames([]);
-        }
-    }
+
 
     useEffect(() => {
         GetPopularGames();

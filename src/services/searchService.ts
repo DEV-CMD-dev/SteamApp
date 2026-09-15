@@ -1,4 +1,7 @@
-import type { MiniProfileDto } from "../DTOs/Profile/MiniProfileDto";
+import type { TagDto } from "../DTOs/Tag/TagDto";
+import type { GameDto } from "../DTOs/Game/GameDto";
+import type { PaginatedList } from "../DTOs/PaginatedList";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const handleResponse = async (res: Response, defaultError: string) => {
@@ -16,9 +19,18 @@ const handleResponse = async (res: Response, defaultError: string) => {
     return data;
 };
 
-export const orderService = {
-    async getBalance(): Promise<number> {
-        const res = await fetch(`${API_BASE_URL}/Order/GetBalance`, {
+export const searchService = {
+    async getAll(searchTerm?: string): Promise<PaginatedList<TagDto>> {
+        const params = new URLSearchParams({
+            pageNumber: "1",
+            pageSize: "5",
+        });
+
+        if (searchTerm?.trim()) {
+            params.append("searchTerm", searchTerm.trim());
+        }
+
+        const res = await fetch(`${API_BASE_URL}/Tags?${params.toString()}`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -26,10 +38,11 @@ export const orderService = {
             },
         });
 
-        return handleResponse(res, "Failed to load balance.");
+        return handleResponse(res, "Failed to load tags.");
     },
-    async getUser(): Promise<MiniProfileDto> {
-        const res = await fetch(`${API_BASE_URL}/Profiles/GetMyProfile`, {
+
+    async searchGames(searchTerm: string): Promise<PaginatedList<GameDto>> {
+        const res = await fetch(`${API_BASE_URL}/Games?SearchTerm=${searchTerm}&pageSize=4`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -37,10 +50,11 @@ export const orderService = {
             },
         });
 
-        return handleResponse(res, "Failed to load balance.");
+        return handleResponse(res, "Failed to search games.");
     },
-    async getNumberofCart(): Promise<number> {
-        const res = await fetch(`${API_BASE_URL}/Cart/NumberOfCart`, {
+
+    async getPopularGames(): Promise<PaginatedList<GameDto>> {
+        const res = await fetch(`${API_BASE_URL}/Games?OnSaleOnly=true&pageNumber=1&pageSize=4`, {
             method: "GET",
             headers: {
                 "Accept": "application/json",
@@ -48,6 +62,6 @@ export const orderService = {
             },
         });
 
-        return handleResponse(res, "Failed to load balance.");
+        return handleResponse(res, "Failed to load popular games.");
     },
 };
