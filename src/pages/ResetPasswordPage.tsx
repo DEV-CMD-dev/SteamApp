@@ -5,6 +5,7 @@ import "../css/resetPasswordPage.css";
 import type { PasswordResetDto } from "../DTOs/UserHelper/PasswordResetDto";
 import { useState } from "react";
 import { userHelperService } from "../services/userHelperService";
+import toast from 'react-hot-toast';
 
 type ResetPasswordForm = PasswordResetDto & {
         confirmPassword: string;
@@ -49,17 +50,22 @@ export default function ResetPasswordPage() {
             setIsLoading(true);
             setErrorMessage(null);
 
-            await userHelperService.resetPassword({
+            const promise = userHelperService.resetPassword({
                 identifier: form.identifier,
                 token: form.token,
                 newPassword: form.newPassword
             })
+            toast.promise(promise, {
+                loading: "Reseting your password",
+                success: "Succesful",
+                error: "Error occured while trying to reset password",
+            });
+            await promise;
             setForm(prev => ({
                 ...prev,
                 newPassword: "",
                 confirmPassword: ""
             }));
-            alert("Password has been reset successfully")
             
             setTimeout(() => {
                 navigate("/auth");
@@ -77,7 +83,6 @@ export default function ResetPasswordPage() {
         } finally {
             setIsLoading(false);
         }
-            
     }
 
     return (

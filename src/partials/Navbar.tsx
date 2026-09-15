@@ -1,6 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+
 import { AuthContext } from "../contexts/AuthContext";
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import CategoriesDropdown from "./dropdowns/CategoriesDropdown";
+import BrowseDropdown from "./dropdowns/BrowseDropdown";
+import RecommendationsDropdown from "./dropdowns/RecommendationsDropdown";
+import type { PanelStyle } from "./dropdowns/NavDropdownPanel";
 import "../css/navbar.css";
 import starIcon from "../assets/navbar/star.png";
 import cartIcon from "../assets/navbar/cart.svg";
@@ -10,7 +15,7 @@ import SearchBar from "../components/Navbar/SearchBar";
 import header_burger from "../assets/navbar/header_menu_hamburger.png";
 import { orderService } from "../services/navbarService";
 import type { MiniProfileDto } from "../DTOs/Profile/MiniProfileDto";
-
+import arrowUpIcon from "../assets/navbar/arrow-up.svg";
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);
@@ -18,7 +23,16 @@ export default function Navbar() {
   const [balance, setBalance] = useState(0);
   const [cart, setCart] = useState(0);
   const [profile, setprofile] = useState<MiniProfileDto>();
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [panelStyle, setPanelStyle] = useState<PanelStyle | null>(null);
 
+  const navRef = useRef<HTMLElement>(null);
+  const categoriesContainerRef = useRef<HTMLDivElement>(null);
+  const navActionsContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
 
   const [isStoreOpen, setIsStoreOpen] = useState(false);
   const [isFriendsOpen, setIsFriendsOpen] = useState(false);
@@ -56,8 +70,53 @@ export default function Navbar() {
   }, [])
 
   const handleDropdownClick = (category: string) => {
-    console.log(`${category} dropdown clicked`);
+    setActiveDropdown((prev) => (prev === category ? null : category));
   };
+
+  const closeDropdown = () => setActiveDropdown(null);
+
+  const handleViewAllTags = () => {
+    setActiveDropdown(null);
+
+    const carousel = document.getElementById("category-carousel");
+    if (carousel) {
+      carousel.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = "/#category-carousel";
+    }
+  };
+
+  const recalculatePanelPosition = () => {
+    if (!navRef.current || !categoriesContainerRef.current || !navActionsContainerRef.current) {
+      return;
+    }
+
+    const navRect = navRef.current.getBoundingClientRect();
+    const startRect = categoriesContainerRef.current.getBoundingClientRect();
+    const endRect = navActionsContainerRef.current.getBoundingClientRect();
+
+    setPanelStyle({
+      marginLeft: startRect.left - navRect.left,
+      width: endRect.right - startRect.left,
+    });
+  };
+
+  useLayoutEffect(() => {
+    recalculatePanelPosition();
+    window.addEventListener("resize", recalculatePanelPosition);
+    return () => window.removeEventListener("resize", recalculatePanelPosition);
+  }, [activeDropdown]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <>
@@ -196,7 +255,6 @@ export default function Navbar() {
               <span>Browse</span>
               <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
             </button>
-
             <button
               type="button"
               className="category-dropdown-btn"
@@ -236,6 +294,21 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
+      </div>
+      <div className="dropdowns-container">
+        <BrowseDropdown
+          isOpen={activeDropdown === "Browse"}
+          panelStyle={panelStyle}
+          onLinkClick={closeDropdown} />
+        <CategoriesDropdown
+          isOpen={activeDropdown === "Categories"}
+          panelStyle={panelStyle}
+          onNavigateToAllTags={handleViewAllTags}
+          onLinkClick={closeDropdown} />
+        <RecommendationsDropdown
+          isOpen={activeDropdown === "Recommendations"}
+          panelStyle={panelStyle}
+          onLinkClick={closeDropdown} />
       </div>
     </>
   );

@@ -4,6 +4,7 @@ import { tagService } from "../../services/tagService";
 import Tag from "./Tag";
 import styles from "../../css/Store/CategoryCarousel.module.css";
 import arrow from "../../assets/store/arrow.svg";
+import { Link } from "react-router-dom";
 
 export default function CategoryCarousel() {
     const [items, setItems] = useState<TagDto[]>([]);
@@ -40,7 +41,7 @@ export default function CategoryCarousel() {
     };
 
     return (
-        <div className={styles.carouselContainer}>
+        <div className={styles.carouselContainer} id="category-carousel">
             <div className={styles.carouselContent}>
 
                 <h3 className={styles.carouselTitle}>
@@ -60,11 +61,12 @@ export default function CategoryCarousel() {
                 <div className={styles.carouselWrapper}>
                     <div className={styles.carouselRow}>
                         {items.map((tag) => (
-                            <div
+                            <Link
+                                to={`/category/${tag.id}`}
                                 className={styles.cardWrapper}
                                 key={tag.id}>
                                 <Tag {...tag} />
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
