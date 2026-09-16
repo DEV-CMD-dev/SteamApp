@@ -1,0 +1,260 @@
+.trade-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    color: #c7d5e0;
+}
+
+.trade-header h1 {
+    font-size: 22px;
+    margin: 0 0 16px;
+}
+
+.trade-body {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+}
+
+.trade-sidebar {
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 16px;
+    height: fit-content;
+}
+
+.new-trade-offer-button {
+    width: 100%;
+    background: #2a475e;
+    color: #c7d5e0;
+    border: 1px solid #4c6b22;
+    border-radius: 3px;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 16px;
+}
+
+.new-trade-offer-button:hover {
+    background: #375879;
+}
+
+.trade-nav {
+    display: flex;
+    flex-direction: column;
+}
+
+.trade-nav-group {
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #2a3f5a;
+}
+
+.trade-nav-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.trade-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+    width: 100%;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    color: #c7d5e0;
+    text-align: left;
+    padding: 10px 10px 10px 8px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 0 3px 3px 0;
+    transition: background 0.15s ease;
+}
+
+.trade-nav-item:hover {
+    background: #1b2838;
+}
+
+.trade-nav-item.active {
+    background: #2a3f5a;
+    border-left-color: #67c1f5;
+}
+
+.trade-nav-count {
+    font-size: 12px;
+    color: #67c1f5;
+    font-weight: 600;
+}
+
+.trade-nav-subitem {
+    display: block;
+    width: 100%;
+    background: none;
+    border: none;
+    color: #8f98a0;
+    text-align: left;
+    padding: 6px 10px 6px 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: color 0.15s ease;
+}
+
+.trade-nav-subitem:hover {
+    color: #c7d5e0;
+}
+
+.trade-nav-subitem.active {
+    color: #67c1f5;
+}
+
+.trade-list {
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 300px;
+}
+
+.trade-loading {
+    color: #8f98a0;
+}
+
+.trade-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    color: #c7d5e0;
+    padding: 60px 20px;
+}
+
+.trade-empty-state span {
+    color: #8f98a0;
+    font-size: 13px;
+    max-width: 340px;
+}
+
+.trade-offer-card {
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 14px;
+}
+
+.trade-offer-parties {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin-bottom: 10px;
+    color: #8f98a0;
+}
+
+.trade-status-badge {
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.trade-status-badge.status-0 {
+    background: #4c6b22;
+    color: #a3d13a;
+}
+
+.trade-status-badge.status-1 {
+    background: #2a475e;
+    color: #67c1f5;
+}
+
+.trade-status-badge.status-2,
+.trade-status-badge.status-3 {
+    background: #3a1f1f;
+    color: #cd5c5c;
+}
+
+.trade-offer-items {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.trade-offer-side {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 8px;
+}
+
+.trade-offer-side.empty {
+    color: #8f98a0;
+    font-size: 13px;
+    justify-content: center;
+}
+
+.trade-offer-side img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+}
+
+.trade-offer-side-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.trade-offer-item-name {
+    font-size: 13px;
+}
+
+.trade-offer-item-game {
+    font-size: 11px;
+    color: #67c1f5;
+}
+
+.trade-offer-arrow {
+    font-size: 18px;
+    color: #8f98a0;
+}
+
+.trade-offer-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.trade-offer-actions button {
+    padding: 6px 14px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.trade-offer-actions button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.accept-button {
+    background: #4c6b22;
+    color: #a3d13a;
+}
+
+.decline-button,
+.cancel-button {
+    background: #3a1f1f;
+    color: #cd5c5c;
+}

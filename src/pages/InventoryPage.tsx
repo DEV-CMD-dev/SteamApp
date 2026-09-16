@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import type { InventoryItemDto } from "../DTOs/InventoryItem/InventoryItemDto";
 import { inventoryService } from "../services/inventoryService";
+import type { ProfileDto } from "../DTOs/Profile/ProfileDto";
+import { profileService } from "../services/profileService";
 import "../css/inventoryPage.css";
 
 const GRID_SIZE = 25;
@@ -15,8 +17,22 @@ type GameGroup = {
     items: InventoryItemDto[];
 };
 
+const getUserIdFromToken = (token: string): string | null => {
+    try {
+        const payload = JSON.parse(atob(token.split(".")[1]));
+
+        return (
+            payload.sub ??
+            payload["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"] ??
+            null
+        );
+    } catch {
+        return null;
+    }
+};
+
 export default function InventoryPage() {
-    const { username } = useContext(AuthContext);
+    const { username, accessToken } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const [inventory, setInventory] = useState<InventoryItemDto[]>([]);
@@ -25,6 +41,7 @@ export default function InventoryPage() {
     const [selectedItemId, setSelectedItemId] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState("");
     const [selling, setSelling] = useState(false);
+    const [profile, setProfile] = useState<ProfileDto | null>(null);
 
     useEffect(() => {
         inventoryService
@@ -36,6 +53,24 @@ export default function InventoryPage() {
             })
             .finally(() => setLoading(false));
     }, []);
+
+    useEffect(() => {
+        if (!accessToken) return;
+
+        const userId = getUserIdFromToken(accessToken);
+
+        if (!userId) {
+            console.error("User ID was not found in access token.");
+            return;
+        }
+
+        profileService
+            .getProfile(userId)
+            .then((result) => setProfile(result))
+            .catch((error) => {
+                console.error("Failed to load profile", error);
+            });
+    }, [accessToken]);
 
     const games: GameGroup[] = [];
     inventory.forEach((invItem) => {
@@ -94,8 +129,20 @@ export default function InventoryPage() {
         <div className="inventory-page">
             <header className="inventory-header">
                 <div className="inventory-title">
-                    <h1>{username}</h1>
-                    <span>Item Inventory</span>
+                    <div className="inventory-user">
+                        {profile?.avatar && (
+                            <img
+                                src={profile.avatar}
+                                alt={username ?? "User"}
+                                className="inventory-avatar"
+                            />
+                        )}
+
+                        <div>
+                            <h1>{username}</h1>
+                            <span>Item Inventory</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="inventory-actions">
@@ -149,9 +196,8 @@ export default function InventoryPage() {
                             {cells.map((invItem, index) => (
                                 <div
                                     key={invItem?.id ?? `empty-${index}`}
-                                    className={`inventory-cell ${invItem ? "" : "empty"} ${
-                                        invItem?.id === selectedItemId ? "selected" : ""
-                                    }`}
+                                    className={`inventory-cell ${invItem ? "" : "empty"} ${invItem?.id === selectedItemId ? "selected" : ""
+                                        }`}
                                     onClick={() => invItem && setSelectedItemId(invItem.id)}
                                 >
                                     {invItem && <img src={invItem.item.imageUrl} alt={invItem.item.name} />}

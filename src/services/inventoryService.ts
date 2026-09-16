@@ -42,4 +42,18 @@ export const inventoryService = {
 
         await handleResponse(res, "Failed to sell item.");
     },
+        async getUserInventory(userId: string, pageNumber = 1, pageSize = 50): Promise<PaginatedList<InventoryItemDto>> {
+        const res = await fetch(
+            `${API_BASE_URL}/InventoryItem/user/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`,
+            {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                },
+            }
+        );
+
+        return handleResponse(res, "Failed to load user inventory.");
+    },
 };

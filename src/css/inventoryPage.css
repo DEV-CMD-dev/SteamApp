@@ -49,14 +49,19 @@
 .game-tab {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     background: #1b2838;
     border: 1px solid transparent;
     border-radius: 3px;
-    padding: 8px 12px;
+    padding: 10px 16px;
     color: #c7d5e0;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 15px;
+    transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.game-tab:hover {
+    background: #22344a;
 }
 
 .game-tab.active {
@@ -65,9 +70,11 @@
 }
 
 .game-tab-icon {
-    width: 20px;
-    height: 20px;
-    object-fit: contain;
+    width: 32px;
+    height: 32px;
+    object-fit: cover;
+    border-radius: 4px;
+    flex-shrink: 0;
 }
 
 .inventory-loading,
@@ -92,8 +99,8 @@
 }
 
 .inventory-panel-icon {
-    width: 28px;
-    height: 28px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
 }
 
@@ -223,4 +230,27 @@
 .item-details-placeholder {
     color: #8f98a0;
     font-size: 13px;
+}
+
+.inventory-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.inventory-user h1 {
+    margin: 0;
+}
+
+.inventory-user span {
+    display: block;
+}
+
+.inventory-avatar {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 0;
+    border: 2px solid #4a6b8a;
+    box-sizing: border-box;
 }
