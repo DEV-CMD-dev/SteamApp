@@ -1,0 +1,109 @@
+.search-item {
+    width: 100%;
+    height: 60px;
+    background-color: rgba(255, 0, 0, 0);
+    display: flex;
+    flex-direction: row;
+    border-radius: 2px;
+    overflow: hidden;
+}
+.search-item:hover {
+    cursor: pointer;
+}
+.search-item-image-container {
+    width: 40%;
+    height: 100%;
+    background-color: rgba(255, 0, 0, 0);
+}
+
+.search-item-info-container {
+    width: 60%;
+    background: linear-gradient(90deg, #212B38 0%, #323d4b 100%);
+    padding: 6px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 3px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.search-item-info-container:hover {
+    background: linear-gradient(90deg, #25303f 0%, #354150 100%);
+}
+
+.search-item-title {
+    color: #FFFFFF;
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.search-item-price-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+
+}
+.search-item-discount {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 6px;
+    gap: 10px;
+    background-color: #A1CD44;
+}
+
+.search-item-discount p {
+    font-size: 12px;
+    color: #000000;
+    font-weight: 400;
+    background-color: transparent;
+}
+
+.search-item-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.search-item-price p {
+    font-size: 12px;
+    color: #FFFFFF;
+    font-weight: 400;
+    background-color: transparent;
+}
+
+.search-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.search-item-discount-container
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+.search-item-original-price
+{
+    font-size: 12px;
+    color: #ffffffcb;
+    font-weight: 400;
+    text-decoration: line-through;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    
+}
