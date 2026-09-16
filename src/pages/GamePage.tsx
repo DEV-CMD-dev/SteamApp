@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
 import AddedToCartModal from "../components/GameDetailPage/AddedToCartModal";
 import { AuthContext } from "../contexts/AuthContext";
+import Reviews from "../components/GameDetailPage/Reviews/Reviews";
 
 
 type GamePageProps = {
@@ -44,7 +45,7 @@ const ratingText = (rating: GameRating): string => {
 };
 
 export default function GamePage({ gameDto }: GamePageProps) {
-    const {accessToken} = useContext(AuthContext)
+    const { accessToken } = useContext(AuthContext)
     const [isExpanded, setIsExpanded] = useState(false);
     const [isInWishlist, setIsInWishlist] = useState(false);
     const [isWishlistLoading, setIsWishlistLoading] = useState(false);
@@ -83,7 +84,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
 
     const handleWishlistToggle = async () => {
         try {
-            if(!accessToken){
+            if (!accessToken) {
                 navigate("/auth")
                 return;
             }
@@ -93,10 +94,10 @@ export default function GamePage({ gameDto }: GamePageProps) {
             if (isInWishlist) {
                 const promise = wishlistService.removeGame(gameDto.id);
                 toast.promise(promise, {
-                        loading: "Removing game from wishlist",
-                        success: "Game removed from wishlist",
-                        error: "Error occured while trying to remove game from wishlist",
-                    });
+                    loading: "Removing game from wishlist",
+                    success: "Game removed from wishlist",
+                    error: "Error occured while trying to remove game from wishlist",
+                });
                 await promise;
                 setIsInWishlist(false);
             } else {
@@ -105,7 +106,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                     loading: "Adding game to wishlist",
                     success: "Game added to wishlist",
                     error: "Error occured while trying to add game to wishlist",
-                    });
+                });
                 await promise;
                 setIsInWishlist(true);
             }
@@ -255,7 +256,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                                 ? "Loading..."
                                 : isInWishlist
                                     ? "★ Remove from Wishlist"
-                                    : "★ Add to Wishlist"} 
+                                    : "★ Add to Wishlist"}
                         </button>
                         {wishlistError && (
                             <p className="wishlist-error">
@@ -499,6 +500,7 @@ export default function GamePage({ gameDto }: GamePageProps) {
                 onClose={() => setIsCartModalOpen(false)}
                 onGoToCart={() => navigate("/cart")}
             />
+            <Reviews gameId={gameDto.id} />
         </div>
     );
 }

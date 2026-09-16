@@ -1,0 +1,114 @@
+.review-form-block {
+    margin-top: 32px;
+    background: #101922;
+    border: 1px solid rgba(255, 255, 255, .05);
+    border-radius: 6px;
+    padding: 32px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+
+.review-form-block h2 {
+    margin: 0 0 20px;
+    font-size: 25px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.review-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.review-form-recommend {
+    display: flex;
+    gap: 12px;
+}
+
+.recommend-btn {
+    flex: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, .08);
+    background: #202833;
+    color: #b8b8b8;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.recommend-btn:hover {
+    background: #283340;
+}
+
+.recommend-btn.active-yes {
+    background: rgba(102, 192, 244, .15);
+    border-color: #66c0f4;
+    color: #66c0f4;
+}
+
+.recommend-btn.active-no {
+    background: rgba(217, 91, 67, .15);
+    border-color: #d95b43;
+    color: #d95b43;
+}
+
+.review-form-textarea {
+    width: 100%;
+    background: #171d25;
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 6px;
+    padding: 14px;
+    color: #fff;
+    font-size: .92rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 120px;
+}
+
+.review-form-textarea:focus {
+    outline: none;
+    border-color: #66c0f4;
+}
+
+.review-form-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-form-count {
+    color: #7d8793;
+    font-size: .78rem;
+}
+
+.review-form-submit {
+    padding: 11px 24px;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: 700;
+    background-color: #259FF6;
+    cursor: pointer;
+}
+
+.review-form-submit:hover {
+    filter: brightness(1.08);
+}
+
+.review-form-submit:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.review-form-error {
+    color: #d95b43;
+    font-size: .85rem;
+    margin: 0;
+}
+
+.review-form-success {
+    color: #66c0f4;
+    font-size: .85rem;
+    margin: 0;
+}
