@@ -64,10 +64,12 @@ export default function Navbar() {
     }
   }
   useEffect(() => {
-    GetBalance()
-    GetUser()
-    GetNumberOfCarts()
-  }, [])
+    if (accessToken) {
+      GetBalance();
+      GetUser();
+      GetNumberOfCarts();
+    }
+  }, [accessToken]);
 
   const handleDropdownClick = (category: string) => {
     setActiveDropdown((prev) => (prev === category ? null : category));
