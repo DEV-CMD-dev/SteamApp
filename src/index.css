@@ -3,13 +3,40 @@
 }
 
 html,
-body{
+body {
     margin: 0;
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     overscroll-behavior-y: none;
     background-color: #0f1924;
 }
 
-:root{
+:root {
     --website-layout-max-width: 1240px;
+}
+
+@font-face {
+    font-family: 'Motiva Sans';
+    src: url('./assets/fonts/MotivaSansTest-Bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Motiva Sans Normal';
+    src: url('./assets/fonts/MotivaSansTest-Regular.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Motiva Sans Medium';
+    src: url('./assets/fonts/MotivaSansTest-Medium.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+a{
+    margin: 0;
+    padding: 0;
+   
 }
