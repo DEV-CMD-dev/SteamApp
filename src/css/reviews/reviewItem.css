@@ -1,0 +1,371 @@
+.review-item {
+    background: #16202d;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 4px;
+    padding: 20px 22px;
+}
+
+.review-item-body {
+    display: flex;
+    gap: 20px;
+}
+
+.review-user-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 96px;
+    flex-shrink: 0;
+    text-align: center;
+}
+
+.review-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 4px;
+    background: #2a3f5a;
+    color: #66c0f4;
+    font-size: 24px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(102, 192, 244, 0.3);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.review-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.review-user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+}
+
+.review-user-info strong {
+    color: #66c0f4;
+    font-size: 13px;
+    font-weight: 600;
+    word-break: break-word;
+    margin-bottom: 3px;
+}
+
+.review-user-info span {
+    font-family: 'Motiva Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #8f98a3;
+    font-size: 12px; 
+    font-weight: 400; 
+    line-height: 1.4;
+    white-space: nowrap;
+}
+
+.review-user-meta {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #798b9e !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    text-transform: uppercase; 
+    letter-spacing: 0.5px;
+}
+
+
+.review-main-col {
+    flex: 1;
+    min-width: 0;
+}
+
+.review-verdict {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.review-verdict-icon {
+    font-size: 26px;
+    line-height: 1;
+}
+
+.review-verdict-label {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.review-verdict.positive .review-verdict-label {
+    color: #66c0f4;
+}
+
+.review-verdict.negative .review-verdict-label {
+    color: #d95b43;
+}
+
+.review-content {
+    margin: 0 0 16px;
+    color: #d6d7d8;
+    font-size: 14px;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+.review-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #687481;
+    font-size: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 12px;
+}
+
+.review-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.review-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 58px;
+    padding: 6px 11px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    background: #202b38;
+    color: #aeb8c3;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+}
+
+.review-actions button:hover {
+    background: #2a3a4b;
+    border-color: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+}
+
+.review-actions button:active {
+    transform: translateY(1px);
+}
+
+.review-actions button:first-child:hover {
+    color: #66c0f4;
+    border-color: rgba(102, 192, 244, 0.4);
+}
+
+.review-actions button:last-child:hover {
+    color: #e36b55;
+    border-color: rgba(217, 91, 67, 0.4);
+}
+
+.review-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.reviews-loading,
+.no-reviews {
+    padding: 20px 0;
+    color: #7d8793;
+    font-size: 14px;
+}
+
+.review-item-editing {
+    border-color: rgba(102, 192, 244, 0.35);
+}
+
+.review-edit-recommend {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.review-choice {
+    flex: 1;
+    padding: 11px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    background: #202833;
+    color: #b8b8b8;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.review-choice:hover {
+    background: #283340;
+}
+
+.review-choice.active-positive {
+    background: rgba(102, 192, 244, 0.15);
+    border-color: #66c0f4;
+    color: #66c0f4;
+}
+
+.review-choice.active-negative {
+    background: rgba(217, 91, 67, 0.15);
+    border-color: #d95b43;
+    color: #d95b43;
+}
+
+.review-edit-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 13px;
+    box-sizing: border-box;
+    resize: vertical;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    background: #171d25;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.review-edit-textarea:focus {
+    outline: none;
+    border-color: #66c0f4;
+}
+
+.review-edit-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    color: #687481;
+    font-size: 12px;
+}
+
+.review-edit-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.review-edit-actions button {
+    min-width: 72px;
+    padding: 8px 16px;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #202833;
+    color: #d6d7d8;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.review-edit-actions button:hover {
+    background: #2a3542;
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.review-edit-actions button:last-child {
+    border: 1px solid rgba(102, 192, 244, 0.35);
+    background: rgba(102, 192, 244, 0.12);
+    color: #66c0f4;
+}
+
+.review-edit-actions button:last-child:hover {
+    background: rgba(102, 192, 244, 0.2);
+    border-color: #66c0f4;
+}
+
+.review-edit-actions button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-box {
+    background: #1b2838;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 24px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.modal-title {
+    margin: 0 0 10px;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.modal-text {
+    margin: 0 0 20px;
+    color: #a3b0bd;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.modal-btn-cancel,
+.modal-btn-danger {
+    padding: 9px 17px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.modal-btn-cancel {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #202833;
+    color: #d6d7d8;
+}
+
+.modal-btn-cancel:hover {
+    background: #2a3542;
+    border-color: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.modal-btn-danger {
+    border: 1px solid rgba(217, 91, 67, 0.45);
+    background: rgba(217, 91, 67, 0.15);
+    color: #e36b55;
+}
+
+.modal-btn-danger:hover {
+    background: rgba(217, 91, 67, 0.25);
+    border-color: #d95b43;
+    color: #ff8068;
+}
+
+.modal-btn-cancel:disabled,
+.modal-btn-danger:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

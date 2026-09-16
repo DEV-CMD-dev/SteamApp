@@ -1,0 +1,102 @@
+.filter-container {
+    width: 100%;
+    height: min-content;
+    background-color: transparent;
+    border-radius: 1px;
+}
+
+.filter-header {
+    width: 100%;
+    background-color: #323e4c;
+    padding: 6px;
+    font-size: 13px;
+    color: #c7d5e0;
+    cursor: pointer;
+}
+
+.filter-content {
+    width: 100%;
+    height: min-content;
+    background-color: #1b2838;
+    border: 1px solid #323e4c;
+    border-top: none;
+    padding: 3px;
+    box-sizing: border-box;
+    border-radius: 0px 0px 1px 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    /* gap: 10px; */
+    overflow: hidden;
+}
+
+.content-input-range {
+    -webkit-appearance: none;
+    appearance: none;
+    max-height: 4px;
+    background-color: #7fcbf7;
+    border-radius: 4px;
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.content-input-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: white;
+    width: 13px;
+    height: 13px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+}
+
+.checkbox-container {
+    width: 100%;
+    height: min-content;
+    border-top: none;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+
+.input-hr {
+    height: 1px;
+    width: 95%;
+    background-color: #323e4c;
+}
+
+.price-label {
+    color: #9fbbcb;
+    font-size: 14px;
+    margin: 0;
+    /* margin-bottom: 5px; */
+    margin-bottom: 10px;
+
+}
+
+.tag-search-input {
+    width: 60%;
+    height: 28px;
+    border-radius: 3px;
+    margin: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    outline: none;
+    border: 0;
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
+    font-style: italic;
+    display: block;
+    justify-self: start;
+    align-self: flex-start;
+}
+
+.tag-search-input::placeholder {
+    color: #7092a5;
+}

@@ -33,7 +33,7 @@ export const profileService = {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         });
-
+        
         return handleResponse(res, "Failed to load profile.");
     },
 

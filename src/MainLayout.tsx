@@ -11,7 +11,7 @@ export default function MainLayout() {
     <div className="site-wrapper">
       <Navbar />
       {location.pathname === "/" && <StoreBanner />}
-      <div className="pages-container">
+      <div className={`${location.pathname === "/search" ? "" : "pages-container"}`}>
         <Outlet />
       </div>
       <Footer />

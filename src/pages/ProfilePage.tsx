@@ -40,6 +40,7 @@ export default function ProfilePage() {
     const level = profile?.level ?? 0;
     const xp = profile?.xp ?? 0;
     const avatarUrl = profile?.avatar || "";
+    const bio = profile?.bio || "No bio";
     const badgeCount = profile?.badges
         ? profile.badges.split(",").length
         : 0;
@@ -47,10 +48,10 @@ export default function ProfilePage() {
     const recentlyPlayedGames = profile?.recentlyPlayedGames ?? [];
 
     const friends = [
-        { name: "nexus", status: "online", count: 12 },
-        { name: "Lightcan", status: "offline", count: 16 },
-        { name: "Black BOX", status: "offline", count: 76 },
-        { name: "Adam", status: "offline", count: 45 },
+        { name: "Pak1Master", status: "online", count: 12 },
+        { name: "qza580", status: "offline", count: 16 },
+        { name: "flora", status: "offline", count: 76 },
+        { name: "Gabe Newell", status: "offline", count: 1000 },
     ];
 
     const handleLogout = () => {
@@ -71,28 +72,18 @@ export default function ProfilePage() {
                     </div>
 
                     <div className="profile-meta">
-                        <h1>{username}</h1>
-                        <p>{username}</p>
+                        <h2>{username}</h2>
+                        <p>{bio}</p>
                     </div>
                 </div>
 
                 <div className="profile-right">
                     <div className="profile-rank">
-                        <div className="profile-rank-label">
-                            <span>Level</span>
-                        </div>
                         <div className="level-badge">
                             <strong>{loading ? "..." : level}</strong>
                         </div>
-                    </div>
-
-                    <div className="profile-identity">
-                        <div className="profile-identity-card">
-                            <div className="badge">{loading ? "..." : badgeCount}</div>
-                            <div className="text">
-                                <strong>{profile?.badges}</strong>
-                                <span>{loading ? "Loading XP..." : `${xp} XP`}</span>
-                            </div>
+                        <div className="profile-rank-label">
+                            <span>Level</span>
                         </div>
                     </div>
 
