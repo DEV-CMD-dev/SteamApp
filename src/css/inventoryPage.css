@@ -1,0 +1,226 @@
+.inventory-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    color: #c7d5e0;
+}
+
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.inventory-title h1 {
+    font-size: 22px;
+    margin: 0;
+}
+
+.inventory-title span {
+    font-size: 13px;
+    color: #8f98a0;
+}
+
+.trade-offers-button {
+    background: #2a475e;
+    color: #c7d5e0;
+    border: 1px solid #4c6b22;
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+.trade-offers-button:hover {
+    background: #375879;
+}
+
+.game-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 12px;
+    margin-bottom: 16px;
+}
+
+.game-tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #1b2838;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 8px 12px;
+    color: #c7d5e0;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.game-tab.active {
+    border-color: #cd5c5c;
+    color: #ffffff;
+}
+
+.game-tab-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.inventory-loading,
+.inventory-empty {
+    color: #8f98a0;
+    font-size: 14px;
+    padding: 8px;
+}
+
+.inventory-panel {
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 16px;
+}
+
+.inventory-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.inventory-panel-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+}
+
+.inventory-panel-header h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.inventory-toolbar {
+    margin-bottom: 16px;
+}
+
+.inventory-toolbar input {
+    width: 100%;
+    max-width: 400px;
+    padding: 8px 10px;
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    color: #c7d5e0;
+}
+
+.inventory-body {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 20px;
+}
+
+.inventory-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.inventory-cell {
+    aspect-ratio: 1;
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.inventory-cell.empty {
+    cursor: default;
+    opacity: 0.4;
+}
+
+.inventory-cell.selected {
+    border-color: #67c1f5;
+}
+
+.inventory-cell img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.item-details-panel {
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 16px;
+}
+
+.item-details-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    margin-bottom: 12px;
+}
+
+.item-details-panel h3 {
+    margin: 0 0 4px;
+    font-size: 16px;
+}
+
+.item-details-game {
+    color: #67c1f5;
+    font-size: 13px;
+    margin: 0 0 12px;
+}
+
+.item-details-description {
+    font-size: 13px;
+    color: #8f98a0;
+    margin-bottom: 12px;
+}
+
+.item-details-quantity {
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.item-details-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.item-details-actions button {
+    flex: 1;
+    padding: 8px;
+    border-radius: 3px;
+    border: none;
+    background: #2a475e;
+    color: #c7d5e0;
+    cursor: pointer;
+}
+
+.item-details-actions button:hover:not(:disabled) {
+    background: #375879;
+}
+
+.item-details-actions button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.item-not-tradable {
+    color: #8f98a0;
+    font-size: 13px;
+}
+
+.item-details-placeholder {
+    color: #8f98a0;
+    font-size: 13px;
+}

@@ -178,6 +178,9 @@ export default function ProfilePage() {
                             <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=badges")}>
                                 <span>Badges</span>
                             </button>
+                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/inventory")}>
+                                <span>Inventory</span>
+                            </button>
                         </div>
                     </div>
 

@@ -20,6 +20,7 @@ import DiscountsPage from './pages/DiscountsPage'
 import CategoryPage from './pages/CategoryPage'
 import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
+import InventoryPage from './pages/InventoryPage'
 
 function App() {
   return (
@@ -59,6 +60,11 @@ function App() {
           <Route path='/profile/edit' element={
             <ProtectedRoute>
               <EditProfilePage />
+            </ProtectedRoute>
+          } />
+          <Route path='/inventory' element={
+            <ProtectedRoute>
+              <InventoryPage />
             </ProtectedRoute>
           } />
           <Route path='/settings' element={
