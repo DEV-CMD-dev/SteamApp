@@ -1,0 +1,48 @@
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 2vw, 32px);
+  padding-bottom: clamp(12px, 1.2vw, 16px);
+  border-bottom: 1px solid #1c2733;
+  margin-bottom: clamp(12px, 1.2vw, 16px);
+}
+
+.playButton {
+  background: #22c55e;
+  color: #0e1621;
+  border: none;
+  border-radius: 4px;
+  padding: clamp(10px, 0.9vw, 14px) clamp(20px, 2vw, 28px);
+  font-weight: 700;
+  font-size: clamp(13px, 0.9vw, 14px);
+  cursor: pointer;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: clamp(13px, 0.9vw, 14px);
+}
+
+.label {
+  color: #8b96a5;
+  font-size: clamp(10px, 0.75vw, 11px);
+  letter-spacing: 0.04em;
+}
+
+.icons {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.icons button {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background: #16202b;
+  border: 1px solid #24303d;
+  color: #c7d0da;
+  cursor: pointer;
+}

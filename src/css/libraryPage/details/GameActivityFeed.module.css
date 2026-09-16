@@ -1,0 +1,10 @@
+.feed {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feed h3 {
+  font-size: clamp(15px, 1.1vw, 17px);
+  margin-bottom: clamp(10px, 1vw, 14px);
+}

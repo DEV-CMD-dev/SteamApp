@@ -1,0 +1,12 @@
+.libraryLayout {
+  display: flex;
+  min-height: 100vh;
+  background: #0e1621;
+  color: #e8edf2;
+}
+
+.content {
+  flex: 1;
+  padding: clamp(16px, 2vw, 32px) clamp(20px, 3vw, 48px);
+  overflow-y: auto;
+}

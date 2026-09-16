@@ -1,0 +1,38 @@
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: #c7d0da;
+  padding: clamp(6px, 0.6vw, 9px) 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: left;
+  font-size: clamp(13px, 0.9vw, 14px);
+}
+
+.item:hover {
+  background: #16202b;
+}
+
+.active {
+  background: #1c2733;
+  color: #fff;
+  font-weight: 600;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

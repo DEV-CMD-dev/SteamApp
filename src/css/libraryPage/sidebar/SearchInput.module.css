@@ -1,0 +1,25 @@
+.searchInput {
+  display: flex;
+  align-items: center;
+  background: #16202b;
+  border: 1px solid #24303d;
+  border-radius: 4px;
+  padding: 0 8px;
+}
+
+.searchInput input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #e8edf2;
+  padding: clamp(6px, 0.6vw, 9px) 6px;
+  font-size: clamp(13px, 0.9vw, 14px);
+}
+
+.searchInput button {
+  background: transparent;
+  border: none;
+  color: #8b96a5;
+  cursor: pointer;
+}

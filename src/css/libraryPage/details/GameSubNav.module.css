@@ -1,0 +1,22 @@
+.subNav {
+  display: flex;
+  gap: clamp(16px, 1.6vw, 28px);
+  border-bottom: 1px solid #1c2733;
+  margin-bottom: clamp(16px, 1.6vw, 24px);
+  overflow-x: auto;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #8b96a5;
+  padding: clamp(8px, 0.8vw, 12px) 2px;
+  font-size: clamp(13px, 0.9vw, 14px);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tab:hover {
+  color: #e8edf2;
+}
