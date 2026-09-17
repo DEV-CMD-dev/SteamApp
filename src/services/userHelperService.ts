@@ -49,20 +49,45 @@ export const userHelperService = {
   },
 
   async requestSetTwoFactorAuth(dto: RequestSetTwoFactorAuthDto) {
-    const res = await fetch(`${API_BASE_URL}/UserHelper/request-set-2fa`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(dto),
-    });
-    return handleResponse(res, "Failed to request two factor code. Try again.");
+  const token = localStorage.getItem("accessToken");
+
+  const res = await fetch(`${API_BASE_URL}/UserHelper/request-set-2fa`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(dto),
+  });
+
+  return handleResponse(res, "Failed to request two factor code. Try again.");
   },
 
   async setTwoFactorAuth(dto: SetTwoFactorAuthDto) {
+    const token = localStorage.getItem("accessToken");
+
     const res = await fetch(`${API_BASE_URL}/UserHelper/set-2fa`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
       body: JSON.stringify(dto),
     });
+
     return handleResponse(res, "Failed to set two factor settings. Try again.");
+  },
+
+  async isTwoFactorAuthEnabled(): Promise<boolean> {
+    const token = localStorage.getItem("accessToken");
+
+    const res = await fetch(`${API_BASE_URL}/UserHelper/is-2fa-enabled`, {
+      method: "GET",
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+
+    return handleResponse(res, "Failed to get two factor settings. Try again.");
   }
 };
