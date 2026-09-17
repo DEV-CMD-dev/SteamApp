@@ -1,6 +1,7 @@
 import type { PaginatedList } from "../DTOs/PaginatedList";
 import type { FriendProfileDto } from "../DTOs/Profile/FriendProfileDto";
 import type { ProfileDto } from "../DTOs/Profile/ProfileDto";
+import type { ProfileSearchResultDto } from "../DTOs/Profile/ProfileSearchResultDto";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -59,6 +60,7 @@ export const profileService = {
         if (userId) {
             queryParams.append("userId", userId);
         }
+
         const res = await fetch(`${API_BASE_URL}/Friendship/friends?${queryParams.toString()}`, {
             method: "GET",
             headers: {
@@ -67,7 +69,18 @@ export const profileService = {
             },
         });
 
-        // Виправлено текст помилки
         return handleResponse(res, "Failed to load friends.");
-    }
+    },
+
+    async search(query: string): Promise<ProfileSearchResultDto[]> {
+        const res = await fetch(`${API_BASE_URL}/Profiles/search?query=${encodeURIComponent(query)}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+
+        return handleResponse(res, "Failed to search users.");
+    },
 };

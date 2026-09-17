@@ -13,9 +13,10 @@ export default function ProfilePage() {
     const navigate = useNavigate();
     const [profile, setProfile] = useState<ProfileDto | null>(null);
     const [friends, setFriends] = useState<PaginatedList<FriendProfileDto>>();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const paramUserId = searchParams.get("userId") || null;
     const [loading, setLoading] = useState(true);
+
     async function GetFriends() {
         try {
             const data = await profileService.GetFriends();
@@ -24,6 +25,7 @@ export default function ProfilePage() {
             console.error(error);
         }
     }
+
     async function GetUserFriends() {
         if (paramUserId) {
             try {
@@ -40,6 +42,7 @@ export default function ProfilePage() {
             setLoading(false);
             return;
         }
+
         if (paramUserId) {
             GetUserFriends();
             profileService
@@ -49,8 +52,7 @@ export default function ProfilePage() {
                     console.error("Failed to load profile", error);
                 })
                 .finally(() => setLoading(false));
-        }
-        else {
+        } else {
             const userId = decodeUserIdFromToken(accessToken);
             if (!userId) {
                 setLoading(false);
@@ -65,63 +67,71 @@ export default function ProfilePage() {
                 })
                 .finally(() => setLoading(false));
         }
-
     }, [accessToken, paramUserId]);
-
-    if (!accessToken) {
-        return null;
-    }
-
-    const level = profile?.level ?? 0;
-    const xp = profile?.xp ?? 0;
-    const avatarUrl = profile?.avatar || "";
-    const bio = profile?.bio || "No bio";
-    const badgeCount = profile?.badges
-        ? profile.badges.split(",").length
-        : 0;
-
-    const recentlyPlayedGames = profile?.recentlyPlayedGames ?? [];
-
-
 
     const handleLogout = () => {
         logout();
         navigate("/");
     };
 
+    if (!accessToken) {
+        return null;
+    }
+
+    const level = profile?.level ?? 0;
+    const avatarUrl = profile?.avatar || "";
+    const bio = profile?.bio || "No bio";
+    const showcaseUrl = profile?.showcase || "";
+    const recentlyPlayedGames = profile?.recentlyPlayedGames ?? [];
+
     return (
         <div className="profile-page">
             <header className="profile-header">
-                <div className="profile-summary">
-                    <div className="profile-avatar-shell">
-                        {avatarUrl ? (
-                            <img className="profile-avatar" src={avatarUrl} alt="User avatar" />
-                        ) : (
-                            <div className="profile-avatar" aria-label="User avatar" />
+                <div
+                    className="profile-banner"
+                    style={showcaseUrl ? { backgroundImage: `url(${showcaseUrl})` } : undefined}
+                >
+                    <div className="profile-banner-overlay" />
+
+                    <div className="profile-summary">
+                        <div className="profile-avatar-shell">
+                            {avatarUrl ? (
+                                <img
+                                    className="profile-avatar"
+                                    src={avatarUrl}
+                                    alt="User avatar"
+                                />
+                            ) : (
+                                <div className="profile-avatar" aria-label="User avatar" />
+                            )}
+                        </div>
+
+                        <div className="profile-meta">
+                            <h2>{profile?.userName || username || "User"}</h2>
+                            <p>{bio}</p>
+                        </div>
+                    </div>
+
+                    <div className="profile-right">
+                        <div className="profile-rank">
+                            <div className="level-badge">
+                                <strong>{loading ? "..." : level}</strong>
+                            </div>
+                            <div className="profile-rank-label">
+                                <span>Level</span>
+                            </div>
+                        </div>
+                        
+                        {!paramUserId && (
+                            <button
+                                type="button"
+                                className="edit-button"
+                                onClick={() => navigate("/profile/edit")}
+                            >
+                                Edit Profile
+                            </button>
                         )}
                     </div>
-
-                    <div className="profile-meta">
-                        <h2>{profile?.userName}</h2>
-                        <p>{bio}</p>
-                    </div>
-                </div>
-
-                <div className="profile-right">
-                    <div className="profile-rank">
-                        <div className="level-badge">
-                            <strong>{loading ? "..." : level}</strong>
-                        </div>
-                        <div className="profile-rank-label">
-                            <span>Level</span>
-                        </div>
-                    </div>
-                    {!paramUserId &&
-                        <button type="button" className="edit-button" onClick={() => navigate("/profile/edit")}>
-                            Edit Profile
-                        </button>
-                    }
-
                 </div>
             </header>
 
@@ -133,15 +143,21 @@ export default function ProfilePage() {
                             <span>Your recently played games will appear here.</span>
                         </div>
                     )}
+
                     {recentlyPlayedGames.map((game) => {
-                        const unlockedList = game.achievements.filter((achievement) => achievement.isUnlocked);
+                        const unlockedList = game.achievements.filter(
+                            (achievement) => achievement.isUnlocked
+                        );
                         const progress = game.achievements.length
                             ? Math.round((unlockedList.length / game.achievements.length) * 100)
                             : 0;
-                        const lastPlayDate = new Date(game.lastPlayDate).toLocaleDateString(undefined, {
-                            day: "numeric",
-                            month: "long",
-                        });
+                        const lastPlayDate = new Date(game.lastPlayDate).toLocaleDateString(
+                            undefined,
+                            {
+                                day: "numeric",
+                                month: "long",
+                            }
+                        );
                         const visibleAchievements = unlockedList.slice(0, 5);
                         const remainingCount = unlockedList.length - visibleAchievements.length;
 
@@ -149,19 +165,26 @@ export default function ProfilePage() {
                             <article key={game.id} className="achievement-item">
                                 <div className="achievement-top">
                                     <div className="achievement-cover" aria-label={game.title}>
-                                        {game.coverImageHorizontal && <img src={game.coverImageHorizontal} alt="" />}
+                                        {game.coverImageHorizontal && (
+                                            <img src={game.coverImageHorizontal} alt="" />
+                                        )}
                                     </div>
 
                                     <h3 className="achievement-title">{game.title}</h3>
 
                                     <div className="achievement-played">
-                                        <span>{Math.floor(game.playTimeMinutes / 60)} hrs on record</span>
+                                        <span>
+                                            {Math.floor(game.playTimeMinutes / 60)} hrs on record
+                                        </span>
                                         <span>last played {lastPlayDate}</span>
                                     </div>
                                 </div>
 
                                 <div className="achievement-stats-bar">
-                                    <span className="achievement-meta">{unlockedList.length} of {game.achievements.length} achievements</span>
+                                    <span className="achievement-meta">
+                                        {unlockedList.length} of {game.achievements.length}{" "}
+                                        achievements
+                                    </span>
                                     <div className="achievement-progress">
                                         <span style={{ width: `${progress}%` }} />
                                     </div>
@@ -171,12 +194,21 @@ export default function ProfilePage() {
                                                 key={achievement.id}
                                                 className="achievement-badge positive"
                                                 aria-label={achievement.name}
-                                                role="img">
-                                                {achievement.iconUrl && <img src={achievement.iconUrl} alt="" aria-hidden="true" />}
+                                                role="img"
+                                            >
+                                                {achievement.iconUrl && (
+                                                    <img
+                                                        src={achievement.iconUrl}
+                                                        alt=""
+                                                        aria-hidden="true"
+                                                    />
+                                                )}
                                             </span>
                                         ))}
                                         {remainingCount > 0 && (
-                                            <span className="achievement-more">+{remainingCount}</span>
+                                            <span className="achievement-more">
+                                                +{remainingCount}
+                                            </span>
                                         )}
                                     </div>
                                 </div>
@@ -188,18 +220,41 @@ export default function ProfilePage() {
                 <aside className="profile-sidebar">
                     <div className="sidebar-panel">
                         <div className="settings-list">
-                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings")}>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/settings")}
+                            >
                                 <span>Settings</span>
                             </button>
-                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=activity")}>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/settings?section=activity")}
+                            >
                                 <span>Activity</span>
                                 <span className="dot" />
                             </button>
-                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=groups")}>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/settings?section=groups")}
+                            >
                                 <span>Groups</span>
                             </button>
-                            <button type="button" className="setting-row setting-link" onClick={() => navigate("/settings?section=badges")}>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/settings?section=badges")}
+                            >
                                 <span>Badges</span>
+                            </button>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/inventory")}
+                            >
+                                <span>Inventory</span>
                             </button>
                         </div>
                     </div>
@@ -208,22 +263,25 @@ export default function ProfilePage() {
                         <h4>Friends</h4>
                         <div className="friend-list">
                             {friends?.items.map((friend) => (
-                                <div onClick={() => {
-                                    if (friend.userId != decodeUserIdFromToken(accessToken)) {
-                                        const params = new URLSearchParams();
-                                        params.append("userId", friend.userId)
-                                        navigate(`/profile?${params}`);
-                                    }
-                                    else {
-                                        navigate(`/profile`);
-                                    }
-                                }} key={friend.name} className="friend-row">
-                                    <div className="friend-avatar" style={{ backgroundImage: `url(${friend.avatar})` }} />
+                                <div
+                                    key={friend.name}
+                                    className="friend-row"
+                                    onClick={() => {
+                                        if (friend.userId !== decodeUserIdFromToken(accessToken)) {
+                                            const params = new URLSearchParams();
+                                            params.append("userId", friend.userId);
+                                            navigate(`/profile?${params}`);
+                                        } else {
+                                            navigate(`/profile`);
+                                        }
+                                    }}
+                                >
+                                    <div
+                                        className="friend-avatar"
+                                        style={{ backgroundImage: `url(${friend.avatar})` }}
+                                    />
                                     <div className="friend-content">
                                         <span className="friend-name">{friend.name}</span>
-                                        {/* <span className={`friend-status ${friend === "online" ? "online" : "offline"}`}>
-                                            {friend.status}
-                                        </span> */}
                                     </div>
                                     <div className="level-badge">{friend.level}</div>
                                 </div>
@@ -232,11 +290,16 @@ export default function ProfilePage() {
                     </div>
                 </aside>
             </div>
-            {!paramUserId &&
-                <button type="button" className="logout-button" onClick={handleLogout}>
+
+            {!paramUserId && (
+                <button
+                    type="button"
+                    className="logout-button"
+                    onClick={handleLogout}
+                >
                     Logout
                 </button>
-            }
+            )}
         </div>
     );
 }
