@@ -17,9 +17,15 @@ export default function LibraryHome({ games, onSelectGame }: LibraryHomeProps) {
     libraryService.getRecentGameVersions().then(setVersions);
   }, []);
 
+  const libraryGameIds = games.map((game) => game.id);
+
   return (
     <>
-      <WhatsNewSection versions={versions} onSelectGame={onSelectGame} />
+      <WhatsNewSection
+        versions={versions}
+        libraryGameIds={libraryGameIds}
+        onSelectGame={onSelectGame}
+      />
       <RecentlyPlayedSection games={games} onSelectGame={onSelectGame} />
     </>
   );

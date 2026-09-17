@@ -1,5 +1,5 @@
 .sidebar {
-  width: clamp(260px, 18vw, 340px);
+  width: clamp(300px, 18vw, 340px);
   flex-shrink: 0;
   background: #0b121a;
   border-right: 1px solid #1c2733;

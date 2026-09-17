@@ -75,5 +75,15 @@ export const libraryService = {
 
         return handleResponse(res, "Failed to load recent updates.");
     },
+    async getGameVersions(gameId: number): Promise<LibraryGameVersionDto[]> {
+    const versions = await this.getRecentGameVersions(100);
+
+    return versions
+        .filter((v) => v.gameId === gameId)
+        .sort(
+            (a, b) =>
+                new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+},
 };
 

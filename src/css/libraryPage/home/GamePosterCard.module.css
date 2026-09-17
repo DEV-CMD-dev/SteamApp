@@ -9,12 +9,25 @@
   padding: 0;
   cursor: pointer;
   background: #16202b;
+  transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.08);
 }
 
 .cover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.cover:hover .image {
+    transform: scale(1.025);
 }
 
 .overlay {
