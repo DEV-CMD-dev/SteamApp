@@ -46,24 +46,35 @@ const AuthForm: React.FC = () => {
         });
 
         toast.promise(promise, {
-          loading: "Trying to log you in",
-          success: "Successful",
-          error: "Log in error",
+          loading: "Verifying credentials",
+          success: "Success",
+          error: "Invalid credentials or email is not confirmed",
         });
-
         const data = await promise;
+
+        if (!data.accessToken) {
+          requireTwoFactor(form.identifier.trim());
+          navigate("/login-2fa");
+          return;
+        }
 
         login(data.accessToken, new Date(data.expirationTime), data.userName);
         navigate("/");
       } else {
-        await authService.register({
+        const promise = authService.register({
           UserName: form.identifier,
           Email: form.email,
           Password: form.password,
           Country: form.country,
         });
 
-        alert("Registration successful! Please login.");
+        toast.promise(promise, {
+          loading: "Creating account",
+          success: "Registration complete. Please login",
+          error: "Error occured while trying to create account",
+        });
+
+        await promise;
         setForm(prev => ({ ...prev, email: "", country: "" }));
         setIsLogin(true);
       }
