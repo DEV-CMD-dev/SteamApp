@@ -22,6 +22,9 @@ import CategoryPage from './pages/CategoryPage'
 import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
 import NotFound from './pages/NotFound'
+import InventoryPage from './pages/InventoryPage'
+import TradePage from './pages/TradePage'
+import NewTradeOfferPage from './pages/NewTradeOfferPage'
 
 function App() {
   return (
@@ -62,6 +65,21 @@ function App() {
           <Route path='/profile/edit' element={
             <ProtectedRoute>
               <EditProfilePage />
+            </ProtectedRoute>
+          } />
+          <Route path='/inventory' element={
+            <ProtectedRoute>
+              <InventoryPage />
+            </ProtectedRoute>
+          } />
+          <Route path='/trade' element={
+            <ProtectedRoute>
+              <TradePage />
+            </ProtectedRoute>
+          } />
+          <Route path='/trade/new' element={
+            <ProtectedRoute>
+              <NewTradeOfferPage />
             </ProtectedRoute>
           } />
           <Route path='/settings' element={

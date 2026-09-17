@@ -1,0 +1,150 @@
+.new-trade-offer-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+    color: #c7d5e0;
+}
+
+.new-trade-offer-header h1 {
+    font-size: 22px;
+    margin: 0 0 20px;
+}
+
+.receiver-search {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.receiver-search label {
+    display: block;
+    font-size: 13px;
+    margin-bottom: 6px;
+    color: #8f98a0;
+}
+
+.receiver-search input {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    color: #c7d5e0;
+}
+
+.receiver-search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-width: 400px;
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    margin-top: 4px;
+    z-index: 10;
+}
+
+.receiver-search-result {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+}
+
+.receiver-search-result:hover {
+    background: #2a3f5a;
+}
+
+.receiver-search-result img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.trade-offer-builder {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.trade-offer-column h3 {
+    font-size: 15px;
+    margin: 0 0 10px;
+}
+
+.item-picker {
+    background: #16202d;
+    border: 1px solid #2a3f5a;
+    border-radius: 3px;
+    padding: 12px;
+    min-height: 200px;
+}
+
+.item-picker-empty {
+    color: #8f98a0;
+    font-size: 13px;
+}
+
+.item-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.item-picker-cell {
+    aspect-ratio: 1;
+    background: #0e1620;
+    border: 1px solid #2a3f5a;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 8px;
+    transition: border-color 0.15s ease;
+}
+
+.item-picker-cell:hover {
+    border-color: #66c0f4;
+}
+
+.item-picker-cell.selected {
+    border-color: #67c1f5;
+    box-shadow: 0 0 0 1px #67c1f5 inset;
+}
+
+.item-picker-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.new-trade-offer-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.new-trade-offer-actions button {
+    padding: 10px 20px;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+    background: #2a3f5a;
+    color: #c7d5e0;
+}
+
+.new-trade-offer-actions button.primary {
+    background: #4c6b22;
+    color: #a3d13a;
+}
+
+.new-trade-offer-actions button:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
