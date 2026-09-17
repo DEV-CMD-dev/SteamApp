@@ -21,6 +21,7 @@ import DiscountsPage from './pages/DiscountsPage'
 import CategoryPage from './pages/CategoryPage'
 import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
+import NotFound from './pages/NotFound'
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
         <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
 
         <Route element={<MainLayout />}>
+          <Route path='*' element={<NotFound />} />
           <Route path='/' element={<StorePage />} />
           <Route path='/top-sellers' element={<TopSellersPage />} />
           <Route path='/library' element={
