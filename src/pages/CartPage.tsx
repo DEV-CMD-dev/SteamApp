@@ -108,7 +108,7 @@ export default function CartPage() {
 
                         <button
                             className="cart-checkout-btn"
-                            onClick={() => navigate("/checkout")}
+                            onClick={() => navigate("/payment")}
                             disabled={cartGames.length === 0}
                         >
                             Proceed to Checkout
@@ -137,7 +137,7 @@ export default function CartPage() {
 
                         <button
                             className="cart-sidebar-checkout-btn"
-                            onClick={() => navigate("/checkout")}
+                            onClick={() => navigate("/payment")}
                             disabled={cartGames.length === 0}
                         >
                             Proceed to Checkout

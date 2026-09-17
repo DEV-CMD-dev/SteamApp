@@ -396,18 +396,21 @@
 }
 
 .friend-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
 }
 
 .friend-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #f4d2af, #80542d);
-  border: 2px solid rgba(255, 255, 255, 0.18);
-  flex-shrink: 0;
+    width: 45px;
+    aspect-ratio: 1;
+    background: url("https://i.pinimg.com/originals/8c/8c/a9/8c8ca966dab8d95d560e457513beb0e8.jpg?nii=t");
+    flex-shrink: 0;
+    background-size: 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: 2px solid #686868;
 }
 
 .friend-content {

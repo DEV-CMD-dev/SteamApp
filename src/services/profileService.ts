@@ -1,3 +1,5 @@
+import type { PaginatedList } from "../DTOs/PaginatedList";
+import type { FriendProfileDto } from "../DTOs/Profile/FriendProfileDto";
 import type { ProfileDto } from "../DTOs/Profile/ProfileDto";
 import type { ProfileSearchResultDto } from "../DTOs/Profile/ProfileSearchResultDto";
 
@@ -33,7 +35,7 @@ export const profileService = {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
         });
-        
+
         return handleResponse(res, "Failed to load profile.");
     },
 
@@ -49,7 +51,28 @@ export const profileService = {
 
         await handleResponse(res, "Failed to update profile.");
     },
-        async search(query: string): Promise<ProfileSearchResultDto[]> {
+    async GetFriends(userId?: string, pageNumber: number = 1, pageSize: number = 4): Promise<PaginatedList<FriendProfileDto>> {
+        const queryParams = new URLSearchParams({
+            pageNumber: pageNumber.toString(),
+            pageSize: pageSize.toString(),
+        });
+
+        if (userId) {
+            queryParams.append("userId", userId);
+        }
+
+        const res = await fetch(`${API_BASE_URL}/Friendship/friends?${queryParams.toString()}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+
+        return handleResponse(res, "Failed to load friends.");
+    },
+
+    async search(query: string): Promise<ProfileSearchResultDto[]> {
         const res = await fetch(`${API_BASE_URL}/Profiles/search?query=${encodeURIComponent(query)}`, {
             method: "GET",
             headers: {
