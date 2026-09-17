@@ -21,29 +21,34 @@ import DiscountsPage from './pages/DiscountsPage'
 import CategoryPage from './pages/CategoryPage'
 import { Toaster } from 'react-hot-toast';
 import TopSellersPage from './pages/TopSellersPage'
+import PaymentPage from './pages/PaymentPage'
 
 function App() {
   return (
     <AuthProvider>
-      <Toaster 
+      <Toaster
         position="top-right"
         reverseOrder={false}
         toastOptions={{
-          style:{
+          style: {
             borderRadius: '8px',
             background: '#333',
             color: '#fff',
           },
           duration: 1500
         }}
-        />
+      />
       <Routes>
         <Route path='/auth' element={<AuthForm />} />
         <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
         <Route path='/reset-password' element={<ResetPasswordPage />} />
         <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
         <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
-
+        <Route path='/payment' element={
+          <ProtectedRoute>
+            <PaymentPage />
+          </ProtectedRoute>
+        } />
         <Route element={<MainLayout />}>
           <Route path='/' element={<StorePage />} />
           <Route path='/top-sellers' element={<TopSellersPage />} />
@@ -85,11 +90,11 @@ function App() {
           } />
           <Route path="/discounts" element={
             <DiscountsPage />
-          } 
+          }
           />
           <Route path="/category/:tagId" element={
             <CategoryPage />
-          } 
+          }
           />
         </Route>
       </Routes>
