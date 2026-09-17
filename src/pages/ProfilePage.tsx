@@ -64,7 +64,8 @@ export default function ProfilePage() {
             showcaseUrl
               ? { backgroundImage: `url(${showcaseUrl})` }
               : undefined
-          }>
+          }
+        >
           <div className="profile-banner-overlay" />
 
           <div className="profile-summary">
@@ -81,7 +82,7 @@ export default function ProfilePage() {
             </div>
 
             <div className="profile-meta">
-              <h2>{username}</h2>
+              <h2>{username || "User"}</h2>
               <p>{bio}</p>
             </div>
           </div>
@@ -99,7 +100,8 @@ export default function ProfilePage() {
             <button
               type="button"
               className="edit-button"
-              onClick={() => navigate("/profile/edit")}>
+              onClick={() => navigate("/profile/edit")}
+            >
               Edit Profile
             </button>
           </div>
@@ -137,7 +139,10 @@ export default function ProfilePage() {
             return (
               <article key={game.id} className="achievement-item">
                 <div className="achievement-top">
-                  <div className="achievement-cover" aria-label={game.title}>
+                  <div
+                    className="achievement-cover"
+                    aria-label={game.title}
+                  >
                     {game.coverImageHorizontal && (
                       <img src={game.coverImageHorizontal} alt="" />
                     )}
@@ -167,7 +172,8 @@ export default function ProfilePage() {
                         key={achievement.id}
                         className="achievement-badge positive"
                         aria-label={achievement.name}
-                        role="img">
+                        role="img"
+                      >
                         {achievement.iconUrl && (
                           <img
                             src={achievement.iconUrl}
@@ -195,27 +201,38 @@ export default function ProfilePage() {
               <button
                 type="button"
                 className="setting-row setting-link"
-                onClick={() => navigate("/settings")}>
+                onClick={() => navigate("/settings")}
+              >
                 <span>Settings</span>
               </button>
               <button
                 type="button"
                 className="setting-row setting-link"
-                onClick={() => navigate("/settings?section=activity")}>
+                onClick={() => navigate("/settings?section=activity")}
+              >
                 <span>Activity</span>
                 <span className="dot" />
               </button>
               <button
                 type="button"
                 className="setting-row setting-link"
-                onClick={() => navigate("/settings?section=groups")}>
+                onClick={() => navigate("/settings?section=groups")}
+              >
                 <span>Groups</span>
               </button>
               <button
                 type="button"
                 className="setting-row setting-link"
-                onClick={() => navigate("/settings?section=badges")}>
+                onClick={() => navigate("/settings?section=badges")}
+              >
                 <span>Badges</span>
+              </button>
+              <button
+                type="button"
+                className="setting-row setting-link"
+                onClick={() => navigate("/inventory")}
+              >
+                <span>Inventory</span>
               </button>
             </div>
           </div>
@@ -231,7 +248,8 @@ export default function ProfilePage() {
                     <span
                       className={`friend-status ${
                         friend.status === "online" ? "online" : "offline"
-                      }`}>
+                      }`}
+                    >
                       {friend.status}
                     </span>
                   </div>
@@ -243,7 +261,11 @@ export default function ProfilePage() {
         </aside>
       </div>
 
-      <button type="button" className="logout-button" onClick={handleLogout}>
+      <button
+        type="button"
+        className="logout-button"
+        onClick={handleLogout}
+      >
         Logout
       </button>
     </div>
