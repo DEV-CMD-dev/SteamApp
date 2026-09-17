@@ -1,6 +1,8 @@
 import type { ConfirmEmailDto } from "../DTOs/UserHelper/ConfirmEmailDto";
 import type { PasswordResetDto } from "../DTOs/UserHelper/PasswordResetDto";
 import type { RequestPasswordResetTokenDto } from "../DTOs/UserHelper/RequestPasswordResetTokenDto";
+import type { RequestSetTwoFactorAuthDto } from "../DTOs/UserHelper/RequestSetTwoFactorAuthDto";
+import type { SetTwoFactorAuthDto } from "../DTOs/UserHelper/SetTwoFactorAuthDto";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -44,5 +46,48 @@ export const userHelperService = {
       body: JSON.stringify(dto),
     });
     return handleResponse(res, "Failed to confirm email. Try again.");
+  },
+
+  async requestSetTwoFactorAuth(dto: RequestSetTwoFactorAuthDto) {
+  const token = localStorage.getItem("accessToken");
+
+  const res = await fetch(`${API_BASE_URL}/UserHelper/request-set-2fa`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+    body: JSON.stringify(dto),
+  });
+
+  return handleResponse(res, "Failed to request two factor code. Try again.");
+  },
+
+  async setTwoFactorAuth(dto: SetTwoFactorAuthDto) {
+    const token = localStorage.getItem("accessToken");
+
+    const res = await fetch(`${API_BASE_URL}/UserHelper/set-2fa`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+      body: JSON.stringify(dto),
+    });
+
+    return handleResponse(res, "Failed to set two factor settings. Try again.");
+  },
+
+  async isTwoFactorAuthEnabled(): Promise<boolean> {
+    const token = localStorage.getItem("accessToken");
+
+    const res = await fetch(`${API_BASE_URL}/UserHelper/is-2fa-enabled`, {
+      method: "GET",
+      headers: {
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      },
+    });
+
+    return handleResponse(res, "Failed to get two factor settings. Try again.");
   }
 };
