@@ -247,7 +247,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
-      <div className="navbar-search-container-main">
+      <div className="navbar-search-container-main" style={{ background : `${activeDropdown ? '#182534' : ''}`}}>
         <div className="navbar-search-container">
           <div className="categories-container">
             <button
@@ -264,7 +264,6 @@ export default function Navbar() {
               <span>Categories</span>
               <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
             </button>
-
             <button
               type="button"
               className="category-dropdown-btn"
@@ -282,7 +281,8 @@ export default function Navbar() {
               <img src={arrowDownIcon} alt="v" className="dropdown-icon" />
             </button>
           </div>
-          <div className="nav-actions-container">
+
+          <div className="nav-actions-container" ref={navActionsContainerRef}>
             <div className="main-search-container">
               <SearchBar />
             </div>
@@ -296,21 +296,21 @@ export default function Navbar() {
             </Link>
           </div>
         </div>
-      </div>
-      <div className="dropdowns-container">
-        <BrowseDropdown
-          isOpen={activeDropdown === "Browse"}
-          panelStyle={panelStyle}
-          onLinkClick={closeDropdown} />
-        <CategoriesDropdown
-          isOpen={activeDropdown === "Categories"}
-          panelStyle={panelStyle}
-          onNavigateToAllTags={handleViewAllTags}
-          onLinkClick={closeDropdown} />
-        <RecommendationsDropdown
-          isOpen={activeDropdown === "Recommendations"}
-          panelStyle={panelStyle}
-          onLinkClick={closeDropdown} />
+        <div className="dropdowns-container">
+          <BrowseDropdown
+            isOpen={activeDropdown === "Browse"}
+            panelStyle={panelStyle}
+            onLinkClick={closeDropdown} />
+          <CategoriesDropdown
+            isOpen={activeDropdown === "Categories"}
+            panelStyle={panelStyle}
+            onNavigateToAllTags={handleViewAllTags}
+            onLinkClick={closeDropdown} />
+          <RecommendationsDropdown
+            isOpen={activeDropdown === "Recommendations"}
+            panelStyle={panelStyle}
+            onLinkClick={closeDropdown} />
+        </div>
       </div>
     </>
   );
