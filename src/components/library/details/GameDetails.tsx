@@ -1,28 +1,32 @@
+import { useEffect, useState } from 'react';
 import GameBanner from './GameBanner';
 import GameActionBar from './GameActionBar';
 import GameSubNav from './GameSubNav';
-import GameActivityFeed from './GameActivityFeed';
-import type { UserGame } from '../library.types';
-import { newsItems } from '../library.mocks';
+import type { FullLibraryGameDto } from '../../../DTOs/Game/FullLibraryGameDto';
+import { libraryService } from '../../../services/libraryService';
 import styles from '../../../css/libraryPage/details/GameDetails.module.css';
 
 interface GameDetailsProps {
-  userGame: UserGame;
+  gameId: number;
   onBack: () => void;
 }
 
-export default function GameDetails({ userGame, onBack }: GameDetailsProps) {
-  const gameNews = newsItems.filter((n) => n.gameName === userGame.game.title);
+export default function GameDetails({ gameId, onBack }: GameDetailsProps) {
+  const [game, setGame] = useState<FullLibraryGameDto | null>(null);
+
+  useEffect(() => {
+    setGame(null);
+      libraryService.getLibraryGameById(gameId).then(setGame);
+  }, [gameId]);
+
+  if (!game) return null;
 
   return (
     <div>
-      <button type="button" className={styles.backButton} onClick={onBack}>
-        ← Library
-      </button>
-      <GameBanner game={userGame.game} />
-      <GameActionBar userGame={userGame} />
+      <button type="button" className={styles.backButton} onClick={onBack}>← Library</button>
+      <GameBanner game={game} />
+      <GameActionBar game={game} />
       <GameSubNav />
-      <GameActivityFeed news={gameNews} date="August 15" />
     </div>
   );
 }

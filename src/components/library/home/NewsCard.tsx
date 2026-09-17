@@ -1,19 +1,19 @@
-import type { NewsItem } from '../library.types';
+import type { LibraryGameVersionDto } from '../../../DTOs/GameVersion/LibraryGameVersionDto';
 import styles from '../../../css/libraryPage/home/NewsCard.module.css';
 
 interface NewsCardProps {
-  news: NewsItem;
+  version: LibraryGameVersionDto;
+  onSelect: (gameId: number) => void;
 }
 
-export default function NewsCard({ news }: NewsCardProps) {
+export default function NewsCard({ version, onSelect }: NewsCardProps) {
   return (
-    <div className={styles.card}>
-      <img src={news.imageUrl} alt={news.title} className={styles.image} />
-      <p className={styles.title}>{news.title}</p>
+    <button type="button" className={styles.card} onClick={() => onSelect(version.gameId)}>
+      <img src={version.gameImageUrl} alt={version.gameTitle} className={styles.image} />
+      <p className={styles.title}>Update {version.version}</p>
       <div className={styles.game}>
-        <img src={news.gameIconUrl} alt="" className={styles.gameIcon} />
-        <span>{news.gameName}</span>
+        <span>{version.gameTitle}</span>
       </div>
-    </div>
+    </button>
   );
 }

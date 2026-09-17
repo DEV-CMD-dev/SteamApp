@@ -1,15 +1,14 @@
-import type { UserGame } from '../library.types';
+import type { LibraryGameDto } from '../../../DTOs/Game/LibraryGameDto';
 import styles from '../../../css/libraryPage/home/GamePosterCard.module.css';
 
 interface GamePosterCardProps {
-  userGame: UserGame;
+  game: LibraryGameDto;
   isFeatured?: boolean;
   onSelect: (gameId: number) => void;
 }
 
-export default function GamePosterCard({ userGame, isFeatured, onSelect }: GamePosterCardProps) {
-  const { game, playTimeMinutes } = userGame;
-  const totalHours = (playTimeMinutes / 60).toFixed(1);
+export default function GamePosterCard({ game, isFeatured, onSelect }: GamePosterCardProps) {
+  const totalHours = (game.playTimeMinutes / 60).toFixed(1);
 
   return (
     <button type="button" className={styles.card} onClick={() => onSelect(game.id)}>

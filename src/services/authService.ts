@@ -1,6 +1,6 @@
 import type { LoginRequestDto } from "../DTOs/LoginRequestDto";
 import type { RegisterRequestDto } from "../DTOs/RegisterRequestDto";
-import type { TwoFactorLoginRequestDto } from "../DTOs/UserHelper/TwofactorLoginRequestDto";
+import type { TwoFactorLoginRequestDto } from "../DTOs/UserHelper/TwoFactorLoginRequestDto";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 

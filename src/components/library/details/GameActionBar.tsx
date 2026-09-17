@@ -1,8 +1,8 @@
-import type { UserGame } from '../library.types';
+import type { FullLibraryGameDto } from '../../../DTOs/Game/FullLibraryGameDto';
 import styles from '../../../css/libraryPage/details/GameActionBar.module.css';
 
 interface GameActionBarProps {
-  userGame: UserGame;
+  game: FullLibraryGameDto;
 }
 
 function formatLastPlayed(dateIso: string) {
@@ -10,19 +10,17 @@ function formatLastPlayed(dateIso: string) {
   return date.toDateString() === new Date().toDateString() ? 'Today' : date.toLocaleDateString();
 }
 
-export default function GameActionBar({ userGame }: GameActionBarProps) {
-  const { playTimeMinutes, lastPlayDate } = userGame;
-
+export default function GameActionBar({ game }: GameActionBarProps) {
   return (
     <div className={styles.actionBar}>
       <button type="button" className={styles.playButton}>▶ PLAY</button>
       <div className={styles.stat}>
         <span className={styles.label}>LAST PLAYED</span>
-        <span>{formatLastPlayed(lastPlayDate)}</span>
+        <span>{formatLastPlayed(game.lastPlayDate)}</span>
       </div>
       <div className={styles.stat}>
         <span className={styles.label}>PLAY TIME</span>
-        <span>{(playTimeMinutes / 60).toFixed(1)} hours</span>
+        <span>{(game.playTimeMinutes / 60).toFixed(1)} hours</span>
       </div>
       <div className={styles.icons}>
         <button type="button" aria-label="Settings">⚙</button>

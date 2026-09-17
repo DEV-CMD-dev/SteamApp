@@ -1,9 +1,9 @@
-import type { UserGame } from '../library.types';
+import type { LibraryGameDto } from '../../../DTOs/Game/LibraryGameDto';
 import GamePosterCard from './GamePosterCard';
 import styles from '../../../css/libraryPage/home/RecentlyPlayedSection.module.css';
 
 interface RecentlyPlayedSectionProps {
-  games: UserGame[];
+  games: LibraryGameDto[];
   onSelectGame: (gameId: number) => void;
 }
 
@@ -16,13 +16,8 @@ export default function RecentlyPlayedSection({ games, onSelectGame }: RecentlyP
     <section className={styles.section}>
       <h2>Recently Played</h2>
       <div className={styles.grid}>
-        {sorted.map((ug, index) => (
-          <GamePosterCard
-            key={ug.gameId}
-            userGame={ug}
-            isFeatured={index === 0}
-            onSelect={onSelectGame}
-          />
+        {sorted.map((g, index) => (
+          <GamePosterCard key={g.id} game={g} isFeatured={index === 0} onSelect={onSelectGame} />
         ))}
       </div>
     </section>

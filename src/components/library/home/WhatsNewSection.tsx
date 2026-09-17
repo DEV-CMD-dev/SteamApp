@@ -1,19 +1,20 @@
-import type { NewsItem } from '../library.types';
+import type { LibraryGameVersionDto } from '../../../DTOs/GameVersion/LibraryGameVersionDto';
 import NewsCard from './NewsCard';
 import styles from '../../../css/libraryPage/home/WhatsNewSection.module.css';
 
 interface WhatsNewSectionProps {
-  news: NewsItem[];
+  versions: LibraryGameVersionDto[];
+  onSelectGame: (gameId: number) => void;
 }
 
-export default function WhatsNewSection({ news }: WhatsNewSectionProps) {
+export default function WhatsNewSection({ versions, onSelectGame }: WhatsNewSectionProps) {
   return (
     <section className={styles.section}>
       <h2>What's New</h2>
       <p className={styles.subtitle}>This week</p>
       <div className={styles.grid}>
-        {news.map((item) => (
-          <NewsCard key={item.id} news={item} />
+        {versions.map((v) => (
+          <NewsCard key={`${v.gameId}-${v.version}`} version={v} onSelect={onSelectGame} />
         ))}
       </div>
     </section>

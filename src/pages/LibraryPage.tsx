@@ -1,29 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import LibraryPageLayout from '../components/library/layout/LibraryPageLayout';
 import LibrarySidebar from '../components/library/sidebar/LibrarySidebar';
 import LibraryHome from '../components/library/home/LibraryHome';
 import GameDetails from '../components/library/details/GameDetails';
-import { ownedGames } from '../components/library/library.mocks';
+import type { LibraryGameDto } from '../DTOs/Game/LibraryGameDto';
+import { libraryService } from '../services/libraryService';
 
 export default function LibraryPage() {
+  const [games, setGames] = useState<LibraryGameDto[]>([]);
   const [selectedGameId, setSelectedGameId] = useState<number | null>(null);
 
-  const selectedUserGame = ownedGames.find((ug) => ug.gameId === selectedGameId) ?? null;
+  useEffect(() => {
+    libraryService.getLibraryGames().then(setGames);
+  }, []);
 
   return (
     <LibraryPageLayout
       sidebar={
         <LibrarySidebar
-          games={ownedGames}
+          games={games}
           selectedGameId={selectedGameId}
           onSelectGame={setSelectedGameId}
         />
       }
     >
-      {selectedUserGame ? (
-        <GameDetails userGame={selectedUserGame} onBack={() => setSelectedGameId(null)} />
+      {selectedGameId !== null ? (
+        <GameDetails gameId={selectedGameId} onBack={() => setSelectedGameId(null)} />
       ) : (
-        <LibraryHome onSelectGame={setSelectedGameId} />
+        <LibraryHome games={games} onSelectGame={setSelectedGameId} />
       )}
     </LibraryPageLayout>
   );

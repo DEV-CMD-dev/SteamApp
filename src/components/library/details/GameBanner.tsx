@@ -1,8 +1,8 @@
-import type { GameDto } from '../../../DTOs/Game/GameDto';
+import type { FullLibraryGameDto } from '../../../DTOs/Game/FullLibraryGameDto';
 import styles from '../../../css/libraryPage/details/GameBanner.module.css';
 
 interface GameBannerProps {
-  game: GameDto;
+  game: FullLibraryGameDto;
 }
 
 export default function GameBanner({ game }: GameBannerProps) {

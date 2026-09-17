@@ -1,8 +1,8 @@
-import type { GameDto } from '../../../DTOs/Game/GameDto'; 
+import type { LibraryGameDto } from '../../../DTOs/Game/LibraryGameDto';
 import styles from '../../../css/libraryPage/sidebar/GameListItem.module.css';
 
 interface GameListItemProps {
-  game: GameDto;
+  game: LibraryGameDto;
   isActive: boolean;
   onSelect: (gameId: number) => void;
 }
@@ -14,7 +14,7 @@ export default function GameListItem({ game, isActive, onSelect }: GameListItemP
       className={isActive ? `${styles.item} ${styles.active}` : styles.item}
       onClick={() => onSelect(game.id)}
     >
-      <img src={game.coverImageVertical} alt="" className={styles.icon} />
+      <img src={game.iconUrl} alt="" className={styles.icon} />
       <span className={styles.title}>{game.title}</span>
     </button>
   );
