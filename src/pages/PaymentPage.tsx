@@ -5,6 +5,7 @@ import { paymentService } from "../services/paymentService";
 import type { GameDto } from "../DTOs/Game/GameDto";
 import { orderService } from "../services/navbarService";
 import type { MiniProfileDto } from "../DTOs/Profile/MiniProfileDto";
+import toast from "react-hot-toast";
 
 export default function PaymentPage() {
     const navigate = useNavigate();
@@ -31,9 +32,26 @@ export default function PaymentPage() {
 
     const handlePurchase = async () => {
         if (!agreedToTerms) return;
+
+        const purchasePromise = paymentService.checkout();
+
+        toast.promise(
+            purchasePromise,
+            {
+                loading: "Processing your payment...",
+                success: "Purchase successful! The games have been added to your library.",
+                error: "Error occurred while processing payment."
+            },
+            {
+                duration: 4000
+            }
+        );
+
         try {
-            await paymentService.checkout();
-            navigate("/");
+            await purchasePromise;
+            setTimeout(() => {
+                navigate("/");
+            }, 1500);
         } catch (error) {
             console.error("Payment failed", error);
         }
@@ -47,7 +65,7 @@ export default function PaymentPage() {
             console.error(error);
         }
     }
-    
+
     async function GetBalance() {
         try {
             const data = await orderService.getBalance();
@@ -57,7 +75,7 @@ export default function PaymentPage() {
             setBalance(0);
         }
     }
-    
+
     async function GetCart() {
         try {
             const data = await paymentService.getMyCart();
