@@ -1,6 +1,7 @@
 export interface ProfileDto {
     userId: string;
     avatar?: string | null;
+    userName: string;
     bio?: string | null;
     level: number;
     xp: number;
