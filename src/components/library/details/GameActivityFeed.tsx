@@ -1,5 +1,9 @@
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import type { LibraryGameVersionDto } from "../../../DTOs/GameVersion/LibraryGameVersionDto";
 import type { FriendProfileDto } from "../../../DTOs/Profile/FriendProfileDto";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { decodeUserIdFromToken } from "../../../utils/jwt";
 import wrenchIcon from "../../../assets/wrench.png";
 import styles from "../../../css/libraryPage/details/GameActivityFeed.module.css";
 
@@ -15,6 +19,21 @@ function formatDate(dateStr: string) {
 }
 
 export default function GameActivityFeed({ versions, friends }: GameActivityFeedProps) {
+  const navigate = useNavigate();
+  const { accessToken } = useContext(AuthContext);
+
+  const handleFriendClick = (friendUserId: string) => {
+    const currentUserId = accessToken ? decodeUserIdFromToken(accessToken) : null;
+
+    if (friendUserId !== currentUserId) {
+      const params = new URLSearchParams();
+      params.append("userId", friendUserId);
+      navigate(`/profile?${params}`);
+    } else {
+      navigate("/profile");
+    }
+  };
+
   return (
     <div className={styles.wrapper}>
       <section className={styles.feed}>
@@ -59,6 +78,7 @@ export default function GameActivityFeed({ versions, friends }: GameActivityFeed
                   className={styles.friendAvatar}
                   style={{ backgroundImage: `url(${friend.avatar || ""})` }}
                   title={friend.name}
+                  onClick={() => handleFriendClick(friend.userId)}
                 />
               ))}
             </div>

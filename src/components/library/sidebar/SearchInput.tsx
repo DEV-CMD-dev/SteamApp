@@ -13,7 +13,7 @@ export default function SearchInput({ value, onChange, placeholder }: SearchInpu
       <input
         type="text"
         value={value}
-        placeholder={placeholder ?? ''}
+        placeholder={placeholder ?? 'Search library'}
         onChange={(e) => onChange(e.target.value)}
       />
       <button type="button" aria-label="Search" className={styles.searchButton}>
