@@ -9,6 +9,7 @@ import TagFilter from "../components/SearchPage/TagFilter";
 import burger_icon from "../assets/navbar/header_menu_hamburger.png";
 
 import { SearchContext } from "../contexts/SearchContext";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function SearchPage() {
     const lastChunk = useRef(0);
@@ -23,7 +24,7 @@ export default function SearchPage() {
 
     async function GetGameSearch(currentPage: number) {
         try {
-            const url = new URL("https://localhost:7166/api/Games");
+            const url = new URL(`${API_BASE_URL}/Games`);
 
             url.searchParams.append("pageNumber", currentPage.toString());
             url.searchParams.append("pageSize", "20");
