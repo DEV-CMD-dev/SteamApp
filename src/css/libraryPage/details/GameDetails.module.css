@@ -1,0 +1,16 @@
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: #8b96a5;
+  font-size: clamp(13px, 0.9vw, 14px);
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: clamp(12px, 1.2vw, 16px);
+}
+
+.backButton:hover {
+  color: #e8edf2;
+}

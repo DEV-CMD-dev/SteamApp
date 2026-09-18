@@ -1,0 +1,13 @@
+.banner {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: clamp(12px, 1.2vw, 16px);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

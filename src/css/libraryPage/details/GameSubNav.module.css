@@ -1,0 +1,61 @@
+.subNav {
+  display: flex;
+  gap: clamp(6px, 0.6vw, 10px);
+  border-bottom: 1px solid #1c2733;
+  margin-bottom: clamp(16px, 1.6vw, 24px);
+  overflow-x: auto;
+  padding-bottom: 1px;
+}
+
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: #8b96a5;
+  padding: clamp(8px, 0.8vw, 12px) clamp(12px, 1vw, 16px);
+  font-size: clamp(13px, 0.9vw, 14px);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  border-radius: 6px 6px 0 0;
+  transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.tab::after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -1px;
+  height: 2px;
+  background: #66c0f4;
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transition: transform 0.18s ease;
+}
+
+.tab:hover {
+  color: #e8edf2;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+.tab:hover::after {
+  transform: scaleX(1);
+}
+
+.tab:focus-visible {
+  outline: 2px solid #66c0f4;
+  outline-offset: 2px;
+}
+
+.tab.active {
+  color: #e8edf2;
+}
+
+.tab.active::after {
+  transform: scaleX(1);
+  background: #66c0f4;
+}

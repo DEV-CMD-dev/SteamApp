@@ -1,6 +1,5 @@
-
 import { AuthContext } from "../contexts/AuthContext";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import CategoriesDropdown from "./dropdowns/CategoriesDropdown";
 import BrowseDropdown from "./dropdowns/BrowseDropdown";
@@ -37,6 +36,7 @@ export default function Navbar() {
   const [isStoreOpen, setIsStoreOpen] = useState(false);
   const [isFriendsOpen, setIsFriendsOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   async function GetBalance() {
     try {
@@ -247,6 +247,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      {location.pathname !== "/library" && (
       <div className="navbar-search-container-main" style={{ background : `${activeDropdown ? '#182534' : ''}`}}>
         <div className="navbar-search-container">
           <div className="categories-container">
@@ -312,6 +313,7 @@ export default function Navbar() {
             onLinkClick={closeDropdown} />
         </div>
       </div>
+    )}
     </>
   );
 }

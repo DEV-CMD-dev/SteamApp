@@ -1,0 +1,14 @@
+.section {
+  margin-bottom: clamp(24px, 3vw, 40px);
+}
+
+.section h2 {
+  font-size: clamp(18px, 1.4vw, 22px);
+  margin-bottom: clamp(12px, 1.2vw, 16px);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: clamp(12px, 1.2vw, 20px);
+}

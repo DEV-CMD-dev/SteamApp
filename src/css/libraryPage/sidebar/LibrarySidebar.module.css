@@ -1,0 +1,17 @@
+.sidebar {
+  width: clamp(300px, 18vw, 340px);
+  flex-shrink: 0;
+  background: #0b121a;
+  border-right: 1px solid #1c2733;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(12px, 1.2vw, 20px);
+  gap: clamp(12px, 1.2vw, 16px);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow-y: auto;
+}

@@ -1,0 +1,68 @@
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: #16202b;
+  transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.08);
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.25s ease;
+}
+
+.cover:hover .image {
+    transform: scale(1.025);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: clamp(10px, 1vw, 14px);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent 60%);
+}
+
+.playButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  background: #22c55e;
+  color: #0e1621;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.playInfo {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-size: clamp(11px, 0.8vw, 12px);
+}
+
+.label {
+  color: #cfd8e0;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
