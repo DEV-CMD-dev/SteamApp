@@ -3,4 +3,5 @@ export interface FriendProfileDto {
     avatar?: string | null;
     name: string;
     level: number;
+    isOnline: boolean;
 }

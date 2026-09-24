@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function SearchGame({ gameDto }: { gameDto: GameDto }) {
     const hasDiscount = gameDto.discount > 0;
-    const hasOs = gameDto.systemRequirements?.split(":")[1].toLowerCase()
+    const hasOs = gameDto.systemRequirements?.split(":")[1]?.toLowerCase();
     const finalPrice = hasDiscount
         ? (gameDto.price * (1 - gameDto.discount / 100)).toFixed(2)
         : gameDto.price.toFixed(2);

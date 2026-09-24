@@ -26,6 +26,8 @@ import NotFound from './pages/NotFound'
 import InventoryPage from './pages/InventoryPage'
 import TradePage from './pages/TradePage'
 import NewTradeOfferPage from './pages/NewTradeOfferPage'
+import FriendsPage from './pages/ChatPage'
+import ChatPage from './pages/ChatPage'
 
 function App() {
   return (
@@ -53,6 +55,12 @@ function App() {
             <PaymentPage />
           </ProtectedRoute>
         } />
+        <Route path="/chat" element={
+          <ProtectedRoute>
+            <ChatPage />
+          </ProtectedRoute>
+        }
+        />
         <Route element={<MainLayout />}>
           <Route path='*' element={<NotFound />} />
           <Route path='/' element={<StorePage />} />
