@@ -83,4 +83,15 @@ export const profileService = {
 
         return handleResponse(res, "Failed to search users.");
     },
+     async searchfriends(query: string): Promise<ProfileSearchResultDto[]> {
+        const res = await fetch(`${API_BASE_URL}/Profiles/search-friends?query=${encodeURIComponent(query)}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+
+        return handleResponse(res, "Failed to search users.");
+    },
 };

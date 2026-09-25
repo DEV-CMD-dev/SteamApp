@@ -11,10 +11,8 @@ import cartIcon from "../assets/navbar/cart.svg";
 import logo from "../assets/logo.svg";
 import arrowDownIcon from "../assets/navbar/arrow-down.svg";
 import SearchBar from "../components/Navbar/SearchBar";
-import header_burger from "../assets/navbar/header_menu_hamburger.png";
 import { orderService } from "../services/navbarService";
 import type { MiniProfileDto } from "../DTOs/Profile/MiniProfileDto";
-import arrowUpIcon from "../assets/navbar/arrow-up.svg";
 
 export default function Navbar() {
   const { accessToken } = useContext(AuthContext);

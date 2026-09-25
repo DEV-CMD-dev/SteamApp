@@ -121,7 +121,7 @@ export default function ProfilePage() {
                                 <span>Level</span>
                             </div>
                         </div>
-                        
+
                         {!paramUserId && (
                             <button
                                 type="button"
@@ -256,11 +256,18 @@ export default function ProfilePage() {
                             >
                                 <span>Inventory</span>
                             </button>
+                            <button
+                                type="button"
+                                className="setting-row setting-link"
+                                onClick={() => navigate("/chat")}
+                            >
+                                <span>Chat</span>
+                            </button>
                         </div>
                     </div>
 
                     <div className="sidebar-panel" id="friends-panel">
-                        <h4>Friends</h4>
+                        <h4 style={{cursor : "pointer"}} onClick={() => navigate("/friends")}>Friends</h4>
                         <div className="friend-list">
                             {friends?.items.map((friend) => (
                                 <div
