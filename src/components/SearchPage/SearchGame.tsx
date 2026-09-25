@@ -1,6 +1,5 @@
 import "./SearchGame.css"
 import windowsIcon from "../../assets/search/windows.svg"
-import appleIcon from "../../assets/search/apple.svg"
 import type { GameDto } from "../../DTOs/Game/GameDto"
 import { useNavigate } from "react-router-dom";
 
