@@ -1,4 +1,6 @@
 import type { MessageDto } from "../DTOs/MessageDto";
+import type { FriendMessageDto } from "../DTOs/Chat/FriendMessageDto";
+
 import type { PaginatedList } from "../DTOs/PaginatedList";
 
 
@@ -40,4 +42,23 @@ export const chatService = {
 
         return handleResponse(res, "Failed to load friends.");
     },
+
+    async GetFriendsWithMessage(pageNumber: number = 1, pageSize: number = 4): Promise<PaginatedList<FriendMessageDto>> {
+        const queryParams = new URLSearchParams({
+            pageNumber: pageNumber.toString(),
+            pageSize: pageSize.toString(),
+        });
+
+        const res = await fetch(`${API_BASE_URL}/Friendship/friends-with-message?${queryParams.toString()}`, {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            },
+        });
+
+        return handleResponse(res, "Failed to load friends.");
+    },
+
 };
+

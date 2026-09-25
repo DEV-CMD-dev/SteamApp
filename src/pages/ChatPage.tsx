@@ -7,17 +7,12 @@ import { profileService } from "../services/profileService";
 import { decodeUserIdFromToken } from "../utils/jwt";
 import no_read_icon from "../assets/chat/no_read.png"
 import read_white from "../assets/chat/read_white.png"
-
-
-
+import logo from "../assets/logo.svg";
 import type { MessageDto } from "../DTOs/MessageDto";
 import type { PaginatedList } from "../DTOs/PaginatedList";
-import type { FriendProfileDto } from "../DTOs/Profile/FriendProfileDto";
 import type { ProfileDto } from "../DTOs/Profile/ProfileDto";
-
-
 import "../css/Chat/chatPage.css";
-
+import type { FriendMessageDto } from "../DTOs/Chat/FriendMessageDto";
 
 
 type CompareDatesProps = {
@@ -54,17 +49,16 @@ function formatMessageDate({ first_date, second_date = new Date() }: CompareDate
 export default function ChatPage() {
     const { accessToken } = useContext(AuthContext);
     const navigate = useNavigate();
-
     const [searchParams] = useSearchParams();
     const recipientId = searchParams.get("userId");
-
     const [profile, setProfile] = useState<ProfileDto | null>(null);
-    const [friends, setFriends] = useState<PaginatedList<FriendProfileDto>>();
+    const [friends, setFriends] = useState<PaginatedList<FriendMessageDto>>();
     const [messages, setMessages] = useState<MessageDto[]>([]);
     const [value, setValue] = useState<string>("");
     const [connection, setConnection] = useState<HubConnection | null>(null);
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const activeUser = useRef<string | null>(null);
+    const isChatLoaded = useRef<boolean>(false);
 
     const fetchInitialData = async (accessToken: string) => {
         try {
@@ -74,7 +68,7 @@ export default function ChatPage() {
                 setProfile(profileData);
             }
 
-            const friendsData = await profileService.GetFriends(undefined, undefined, 50);
+            const friendsData = await chatService.GetFriendsWithMessage(1, 50);
             setFriends(friendsData);
         } catch (error) {
             console.error(error);
@@ -107,14 +101,19 @@ export default function ChatPage() {
             const messagesData = await chatService.getMessages(recipientId, 1, 50);
             if (recipientId)
                 setMessages(messagesData.items?.reverse() || []);
-            console.log(messagesData.items)
         } catch (error) {
             console.error(error);
         }
     };
 
     useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        if (messages.length === 0 || !activeUser.current) return;
+
+        messagesEndRef.current?.scrollIntoView({
+            behavior: isChatLoaded.current ? "smooth" : "auto"
+        });
+
+        isChatLoaded.current = true;
     }, [messages]);
 
     useEffect(() => {
@@ -137,6 +136,15 @@ export default function ChatPage() {
             }
             if (currentActiveChat === data.senderId) {
                 newConnection.invoke("ReadMessage", data.senderId).catch(console.error);
+            }
+            if (currentActiveChat !== data.senderId) {
+                setFriends((prev) => {
+                    if (!prev) return prev;
+                    return {
+                        ...prev,
+                        items: prev.items.map((frnd) => frnd.userId == data.senderId ? { ...frnd, unreadMessageCounter: frnd.unreadMessageCounter + 1, lastMessage: data.text } : frnd)
+                    }
+                })
             }
         });
 
@@ -179,124 +187,152 @@ export default function ChatPage() {
     }, [accessToken]);
 
     useEffect(() => {
-        if (!recipientId) return
+        if (!recipientId) {
+            activeUser.current = null;
+            return;
+        }
+        isChatLoaded.current = false;
         fetchMessages(recipientId);
         activeUser.current = recipientId;
         if (connection) {
             readMessages(recipientId);
+            setFriends((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    items: prev.items.map((frnd) => frnd.userId == recipientId ? { ...frnd, unreadMessageCounter: 0 } : frnd)
+                }
+            })
         }
     }, [recipientId, connection])
 
 
     return (
-        <div className="chat-page-container">
-            <div className="chats-list-container">
-                <div className="my-account-card">
-                    <div className="square-avatar-wrap">
-                        <img
-                            src={profile?.avatar ?? "https://via.placeholder.com/150"}
-                            alt="My Avatar"
-                            className="square-avatar"
-                        />
-                        <span className="online-indicator"></span>
-                    </div>
-                    <div className="my-account-info">
-                        <span className="my-account-name">{profile?.userName ?? "Завантаження..."}</span>
-                        <span className="my-account-status">Online</span>
-                    </div>
-                </div>
-
-                <div className="chat-search-wrap">
-                    <input type="text" placeholder="Пошук діалогів..." className="chat-search-input" />
-                </div>
-
-                <div className="chat-dialogs-list">
-                    {friends?.items.map((frnd) => {
-                        const isActive = recipientId === frnd.userId;
-
-                        return (
-                            <div
-                                key={frnd.userId}
-                                onClick={() => {
-                                    if (recipientId != frnd.userId) {
-                                        setMessages([])
-                                        navigate(`/chat?userId=${frnd.userId}`);
-                                    }
-                                }}
-                                className={`chat-dialog-item ${isActive ? "active" : ""}`}
-                            >
-                                <div className="square-avatar-wrap">
-                                    <img
-                                        src={frnd?.avatar ?? "https://via.placeholder.com/150"}
-                                        alt={frnd?.name}
-                                        className="square-avatar"
-                                    />
-                                    {frnd.isOnline && <span className="online-indicator"></span>}
-                                </div>
-                                <div className="chat-dialog-content">
-                                    <div className="chat-dialog-header">
-                                        <span className="dialog-user-name">{frnd?.name}</span>
-                                        <span className="dialog-timestamp">16:44</span>
-                                    </div>
-                                    <div className="chat-dialog-footer">
-                                        <p className="dialog-last-message">Останнє повідомлення</p>
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
+        <>
+            <div className="mini-navbar-container">
+                <div className="site-logo-wrap" onClick={() => navigate("/")} title="Main">
+                    <img src={logo} alt="Logo" className="site-logo-icon" />
                 </div>
             </div>
 
-            <div className="dialog-container">
-                <div className="message-list">
-                    {messages.map((message, index) => {
-                        const currentDate = message.createdAt.slice(0, 10);
-                        const prevDate = index > 0 ? messages[index - 1].createdAt.slice(0, 10) : null;
-                        const showDivider = currentDate !== prevDate;
-                        const isSender = message.receiverId === recipientId;
+            <div className={`chat-page-container ${recipientId ? "chat-open" : ""}`}>
+                <div className="chats-list-container">
+                    <div className="my-account-card">
+                        <div className="square-avatar-wrap">
+                            <img
+                                src={profile?.avatar ?? "https://via.placeholder.com/150"}
+                                alt="My Avatar"
+                                className="square-avatar"
+                            />
+                            <span className="online-indicator"></span>
+                        </div>
+                        <div className="my-account-info">
+                            <span className="my-account-name">{profile?.userName ?? "Завантаження..."}</span>
+                            <span className="my-account-status">Online</span>
+                        </div>
+                    </div>
+                    <div className="chat-dialogs-list">
+                        {friends?.items.map((frnd) => {
+                            const isActive = recipientId === frnd.userId;
 
-                        return (
-                            <React.Fragment key={message.id || index}>
-                                {showDivider && (
-                                    <div className="date-divider">
-                                        {formatMessageDate({ first_date: message.createdAt })}
+                            return (
+                                <div
+                                    key={frnd.userId}
+                                    onClick={() => {
+                                        if (recipientId != frnd.userId) {
+                                            setMessages([])
+                                            navigate(`/chat?userId=${frnd.userId}`);
+                                        }
+                                    }}
+                                    className={`chat-dialog-item ${isActive ? "active" : ""}`}
+                                >
+                                    <div className="square-avatar-wrap">
+                                        <img
+                                            src={frnd?.avatar ?? "https://via.placeholder.com/150"}
+                                            alt={frnd?.name}
+                                            className="square-avatar"
+                                        />
+                                        {frnd.isOnline && <span className="online-indicator"></span>}
                                     </div>
-                                )}
-                                <div className="message-container">
-                                    <div className={`${isSender ? "sender" : "receiver"}-message-container`}>
-                                        <span className="message-text">{message.text}</span>
-                                        {isSender && (
-                                            <span className="image_container_message">
-                                                <img src={message.isRead ? read_white : no_read_icon}></img>
-                                            </span>
-                                        )}
-                                        <span className="createdAt-text">
-                                            {formatMessageTime(message.createdAt)}
+                                    <div className="chat-dialog-content">
+                                        <div className="chat-dialog-header">
+                                            <span className="dialog-user-name">{frnd?.name}</span>
+                                        </div>
+                                        <div className="chat-dialog-footer">
+                                            <p className="dialog-last-message">{frnd.lastMessage}</p>
+                                        </div>
+                                    </div>
+                                    {frnd.unreadMessageCounter > 0 && (
+                                        <span className="unread-badge">
+                                            {frnd.unreadMessageCounter}
                                         </span>
-                                    </div>
-
-
+                                    )}
                                 </div>
-                            </React.Fragment>
-                        );
-                    })}
-                    <div ref={messagesEndRef} />
+                            );
+                        })}
+                    </div>
                 </div>
 
-                <div className="inputs-container">
-                    <form className="form-container" onSubmit={handleSubmit}>
-                        <input
-                            className="input-text"
-                            type="text"
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                            placeholder="Написати повідомлення..."
-                        />
-                        <button className="send-btn" type="submit" disabled={!value.trim()}></button>
-                    </form>
+                <div className="dialog-container">
+                    <div className="mobile-chat-header">
+                        <button
+                            type="button"
+                            className="mobile-back-btn"
+                            onClick={() => navigate("/chat")}
+                        >
+                            <span>Back</span>
+                        </button>
+                        <span className="mobile-chat-title">
+                            {friends?.items.find((f) => f.userId === recipientId)?.name ?? "Чат"}
+                        </span>
+                    </div>
+                    <div className="message-list">
+                        {messages.map((message, index) => {
+                            const currentDate = message.createdAt.slice(0, 10);
+                            const prevDate = index > 0 ? messages[index - 1].createdAt.slice(0, 10) : null;
+                            const showDivider = currentDate !== prevDate;
+                            const isSender = message.receiverId === recipientId;
+
+                            return (
+                                <React.Fragment key={message.id || index}>
+                                    {showDivider && (
+                                        <div className="date-divider">
+                                            {formatMessageDate({ first_date: message.createdAt })}
+                                        </div>
+                                    )}
+                                    <div className="message-container">
+                                        <div className={`${isSender ? "sender" : "receiver"}-message-container`}>
+                                            <span className="message-text">{message.text}</span>
+                                            {isSender && (
+                                                <span className="image_container_message">
+                                                    <img src={message.isRead ? read_white : no_read_icon}></img>
+                                                </span>
+                                            )}
+                                            <span className="createdAt-text">
+                                                {formatMessageTime(message.createdAt)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </React.Fragment>
+                            );
+                        })}
+                        <div ref={messagesEndRef} />
+                    </div>
+
+                    <div className="inputs-container">
+                        <form className="form-container" onSubmit={handleSubmit}>
+                            <input
+                                className="input-text"
+                                type="text"
+                                value={value}
+                                onChange={(e) => setValue(e.target.value)}
+                                placeholder="Message..."
+                            />
+                            <button className="send-btn" type="submit" disabled={!value.trim()}></button>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
