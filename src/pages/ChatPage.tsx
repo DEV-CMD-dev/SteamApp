@@ -1,19 +1,19 @@
 import React, { useEffect, useState, useContext, useRef } from "react";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthContext";
+import { SignalRContext } from "../contexts/SignalRContext";
 import { chatService } from "../services/chatService";
 import { profileService } from "../services/profileService";
 import { decodeUserIdFromToken } from "../utils/jwt";
-import no_read_icon from "../assets/chat/no_read.png"
-import read_white from "../assets/chat/read_white.png"
+import no_read_icon from "../assets/chat/no_read.png";
+import read_white from "../assets/chat/read_white.png";
 import logo from "../assets/logo.svg";
+import sent from "../assets/chat/sent.png";
 import type { MessageDto } from "../DTOs/MessageDto";
 import type { PaginatedList } from "../DTOs/PaginatedList";
 import type { ProfileDto } from "../DTOs/Profile/ProfileDto";
 import "../css/Chat/chatPage.css";
 import type { FriendMessageDto } from "../DTOs/Chat/FriendMessageDto";
-
 
 type CompareDatesProps = {
     first_date: Date | string;
@@ -45,24 +45,25 @@ function formatMessageDate({ first_date, second_date = new Date() }: CompareDate
     });
 }
 
-
 export default function ChatPage() {
     const { accessToken } = useContext(AuthContext);
+    const { connection } = useContext(SignalRContext);
     const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const recipientId = searchParams.get("userId");
+
     const [profile, setProfile] = useState<ProfileDto | null>(null);
     const [friends, setFriends] = useState<PaginatedList<FriendMessageDto>>();
     const [messages, setMessages] = useState<MessageDto[]>([]);
     const [value, setValue] = useState<string>("");
-    const [connection, setConnection] = useState<HubConnection | null>(null);
+
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const activeUser = useRef<string | null>(null);
     const isChatLoaded = useRef<boolean>(false);
 
-    const fetchInitialData = async (accessToken: string) => {
+    const fetchInitialData = async (token: string) => {
         try {
-            const userId = decodeUserIdFromToken(accessToken);
+            const userId = decodeUserIdFromToken(token);
             if (userId) {
                 const profileData = await profileService.getProfile(userId);
                 setProfile(profileData);
@@ -75,9 +76,35 @@ export default function ChatPage() {
         }
     };
 
+    const fetchMessages = async (id: string) => {
+        try {
+            const messagesData = await chatService.getMessages(id, 1, 50);
+            if (id) {
+                setMessages(messagesData.items?.reverse() || []);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const readMessages = async (id: string) => {
+        try {
+            if (!connection) return;
+            await connection.invoke("ReadMessage", id);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!value.trim() || !connection || !recipientId) return;
+
+        if (!connection) {
+            console.error("ПОМИЛКА: Немає підключення до SignalR!");
+            alert("Немає підключення до сервера чату!");
+            return;
+        }
 
         try {
             await connection.invoke("SendMessage", recipientId, value);
@@ -87,24 +114,106 @@ export default function ChatPage() {
         }
     };
 
-    const readMessages = async (recipientId: string) => {
-        try {
-            if (!connection) return;
-            await connection.invoke("ReadMessage", recipientId);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+    useEffect(() => {
+        if (!accessToken) return;
+        fetchInitialData(accessToken);
+    }, [accessToken]);
 
-    const fetchMessages = async (recipientId: string) => {
-        try {
-            const messagesData = await chatService.getMessages(recipientId, 1, 50);
-            if (recipientId)
-                setMessages(messagesData.items?.reverse() || []);
-        } catch (error) {
-            console.error(error);
+    useEffect(() => {
+        if (!connection) return;
+
+        const handleReceiveMessage = (data: MessageDto) => {
+            const currentActiveChat = activeUser.current;
+
+            if (currentActiveChat === data.senderId || currentActiveChat === data.receiverId) {
+                setMessages((prev) => {
+                    if (prev.some((msg) => msg.id === data.id)) return prev;
+                    return [...prev, data];
+                });
+            }
+
+            if (currentActiveChat === data.senderId) {
+                connection.invoke("ReadMessage", data.senderId).catch(console.error);
+            }
+
+            if (currentActiveChat !== data.senderId) {
+                setFriends((prev) => {
+                    if (!prev) return prev;
+                    return {
+                        ...prev,
+                        items: prev.items.map((frnd) =>
+                            frnd.userId == data.senderId
+                                ? { ...frnd, unreadMessageCounter: frnd.unreadMessageCounter + 1, lastMessage: data.text }
+                                : frnd
+                        )
+                    }
+                });
+            }
+        };
+
+        const handleUserConnected = (connectedUserId: string) => {
+            setFriends((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    items: prev.items.map((frnd) => frnd.userId === connectedUserId ? { ...frnd, isOnline: true } : frnd)
+                }
+            });
+        };
+
+        const handleUserDisconnected = (disconnectedUserId: string) => {
+            setFriends((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    items: prev.items.map((frnd) => frnd.userId === disconnectedUserId ? { ...frnd, isOnline: false } : frnd)
+                }
+            });
+        };
+
+        const handleMessagesWereRead = (readerId: string) => {
+            setMessages((prev) => {
+                if (!prev) return [];
+                return prev.map((msg) =>
+                    msg.senderId !== readerId ? { ...msg, isRead: true } : msg
+                );
+            });
+        };
+
+        connection.on("ReceiveMessage", handleReceiveMessage);
+        connection.on("UserConnected", handleUserConnected);
+        connection.on("UserDisconnected", handleUserDisconnected);
+        connection.on("MessagesWereRead", handleMessagesWereRead);
+
+        return () => {
+            connection.off("ReceiveMessage", handleReceiveMessage);
+            connection.off("UserConnected", handleUserConnected);
+            connection.off("UserDisconnected", handleUserDisconnected);
+            connection.off("MessagesWereRead", handleMessagesWereRead);
+        };
+    }, [connection]);
+
+    useEffect(() => {
+        if (!recipientId) {
+            activeUser.current = null;
+            return;
         }
-    };
+
+        isChatLoaded.current = false;
+        fetchMessages(recipientId);
+        activeUser.current = recipientId;
+
+        if (connection) {
+            readMessages(recipientId);
+            setFriends((prev) => {
+                if (!prev) return prev;
+                return {
+                    ...prev,
+                    items: prev.items.map((frnd) => frnd.userId == recipientId ? { ...frnd, unreadMessageCounter: 0 } : frnd)
+                }
+            });
+        }
+    }, [recipientId, connection]);
 
     useEffect(() => {
         if (messages.length === 0 || !activeUser.current) return;
@@ -115,97 +224,6 @@ export default function ChatPage() {
 
         isChatLoaded.current = true;
     }, [messages]);
-
-    useEffect(() => {
-        if (!accessToken) return;
-
-        fetchInitialData(accessToken);
-
-        const newConnection = new HubConnectionBuilder()
-            .withUrl(`https://localhost:7166/chat`, { accessTokenFactory: () => accessToken })
-            .withAutomaticReconnect()
-            .build();
-
-        newConnection.on("ReceiveMessage", (data: MessageDto) => {
-            const currentActiveChat = activeUser.current;
-            if (currentActiveChat === data.senderId || currentActiveChat === data.receiverId) {
-                setMessages((prev) => {
-                    if (prev.some((msg) => msg.id === data.id)) return prev;
-                    return [...prev, data];
-                });
-            }
-            if (currentActiveChat === data.senderId) {
-                newConnection.invoke("ReadMessage", data.senderId).catch(console.error);
-            }
-            if (currentActiveChat !== data.senderId) {
-                setFriends((prev) => {
-                    if (!prev) return prev;
-                    return {
-                        ...prev,
-                        items: prev.items.map((frnd) => frnd.userId == data.senderId ? { ...frnd, unreadMessageCounter: frnd.unreadMessageCounter + 1, lastMessage: data.text } : frnd)
-                    }
-                })
-            }
-        });
-
-        newConnection.on("UserConnected", (connectedUserId: string) => {
-            setFriends((prev) => {
-                if (!prev) return prev;
-                return {
-                    ...prev,
-                    items: prev.items.map((frnd) => frnd.userId === connectedUserId ? { ...frnd, isOnline: true } : frnd)
-                }
-            })
-        })
-
-        newConnection.on("UserDisconnected", (disconnectedUserId: string) => {
-            setFriends((prev) => {
-                if (!prev) return prev;
-                return {
-                    ...prev,
-                    items: prev.items.map((frnd) => frnd.userId === disconnectedUserId ? { ...frnd, isOnline: false } : frnd)
-                }
-            })
-        });
-
-        newConnection.on("MessagesWereRead", (readerId: string) => {
-            setMessages((prev) => {
-                if (!prev) return [];
-                return prev.map((msg) =>
-                    msg.senderId !== readerId ? { ...msg, isRead: true } : msg
-                );
-            });
-        });
-
-        newConnection.start()
-            .then(() => setConnection(newConnection))
-            .catch((err) => console.error(err));
-
-        return () => {
-            newConnection.stop();
-        };
-    }, [accessToken]);
-
-    useEffect(() => {
-        if (!recipientId) {
-            activeUser.current = null;
-            return;
-        }
-        isChatLoaded.current = false;
-        fetchMessages(recipientId);
-        activeUser.current = recipientId;
-        if (connection) {
-            readMessages(recipientId);
-            setFriends((prev) => {
-                if (!prev) return prev;
-                return {
-                    ...prev,
-                    items: prev.items.map((frnd) => frnd.userId == recipientId ? { ...frnd, unreadMessageCounter: 0 } : frnd)
-                }
-            })
-        }
-    }, [recipientId, connection])
-
 
     return (
         <>
@@ -227,10 +245,15 @@ export default function ChatPage() {
                             <span className="online-indicator"></span>
                         </div>
                         <div className="my-account-info">
-                            <span className="my-account-name">{profile?.userName ?? "Завантаження..."}</span>
+                            <span className="my-account-name">{profile?.userName ?? "Loading..."}</span>
                             <span className="my-account-status">Online</span>
                         </div>
                     </div>
+
+                    <div className="chat-search-wrap">
+                        <input type="text" placeholder="Search friends..." className="chat-search-input" />
+                    </div>
+
                     <div className="chat-dialogs-list">
                         {friends?.items.map((frnd) => {
                             const isActive = recipientId === frnd.userId;
@@ -240,7 +263,7 @@ export default function ChatPage() {
                                     key={frnd.userId}
                                     onClick={() => {
                                         if (recipientId != frnd.userId) {
-                                            setMessages([])
+                                            setMessages([]);
                                             navigate(`/chat?userId=${frnd.userId}`);
                                         }
                                     }}
@@ -278,7 +301,7 @@ export default function ChatPage() {
                         <button
                             type="button"
                             className="mobile-back-btn"
-                            onClick={() => navigate("/chat")}
+                            onClick={() => setSearchParams({})}
                         >
                             <span>Back</span>
                         </button>
@@ -328,7 +351,9 @@ export default function ChatPage() {
                                 onChange={(e) => setValue(e.target.value)}
                                 placeholder="Message..."
                             />
-                            <button className="send-btn" type="submit" disabled={!value.trim()}></button>
+                            <button className="send-btn" type="submit" disabled={!value.trim()}>
+                                <img className="send-img" src={sent} alt="" />
+                            </button>
                         </form>
                     </div>
                 </div>

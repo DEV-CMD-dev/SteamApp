@@ -382,6 +382,9 @@
     margin: 0;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .send-btn:hover:not(:disabled) {
@@ -391,6 +394,11 @@
 .send-btn:disabled {
     background-color: #3a3a3a;
     cursor: not-allowed;
+}
+.send-img
+{
+    width: 20px;
+    height: 20px;
 }
 
 .mini-navbar-container {

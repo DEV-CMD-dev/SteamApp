@@ -26,107 +26,116 @@ import NotFound from './pages/NotFound'
 import InventoryPage from './pages/InventoryPage'
 import TradePage from './pages/TradePage'
 import NewTradeOfferPage from './pages/NewTradeOfferPage'
-import FriendsPage from './pages/ChatPage'
+import FriendsPage from './pages/FriendsPage'
 import ChatPage from './pages/ChatPage'
+import { SignalRProvider } from './contexts/SignalRContext'
 
 function App() {
   return (
+
     <AuthProvider>
-      <Toaster
-        position="top-right"
-        reverseOrder={false}
-        toastOptions={{
-          style: {
-            borderRadius: '8px',
-            background: '#333',
-            color: '#fff',
-          },
-          duration: 1500
-        }}
-      />
-      <Routes>
-        <Route path='/auth' element={<AuthForm />} />
-        <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
-        <Route path='/reset-password' element={<ResetPasswordPage />} />
-        <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
-        <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
-        <Route path='/payment' element={
-          <ProtectedRoute>
-            <PaymentPage />
-          </ProtectedRoute>
-        } />
-        <Route path="/chat" element={
-          <ProtectedRoute>
-            <ChatPage />
-          </ProtectedRoute>
-        }
+      <SignalRProvider>
+        <Toaster
+          position="top-right"
+          reverseOrder={false}
+          toastOptions={{
+            style: {
+              borderRadius: '8px',
+              background: '#333',
+              color: '#fff',
+            },
+            duration: 1500
+          }}
         />
-        <Route element={<MainLayout />}>
-          <Route path='*' element={<NotFound />} />
-          <Route path='/' element={<StorePage />} />
-          <Route path='/top-sellers' element={<TopSellersPage />} />
-          <Route path='/library' element={
+        <Routes>
+          <Route path='/auth' element={<AuthForm />} />
+          <Route path='/forgot-password' element={<RequestResetPasswordPage />} />
+          <Route path='/reset-password' element={<ResetPasswordPage />} />
+          <Route path='/confirm-email' element={<ConfirmedEmailPage />} />
+          <Route path='/login-2fa' element={<TwoFactorConfirmationPage />} />
+          <Route path='/payment' element={
             <ProtectedRoute>
-              <LibraryPage />
+              <PaymentPage />
             </ProtectedRoute>
           } />
-          <Route path='/profile' element={
+          <Route path="/chat" element={
             <ProtectedRoute>
-              <ProfilePage />
+              <ChatPage />
             </ProtectedRoute>
-          } />
-          <Route path='/profile/edit' element={
-            <ProtectedRoute>
-              <EditProfilePage />
-            </ProtectedRoute>
-          } />
-          <Route path='/inventory' element={
-            <ProtectedRoute>
-              <InventoryPage />
-            </ProtectedRoute>
-          } />
-          <Route path='/trade' element={
-            <ProtectedRoute>
-              <TradePage />
-            </ProtectedRoute>
-          } />
-          <Route path='/trade/new' element={
-            <ProtectedRoute>
-              <NewTradeOfferPage />
-            </ProtectedRoute>
-          } />
-          <Route path='/settings' element={
-            <ProtectedRoute>
-              <SettingsPage />
-            </ProtectedRoute>
-          } />
-          <Route path='/wishlist' element={
-            <ProtectedRoute>
-              <WishListPage />
-            </ProtectedRoute>
-          } />
-          <Route path='/cart' element={
-            <ProtectedRoute>
-              <CartPage />
-            </ProtectedRoute>
-          } />
-          <Route path="/game/:id" element={
-            <GamePageContainer />
-          } />
-          <Route path="/search" element={
-            <SearchPage />
-          } />
-          <Route path="/discounts" element={
-            <DiscountsPage />
           }
           />
-          <Route path="/category/:tagId" element={
-            <CategoryPage />
-          }
-          />
-        </Route>
-      </Routes>
-    </AuthProvider>
+          <Route element={<MainLayout />}>
+            <Route path='*' element={<NotFound />} />
+            <Route path='/' element={<StorePage />} />
+            <Route path='/top-sellers' element={<TopSellersPage />} />
+            <Route path='/library' element={
+              <ProtectedRoute>
+                <LibraryPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/profile' element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            } />
+            <Route path='/profile/edit' element={
+              <ProtectedRoute>
+                <EditProfilePage />
+              </ProtectedRoute>
+            } />
+            <Route path='/inventory' element={
+              <ProtectedRoute>
+                <InventoryPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/trade' element={
+              <ProtectedRoute>
+                <TradePage />
+              </ProtectedRoute>
+            } />
+            <Route path='/trade/new' element={
+              <ProtectedRoute>
+                <NewTradeOfferPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/settings' element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/wishlist' element={
+              <ProtectedRoute>
+                <WishListPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/cart' element={
+              <ProtectedRoute>
+                <CartPage />
+              </ProtectedRoute>
+            } />
+            <Route path='/friends' element={
+              <ProtectedRoute>
+                <FriendsPage />
+              </ProtectedRoute>
+            } />
+            <Route path="/game/:id" element={
+              <GamePageContainer />
+            } />
+            <Route path="/search" element={
+              <SearchPage />
+            } />
+            <Route path="/discounts" element={
+              <DiscountsPage />
+            }
+            />
+            <Route path="/category/:tagId" element={
+              <CategoryPage />
+            }
+            />
+          </Route>
+        </Routes>
+      </SignalRProvider>
+    </AuthProvider >
   )
 }
 
